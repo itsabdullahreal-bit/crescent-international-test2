@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Admin Portal — Crescent International</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0b2b5a;--white:#fff}
+  *{box-sizing:border-box}
+  body{font-family:'Poppins',sans-serif;margin:0;background:#f3f6fb;color:#222}
+  header{background:var(--navy);color:var(--white);padding:18px;text-align:center}
+  .wrap{max-width:1100px;margin:18px auto;padding:16px}
+  .card{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px;box-shadow:0 8px 24px rgba(12,30,60,0.06)}
+  input,textarea,select{width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;margin-top:8px}
+  .row{display:flex;gap:12px}
+  .col{flex:1}
+  .btn{background:var(--navy);color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+  .small{font-size:13px;color:#666}
+  label{font-weight:600}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h2>Admin Portal — Crescent International</h2>
+  <div style="font-size:13px;opacity:.9">Hidden URL. Keep it secret.</div>
+</header>
+
+<div class="wrap">
+  <div class="card" id="loginCard">
+    <h3>Admin Login</h3>
+    <p class="small">Use the test admin email and password. You can change them once from Settings.</p>
+    <label>Email</label>
+    <input id="login-email" placeholder="admin email" value="ayubandabdullah835@gmail.com"/>
+    <label>Password</label>
+    <input id="login-pass" type="password" placeholder="password" value="admin@123"/>
+    <div style="margin-top:10px"><button class="btn" onclick="login()">Login</button></div>
+    <div id="login-msg" style="margin-top:8px;color:#b91c1c"></div>
+  </div>
+
+  <div id="adminArea" style="display:none">
+    <!-- Settings -->
+    <div class="card">
+      <h3>Settings (Change login — one-time)</h3>
+      <div class="grid">
+        <div>
+          <label>Admin Email</label>
+          <input id="set-email" />
+        </div>
+        <div>
+          <label>Admin Password</label>
+          <input id="set-pass" type="password" />
+        </div>
+      </div>
+      <div style="margin-top:10px"><button class="btn" onclick="changeLogin()">Change (one-time)</button>
+        <div class="small" style="margin-top:8px">This action is allowed only once for demo. It stores values in your browser localStorage.</div>
+      </div>
+    </div>
+
+    <!-- Home slideshow -->
+    <div class="card">
+      <h3>Home Slideshow</h3>
+      <p class="small">Upload images — they will appear on the homepage. Files are stored in browser (localStorage) as base64 (demo).</p>
+      <input id="slide-files" type="file" accept="image/*" multiple />
+      <label>Caption (optional)</label><input id="slide-caption" placeholder="Caption for uploaded images" />
+      <div style="margin-top:10px"><button class="btn" onclick="uploadSlides()">Upload</button>
+      <button class="btn" style="background:#666;margin-left:8px" onclick="clearSlides()">Clear slides</button></div>
+      <div id="slides-preview" style="margin-top:12px"></div>
+    </div>
+
+    <!-- Homework manager -->
+    <div class="card">
+      <h3>Homework Manager</h3>
+      <div class="row">
+        <div class="col">
+          <label>Class</label>
+          <select id="hw-class"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select>
+          <label>Date</label><input id="hw-date" type="date"/>
+        </div>
+        <div class="col">
+          <label>Task</label><textarea id="hw-task" rows="3"></textarea>
+        </div>
+      </div>
+      <div style="margin-top:10px"><button class="btn" onclick="addHomework()">Add Homework</button></div>
+      <div id="hw-list" style="margin-top:12px"></div>
+    </div>
+
+    <!-- Results manager -->
+    <div class="card">
+      <h3>Results Manager</h3>
+      <div class="grid">
+        <div>
+          <label>Roll Number</label><input id="res-roll"/>
+          <label>Parent CNIC</label><input id="res-cnic"/>
+        </div>
+        <div>
+          <label>Class</label><select id="res-class"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select>
+          <label>Marks/Text</label><input id="res-marks"/>
+        </div>
+      </div>
+      <div style="margin-top:10px"><button class="btn" onclick="addResult()">Save Result</button></div>
+      <div id="res-list" style="margin-top:12px"></div>
+    </div>
+
+    <!-- FAQs -->
+    <div class="card">
+      <h3>FAQ Manager</h3>
+      <div class="grid">
+        <div><label>Question</label><input id="faq-q"/></div>
+        <div><label>Category</label><input id="faq-cat" placeholder="Admissions/Fees/etc"/></div>
+      </div>
+      <label>Answer</label><textarea id="faq-a" rows="3"></textarea>
+      <div style="margin-top:10px"><button class="btn" onclick="addFaq()">Add FAQ</button></div>
+      <div id="faq-manage" style="margin-top:12px"></div>
+    </div>
+
+    <!-- Attendance -->
+    <div class="card">
+      <h3>Attendance Manager</h3>
+      <div class="row">
+        <div class="col"><label>Class</label><select id="att-class-set"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select></div>
+        <div class="col"><label>Date</label><input id="att-date-set" type="date" value=""></div>
+      </div>
+      <div style="margin-top:10px">
+        <label>Student Name</label><input id="att-name" placeholder="Student full name"/>
+        <label>Status</label><select id="att-status"><option>Present</option><option>Absent</option><option>Half</option></select>
+      </div>
+      <div style="margin-top:10px"><button class="btn" onclick="addAttendance()">Add Attendance</button></div>
+      <div id="att-manage" style="margin-top:12px"></div>
+    </div>
+
+    <!-- Events -->
+    <div class="card">
+      <h3>Events Manager</h3>
+      <label>Event Name</label><input id="ev-name"/>
+      <label>Description</label><textarea id="ev-desc" rows="3"></textarea>
+      <label>Upload Images</label><input type="file" id="ev-files" multiple accept="image/*"/>
+      <div style="margin-top:10px"><button class="btn" onclick="addEvent()">Add Event</button></div>
+      <div id="ev-manage" style="margin-top:12px"></div>
+    </div>
+
+    <!-- Updates -->
+    <div class="card">
+      <h3>Updates Manager</h3>
+      <label>CIE Updates</label><textarea id="u-cie" rows="2"></textarea>
+      <label>School News</label><textarea id="u-news" rows="3"></textarea>
+      <div style="margin-top:8px"><button class="btn" onclick="saveUpdates()">Save Updates</button></div>
+    </div>
+
+    <!-- Students / Flowchart -->
+    <div class="card">
+      <h3>Student Records</h3>
+      <div class="grid">
+        <div><label>Student Name</label><input id="s-name"/></div>
+        <div><label>Parent(s) Name</label><input id="s-parents"/></div>
+        <div><label>Parent CNIC</label><input id="s-cnic"/></div>
+        <div><label>B-Form / SmartCard</label><input id="s-bform"/></div>
+        <div><label>Date of Birth</label><input type="date" id="s-dob"/></div>
+        <div><label>Date of Joining</label><input type="date" id="s-join"/></div>
+        <div><label>Class</label><select id="s-class"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select></div>
+      </div>
+      <div style="margin-top:10px"><button class="btn" onclick="addStudent()">Add Student</button>
+        <button class="btn" style="background:#666;margin-left:8px" onclick="exportStudentsCSV()">Export CSV</button></div>
+      <div id="students-list" style="margin-top:12px"></div>
+    </div>
+
+    <div style="margin-top:12px" class="card">
+      <button class="btn" onclick="logout()">Logout</button>
+      <div class="small" style="margin-top:8px">Note: This demo stores everything in your browser. Clearing browser storage will erase edits.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* LocalStorage keys */
+const LS = {
+  slides:'cres_slides_v1',
+  homework:'cres_homework_v1',
+  results:'cres_results_v1',
+  faqs:'cres_faqs_v1',
+  attendance:'cres_att_v1',
+  events:'cres_events_v1',
+  updates:'cres_updates_v1',
+  students:'cres_students_v1',
+  adminCred:'cres_admin_v1',
+  adminChangedFlag:'cres_admin_changed_v1' // to allow one-time change
+}
+
+/* default admin credentials (from you) */
+if(!localStorage.getItem(LS.adminCred)){
+  localStorage.setItem(LS.adminCred, JSON.stringify({email:'ayubandabdullah835@gmail.com', pass:'admin@123'}));
+}
+function getAdmin(){return JSON.parse(localStorage.getItem(LS.adminCred)||'{}')}
+
+/* login */
+function login(){
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const admin = getAdmin();
+  const msg = document.getElementById('login-msg');
+  if(email===admin.email && pass===admin.pass){
+    msg.textContent=''; document.getElementById('loginCard').style.display='none'; document.getElementById('adminArea').style.display='block';
+    loadAllManagers();
+  } else { msg.textContent='Wrong email or password.'; }
+}
+
+/* change login one-time */
+function changeLogin(){
+  if(localStorage.getItem(LS.adminChangedFlag)){
+    alert('Login change already used once (demo).');
+    return;
+  }
+  const e = document.getElementById('set-email').value.trim();
+  const p = document.getElementById('set-pass').value;
+  if(!e || !p){ alert('Provide both email and password'); return; }
+  localStorage.setItem(LS.adminCred, JSON.stringify({email:e,pass:p}));
+  localStorage.setItem(LS.adminChangedFlag,'1');
+  alert('Login changed. Use new credentials next time.');
+}
+
+/* ---------- Slides upload ---------- */
+function toBase64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }) }
+async function uploadSlides(){
+  const files = document.getElementById('slide-files').files;
+  if(!files.length){ alert('Choose images to upload'); return; }
+  const caption = document.getElementById('slide-caption').value.trim();
+  const existing = JSON.parse(localStorage.getItem(LS.slides)||'[]');
+  for(let f of files){
+    const b = await toBase64(f);
+    existing.push({url:b,caption:caption});
+  }
+  localStorage.setItem(LS.slides, JSON.stringify(existing));
+  alert('Slides uploaded (saved in browser).');
+  notifyChange(LS.slides);
+  renderSlidesPreview();
+}
+function clearSlides(){ if(confirm('Clear all slides?')){ localStorage.setItem(LS.slides, JSON.stringify([])); notifyChange(LS.slides); renderSlidesPreview(); } }
+function renderSlidesPreview(){
+  const container = document.getElementById('slides-preview');
+  const slides = JSON.parse(localStorage.getItem(LS.slides)||'[]');
+  container.innerHTML = slides.map((s,i)=>`<div style="display:inline-block;margin-right:8px"><img src="${s.url}" style="width:120px;height:70px;object-fit:cover;border-radius:6px"/><div style="font-size:12px">${s.caption||''}</div></div>`).join('');
+}
+renderSlidesPreview();
+
+/* ---------- Homework ---------- */
+function addHomework(){
+  const cls = document.getElementById('hw-class').value;
+  const date = document.getElementById('hw-date').value;
+  const task = document.getElementById('hw-task').value.trim();
+  if(!date || !task){ alert('Provide date and task'); return; }
+  const arr = JSON.parse(localStorage.getItem(LS.homework)||'[]');
+  arr.push({class:cls,date:date,task:task});
+  localStorage.setItem(LS.homework, JSON.stringify(arr));
+  notifyChange(LS.homework);
+  renderHWList();
+}
+function renderHWList(){
+  const list = document.getElementById('hw-list');
+  const arr = JSON.parse(localStorage.getItem(LS.homework)||'[]');
+  list.innerHTML = arr.map((h,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${h.class}</strong> | ${h.date}<div class="small" style="margin-top:6px">${h.task}</div><div style="margin-top:6px"><button onclick="deleteHW(${i})" class="btn" style="background:#c33">Delete</button></div></div>`).join('')||'<div class="small">No homework</div>';
+}
+function deleteHW(i){ const arr=JSON.parse(localStorage.getItem(LS.homework)||'[]'); arr.splice(i,1); localStorage.setItem(LS.homework,JSON.stringify(arr)); notifyChange(LS.homework); renderHWList(); }
+renderHWList();
+
+/* ---------- Results ---------- */
+function addResult(){
+  const roll=document.getElementById('res-roll').value.trim();
+  const cnic=document.getElementById('res-cnic').value.trim();
+  const cls=document.getElementById('res-class').value;
+  const marks=document.getElementById('res-marks').value.trim();
+  if(!roll || !cnic){ alert('Roll and CNIC needed'); return; }
+  const arr=JSON.parse(localStorage.getItem(LS.results)||'[]');
+  arr.push({roll,cnic,class:cls,marks});
+  localStorage.setItem(LS.results,JSON.stringify(arr));
+  notifyChange(LS.results);
+  renderResultsList();
+}
+function renderResultsList(){
+  const node = document.getElementById('res-list');
+  const arr = JSON.parse(localStorage.getItem(LS.results)||'[]');
+  node.innerHTML = arr.map((r,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>Roll ${r.roll}</strong> | CNIC ${r.cnic} | ${r.class}<div class="small">${r.marks||''}</div><div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteResult(${i})">Delete</button></div></div>`).join('')||'<div class="small">No results</div>';
+}
+function deleteResult(i){ const arr=JSON.parse(localStorage.getItem(LS.results)||'[]'); arr.splice(i,1); localStorage.setItem(LS.results,JSON.stringify(arr)); notifyChange(LS.results); renderResultsList(); }
+renderResultsList();
+
+/* ---------- FAQs ---------- */
+function addFaq(){
+  const q=document.getElementById('faq-q').value.trim();
+  const a=document.getElementById('faq-a').value.trim();
+  const c=document.getElementById('faq-cat').value.trim()||'General';
+  if(!q||!a){ alert('Add question and answer'); return; }
+  const arr=JSON.parse(localStorage.getItem(LS.faqs)||'[]');
+  arr.push({q,a,cat:c});
+  localStorage.setItem(LS.faqs,JSON.stringify(arr)); notifyChange(LS.faqs); renderFaqManage();
+}
+function renderFaqManage(){
+  const node = document.getElementById('faq-manage'), arr=JSON.parse(localStorage.getItem(LS.faqs)||'[]');
+  node.innerHTML = arr.map((f,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${f.q}</strong> <div class="small">${f.cat}</div><div style="margin-top:6px">${f.a}</div><div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteFaq(${i})">Delete</button></div></div>`).join('')||'<div class="small">No FAQ</div>';
+}
+function deleteFaq(i){ const arr=JSON.parse(localStorage.getItem(LS.faqs)||'[]'); arr.splice(i,1); localStorage.setItem(LS.faqs,JSON.stringify(arr)); notifyChange(LS.faqs); renderFaqManage(); }
+renderFaqManage();
+
+/* ---------- Attendance ---------- */
+function addAttendance(){
+  const cls=document.getElementById('att-class-set').value;
+  const date=document.getElementById('att-date-set').value || new Date().toISOString().slice(0,10);
+  const name=document.getElementById('att-name').value.trim();
+  const status=document.getElementById('att-status').value;
+  if(!name){alert('Student name');return;}
+  const arr=JSON.parse(localStorage.getItem(LS.attendance)||'[]');
+  arr.push({class:cls,date:name?date:date,name, status});
+  localStorage.setItem(LS.attendance,JSON.stringify(arr)); notifyChange(LS.attendance); renderAttManage();
+}
+function renderAttManage(){
+  const node=document.getElementById('att-manage'), arr=JSON.parse(localStorage.getItem(LS.attendance)||'[]');
+  node.innerHTML = arr.map((r,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${r.name}</strong> | ${r.class} | ${r.date} | ${r.status}<div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteAtt(${i})">Delete</button></div></div>`).join('')||'<div class="small">No attendance records</div>';
+}
+function deleteAtt(i){ const arr=JSON.parse(localStorage.getItem(LS.attendance)||'[]'); arr.splice(i,1); localStorage.setItem(LS.attendance,JSON.stringify(arr)); notifyChange(LS.attendance); renderAttManage(); }
+renderAttManage();
+
+/* ---------- Events ---------- */
+async function addEvent(){
+  const name=document.getElementById('ev-name').value.trim();
+  const desc=document.getElementById('ev-desc').value.trim();
+  const files=document.getElementById('ev-files').files;
+  if(!name||!desc){ alert('Name & description required'); return; }
+  const images=[];
+  for(let f of files){
+    images.push(await toBase64(f));
+  }
+  const arr = JSON.parse(localStorage.getItem(LS.events)||'[]');
+  arr.push({name,desc,images});
+  localStorage.setItem(LS.events,JSON.stringify(arr)); notifyChange(LS.events); renderEvManage();
+}
+function renderEvManage(){
+  const node=document.getElementById('ev-manage'), arr=JSON.parse(localStorage.getItem(LS.events)||'[]');
+  node.innerHTML = arr.map((ev,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${ev.name}</strong><div class="small">${ev.desc}</div><div style="margin-top:6px">${ev.images.map(im=>`<img src="${im}" style="width:120px;height:70px;object-fit:cover;margin-right:6px;border-radius:6px"/>`).join('')}</div><div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteEvent(${i})">Delete</button></div></div>`).join('')||'<div class="small">No events</div>';
+}
+function deleteEvent(i){ const arr=JSON.parse(localStorage.getItem(LS.events)||'[]'); arr.splice(i,1); localStorage.setItem(LS.events,JSON.stringify(arr)); notifyChange(LS.events); renderEvManage(); }
+renderEvManage();
+
+/* ---------- Updates ---------- */
+function saveUpdates(){
+  const cie = document.getElementById('u-cie').value.trim();
+  const news = document.getElementById('u-news').value.trim();
+  localStorage.setItem(LS.updates, JSON.stringify({cie:cie||'No session under way.', news:news||''}));
+  notifyChange(LS.updates);
+  alert('Updates saved');
+}
+
+/* ---------- Students ---------- */
+function addStudent(){
+  const s = {
+    name: document.getElementById('s-name').value.trim(),
+    parents: document.getElementById('s-parents').value.trim(),
+    cnic: document.getElementById('s-cnic').value.trim(),
+    bform: document.getElementById('s-bform').value.trim(),
+    dob: document.getElementById('s-dob').value,
+    join: document.getElementById('s-join').value,
+    class: document.getElementById('s-class').value
+  };
+  if(!s.name){ alert('Student name required'); return; }
+  const arr = JSON.parse(localStorage.getItem(LS.students)||'[]');
+  arr.push(s); localStorage.setItem(LS.students, JSON.stringify(arr)); notifyChange(LS.students); renderStudents();
+}
+function renderStudents(){
+  const list = document.getElementById('students-list');
+  const arr = JSON.parse(localStorage.getItem(LS.students)||'[]');
+  list.innerHTML = arr.map((st,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${st.name}</strong> <div class="small">${st.class} | CNIC: ${st.cnic}</div><div style="margin-top:6px">${st.parents} | B-Form: ${st.bform}</div><div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteStudent(${i})">Delete</button></div></div>`).join('')||'<div class="small">No students</div>';
+}
+function deleteStudent(i){ const arr=JSON.parse(localStorage.getItem(LS.students)||'[]'); arr.splice(i,1); localStorage.setItem(LS.students, JSON.stringify(arr)); notifyChange(LS.students); renderStudents(); }
+function exportStudentsCSV(){
+  const arr = JSON.parse(localStorage.getItem(LS.students)||'[]');
+  if(!arr.length){ alert('No students to export'); return; }
+  const keys = ['name','parents','cnic','bform','dob','join','class'];
+  const csv = [keys.join(',')].concat(arr.map(r=>keys.map(k=>`"${((r[k]||'')+'').replace(/"/g,'""')}"`).join(','))).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'students.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+
+/* ---------- Helpers ---------- */
+function notifyChange(key){ localStorage.setItem(key, localStorage.getItem(key)); window.dispatchEvent(new Event('storage')); }
+/* base64 converter */
+function toBase64(file){ return new Promise((res,rej)=>{ const f = new FileReader(); f.onload=()=>res(f.result); f.onerror=rej; f.readAsDataURL(file); }) }
+
+/* load initial managers when admin logs in */
+function loadAllManagers(){
+  renderSlidesPreviewAdmin(); renderHWList(); renderResultsList(); renderFaqManage(); renderAttManage(); renderEvManage(); renderStudents();
+  // preload updates fields
+  const up = JSON.parse(localStorage.getItem(LS.updates)||'{}'); document.getElementById('u-cie').value = up.cie||''; document.getElementById('u-news').value = up.news||'';
+}
+
+/* preview slides admin-side */
+function renderSlidesPreviewAdmin(){
+  const slides = JSON.parse(localStorage.getItem(LS.slides)||'[]'); const container = document.getElementById('slides-preview');
+  container.innerHTML = slides.map((s,i)=>`<div style="display:inline-block;margin-right:8px"><img src="${s.url}" style="width:120px;height:70px;object-fit:cover;border-radius:6px"/><div style="font-size:12px">${s.caption||''}</div></div>`).join('');
+}
+
+/* Logout */
+function logout(){ document.getElementById('adminArea').style.display='none'; document.getElementById('loginCard').style.display='block'; }
+
+/* render lists (some functions were defined above too) */
+function renderHWList(){ const list=document.getElementById('hw-list'); const arr=JSON.parse(localStorage.getItem(LS.homework)||'[]'); list.innerHTML = arr.map((h,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${h.class}</strong> | ${h.date}<div class="small">${h.task}</div><div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteHW(${i})">Delete</button></div></div>`).join('')||'<div class="small">No homework</div>'; }
+function deleteHW(i){ const arr=JSON.parse(localStorage.getItem(LS.homework)||'[]'); arr.splice(i,1); localStorage.setItem(LS.homework,JSON.stringify(arr)); notifyChange(LS.homework); renderHWList(); }
+function renderResultsList(){ const node=document.getElementById('res-list'); const arr=JSON.parse(localStorage.getItem(LS.results)||'[]'); node.innerHTML = arr.map((r,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>Roll ${r.roll}</strong> | CNIC ${r.cnic} | ${r.class}<div class="small">${r.marks||''}</div><div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteResult(${i})">Delete</button></div></div>`).join('')||'<div class="small">No results</div>'; }
+function deleteResult(i){ const arr=JSON.parse(localStorage.getItem(LS.results)||'[]'); arr.splice(i,1); localStorage.setItem(LS.results,JSON.stringify(arr)); notifyChange(LS.results); renderResultsList(); }
+function renderFaqManage(){ const node=document.getElementById('faq-manage'), arr=JSON.parse(localStorage.getItem(LS.faqs)||'[]'); node.innerHTML = arr.map((f,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${f.q}</strong> <div class="small">${f.cat}</div><div style="margin-top:6px">${f.a}</div><div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteFaq(${i})">Delete</button></div></div>`).join('')||'<div class="small">No FAQ</div>'; }
+function deleteFaq(i){ const arr=JSON.parse(localStorage.getItem(LS.faqs)||'[]'); arr.splice(i,1); localStorage.setItem(LS.faqs,JSON.stringify(arr)); notifyChange(LS.faqs); renderFaqManage(); }
+function renderAttManage(){ const node=document.getElementById('att-manage'), arr=JSON.parse(localStorage.getItem(LS.attendance)||'[]'); node.innerHTML = arr.map((r,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${r.name}</strong> | ${r.class} | ${r.date} | ${r.status}<div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteAtt(${i})">Delete</button></div></div>`).join('')||'<div class="small">No attendance records</div>'; }
+function deleteAtt(i){ const arr=JSON.parse(localStorage.getItem(LS.attendance)||'[]'); arr.splice(i,1); localStorage.setItem(LS.attendance,JSON.stringify(arr)); notifyChange(LS.attendance); renderAttManage(); }
+function renderEvManage(){ const node=document.getElementById('ev-manage'), arr=JSON.parse(localStorage.getItem(LS.events)||'[]'); node.innerHTML = arr.map((ev,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${ev.name}</strong><div class="small">${ev.desc}</div><div style="margin-top:6px">${ev.images.map(im=>`<img src="${im}" style="width:120px;height:70px;object-fit:cover;margin-right:6px;border-radius:6px"/>`).join('')}</div><div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteEvent(${i})">Delete</button></div></div>`).join('')||'<div class="small">No events</div>'; }
+function deleteEvent(i){ const arr=JSON.parse(localStorage.getItem(LS.events)||'[]'); arr.splice(i,1); localStorage.setItem(LS.events,JSON.stringify(arr)); notifyChange(LS.events); renderEvManage(); }
+function renderStudents(){ const list=document.getElementById('students-list'); const arr=JSON.parse(localStorage.getItem(LS.students)||'[]'); list.innerHTML = arr.map((st,i)=>`<div style="padding:8px;border-bottom:1px dashed #eee"><strong>${st.name}</strong> <div class="small">${st.class} | CNIC: ${st.cnic}</div><div style="margin-top:6px">${st.parents} | B-Form: ${st.bform}</div><div style="margin-top:6px"><button class="btn" style="background:#c33" onclick="deleteStudent(${i})">Delete</button></div></div>`).join('')||'<div class="small">No students</div>'; }
+
+/* initial */
+renderSlidesPreviewAdmin(); renderHWList(); renderResultsList(); renderFaqManage(); renderAttManage(); renderEvManage(); renderStudents();
+</script>
+</body>
+</html>
