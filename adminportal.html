@@ -1,379 +1,207 @@
-<!doctype html>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Admin — Edit Homepage (Facilities / Labs / Faculty)</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-<style>
-  :root{--navy:#0b2b5a;--white:#fff}
-  *{box-sizing:border-box}
-  body{font-family:'Poppins',sans-serif;margin:0;background:#f3f6fb;color:#222}
-  header{background:var(--navy);color:var(--white);padding:18px;text-align:center}
-  .wrap{max-width:1100px;margin:18px auto;padding:16px}
-  .card{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px;box-shadow:0 8px 24px rgba(12,30,60,0.06)}
-  input,textarea,select{width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;margin-top:8px}
-  .row{display:flex;gap:12px}
-  .col{flex:1}
-  .btn{background:var(--navy);color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
-  .small{font-size:13px;color:#666}
-  label{font-weight:600}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .list-item{padding:8px;border-bottom:1px dashed #eee;display:flex;gap:10px;align-items:flex-start}
-  .thumb{width:120px;height:70px;object-fit:cover;border-radius:6px}
-  .meta{flex:1}
-  .actions{display:flex;gap:8px;margin-top:8px}
-  .img-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-  .img-row img{width:120px;height:70px;object-fit:cover;border-radius:6px}
-  @media(max-width:800px){.grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crescent International – Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      background: #111;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    section {
+      padding: 20px;
+      border-bottom: 1px solid #222;
+    }
+    h2 {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 5px;
+    }
+    .item {
+      margin-bottom: 12px;
+      padding: 10px;
+      background: #141414;
+      border-radius: 6px;
+    }
+    .item img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      margin-right: 8px;
+      border-radius: 4px;
+    }
+    .btn {
+      background: #0078ff;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      margin-right: 6px;
+      cursor: pointer;
+    }
+    .btn-danger {
+      background: #d22;
+    }
+    .btn:hover {
+      opacity: 0.8;
+    }
+    input, textarea {
+      background: #111;
+      color: white;
+      border: 1px solid #333;
+      padding: 6px;
+      width: 100%;
+      margin-bottom: 8px;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h2>Admin — Homepage Editor (Facilities / Labs / Faculty)</h2>
-  <div class="small">This is standalone admin. It saves to localStorage keys — your main site is not modified.</div>
-</header>
+  <header>Crescent International – Admin Dashboard</header>
 
-<div class="wrap">
-  <!-- Login -->
-  <div class="card" id="loginCard">
-    <h3>Admin Login</h3>
-    <p class="small">Demo admin credentials can be changed once from Settings.</p>
-    <label>Email</label>
-    <input id="login-email" value="ayubandabdullah835@gmail.com"/>
-    <label>Password</label>
-    <input id="login-pass" type="password" value="admin@123"/>
-    <div style="margin-top:10px"><button class="btn" onclick="login()">Login</button></div>
-    <div id="login-msg" style="margin-top:8px;color:#b91c1c"></div>
-  </div>
+  <section id="facilities">
+    <h2>Facilities</h2>
+    <div id="facilities-list"></div>
+    <textarea id="facilities-text" placeholder="Enter facility description..."></textarea>
+    <button class="btn" onclick="addFacility()">Add Facility</button>
+  </section>
 
-  <div id="adminArea" style="display:none">
-    <div class="card">
-      <h3>Settings (change login — one-time)</h3>
-      <div class="grid">
-        <div>
-          <label>Admin Email</label>
-          <input id="set-email" />
-        </div>
-        <div>
-          <label>Admin Password</label>
-          <input id="set-pass" type="password" />
-        </div>
-      </div>
-      <div style="margin-top:10px">
-        <button class="btn" onclick="changeLogin()">Change (one-time)</button>
-        <div class="small" style="margin-top:8px">Stored only in browser for demo.</div>
-      </div>
-    </div>
+  <section id="labs">
+    <h2>Labs</h2>
+    <div id="labs-list"></div>
+    <textarea id="labs-text" placeholder="Enter lab description..."></textarea>
+    <button class="btn" onclick="addLab()">Add Lab</button>
+  </section>
 
-    <!-- Facilities editor -->
-    <div class="card">
-      <h3>Facilities — Add Text / Image</h3>
-      <div class="grid">
-        <div>
-          <label>New Facility Title (optional)</label>
-          <input id="fac-title" placeholder="e.g. Science Block"/>
-        </div>
-        <div>
-          <label>Upload Image (optional)</label>
-          <input id="fac-img" type="file" accept="image/*" />
-        </div>
-      </div>
-      <label>Description (text)</label>
-      <textarea id="fac-desc" rows="3" placeholder="Short description"></textarea>
-      <div style="margin-top:10px">
-        <button class="btn" onclick="addFacility()">Add Facility</button>
-        <button class="btn" style="background:#666;margin-left:8px" onclick="clearSection('facilities')">Clear All Facilities</button>
-      </div>
-      <div id="fac-list" style="margin-top:12px"></div>
-    </div>
+  <section id="faculty">
+    <h2>Faculty</h2>
+    <div id="faculty-list"></div>
+    <textarea id="faculty-text" placeholder="Enter faculty details..."></textarea>
+    <button class="btn" onclick="addFaculty()">Add Faculty</button>
+  </section>
 
-    <!-- Labs editor -->
-    <div class="card">
-      <h3>Labs — Add Text / Image</h3>
-      <div class="grid">
-        <div>
-          <label>Lab Title</label>
-          <input id="lab-title" placeholder="e.g. Computer Lab"/>
-        </div>
-        <div>
-          <label>Upload Image (optional)</label>
-          <input id="lab-img" type="file" accept="image/*" />
-        </div>
-      </div>
-      <label>Description</label>
-      <textarea id="lab-desc" rows="3" placeholder="Short description"></textarea>
-      <div style="margin-top:10px">
-        <button class="btn" onclick="addLab()">Add Lab</button>
-        <button class="btn" style="background:#666;margin-left:8px" onclick="clearSection('labs')">Clear All Labs</button>
-      </div>
-      <div id="lab-list" style="margin-top:12px"></div>
-    </div>
+  <script>
+    // LocalStorage Keys
+    const LS = {
+      facilities: "facilitiesData",
+      labs: "labsData",
+      faculty: "facultyData"
+    };
 
-    <!-- Faculty editor -->
-    <div class="card">
-      <h3>Faculty — Add Person / Text / Image</h3>
-      <div class="grid">
-        <div>
-          <label>Name / Title</label>
-          <input id="fac-name" placeholder="e.g. Ms. Ayesha — Math Teacher"/>
-        </div>
-        <div>
-          <label>Upload Portrait (optional)</label>
-          <input id="fac-img-person" type="file" accept="image/*" />
-        </div>
-      </div>
-      <label>Bio / Description</label>
-      <textarea id="fac-bio" rows="3" placeholder="Short bio"></textarea>
-      <div style="margin-top:10px">
-        <button class="btn" onclick="addFaculty()">Add Faculty</button>
-        <button class="btn" style="background:#666;margin-left:8px" onclick="clearSection('faculty')">Clear All Faculty</button>
-      </div>
-      <div id="faculty-list" style="margin-top:12px"></div>
-    </div>
-
-    <div style="margin-top:12px" class="card">
-      <button class="btn" onclick="logout()">Logout</button>
-      <div class="small" style="margin-top:8px">This admin saves everything in browser localStorage. Your main site is NOT changed by this file.</div>
-    </div>
-  </div>
-</div>
-
-<script>
-/* localStorage keys used by this admin (standalone) */
-const HOME_LS = {
-  facilities: 'cres_home_facilities_v1',
-  labs: 'cres_home_labs_v1',
-  faculty: 'cres_home_faculty_v1',
-  adminCred: 'cres_admin_v1',
-  adminChanged: 'cres_admin_changed_v1'
-};
-
-/* setup demo credentials if not present */
-if(!localStorage.getItem(HOME_LS.adminCred)){
-  localStorage.setItem(HOME_LS.adminCred, JSON.stringify({email:'ayubandabdullah835@gmail.com', pass:'admin@123'}));
-}
-
-/* login functions */
-function getAdmin(){ return JSON.parse(localStorage.getItem(HOME_LS.adminCred)||'{}'); }
-function login(){
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  const admin = getAdmin(); const msg = document.getElementById('login-msg');
-  if(email===admin.email && pass===admin.pass){
-    msg.textContent=''; document.getElementById('loginCard').style.display='none'; document.getElementById('adminArea').style.display='block';
-    loadAll();
-  } else { msg.textContent='Wrong email or password.'; }
-}
-function changeLogin(){
-  if(localStorage.getItem(HOME_LS.adminChanged)){ alert('Login change already used once (demo).'); return; }
-  const e = document.getElementById('set-email').value.trim(); const p = document.getElementById('set-pass').value;
-  if(!e||!p){ alert('Provide both email and password'); return; }
-  localStorage.setItem(HOME_LS.adminCred, JSON.stringify({email:e,pass:p}));
-  localStorage.setItem(HOME_LS.adminChanged,'1');
-  alert('Login changed (stored in browser).');
-}
-function logout(){ document.getElementById('adminArea').style.display='none'; document.getElementById('loginCard').style.display='block'; }
-
-/* util: file -> base64 */
-function toBase64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }) }
-
-/* read / write lists helpers */
-function readList(key){ return JSON.parse(localStorage.getItem(key) || '[]'); }
-function writeList(key, arr){ localStorage.setItem(key, JSON.stringify(arr)); }
-
-/* render functions */
-function renderFacilities(){
-  const container = document.getElementById('fac-list');
-  const arr = readList(HOME_LS.facilities);
-  if(!arr.length){ container.innerHTML = '<div class="small">No facilities yet</div>'; return; }
-  container.innerHTML = arr.map((it,i)=>`
-    <div class="list-item">
-      ${it.image ? <img src="${it.image}" class="thumb" /> : ''}
-      <div class="meta">
-        <strong>${it.title || '(no title)'}</strong>
-        <div class="small" style="margin-top:6px">${it.desc||''}</div>
-        <div class="actions">
-          <button class="btn" style="background:#c33" onclick="deleteItem('${HOME_LS.facilities}', ${i})">Delete</button>
-          <button class="btn" style="background:#555" onclick="addImageToExisting('${HOME_LS.facilities}', ${i})">Add Image</button>
-          <button class="btn" style="background:#777" onclick="editTextItem('${HOME_LS.facilities}', ${i})">Edit Text</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-function renderLabs(){
-  const container = document.getElementById('lab-list');
-  const arr = readList(HOME_LS.labs);
-  if(!arr.length){ container.innerHTML = '<div class="small">No labs yet</div>'; return; }
-  container.innerHTML = arr.map((it,i)=>`
-    <div class="list-item">
-      ${it.image ? <img src="${it.image}" class="thumb" /> : ''}
-      <div class="meta">
-        <strong>${it.title || '(no title)'}</strong>
-        <div class="small" style="margin-top:6px">${it.desc||''}</div>
-        <div class="actions">
-          <button class="btn" style="background:#c33" onclick="deleteItem('${HOME_LS.labs}', ${i})">Delete</button>
-          <button class="btn" style="background:#555" onclick="addImageToExisting('${HOME_LS.labs}', ${i})">Add Image</button>
-          <button class="btn" style="background:#777" onclick="editTextItem('${HOME_LS.labs}', ${i})">Edit Text</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-function renderFaculty(){
-  const container = document.getElementById('faculty-list');
-  const arr = readList(HOME_LS.faculty);
-  if(!arr.length){ container.innerHTML = '<div class="small">No faculty yet</div>'; return; }
-  container.innerHTML = arr.map((it,i)=>`
-    <div class="list-item">
-      ${it.image ? <img src="${it.image}" class="thumb" /> : ''}
-      <div class="meta">
-        <strong>${it.name || '(no name)'}</strong>
-        <div class="small" style="margin-top:6px">${it.bio||''}</div>
-        <div class="actions">
-          <button class="btn" style="background:#c33" onclick="deleteItem('${HOME_LS.faculty}', ${i})">Delete</button>
-          <button class="btn" style="background:#555" onclick="addImageToExisting('${HOME_LS.faculty}', ${i})">Add Image</button>
-          <button class="btn" style="background:#777" onclick="editTextItem('${HOME_LS.faculty}', ${i})">Edit Text</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-/* add functions */
-async function addFacility(){
-  const title = document.getElementById('fac-title').value.trim();
-  const desc = document.getElementById('fac-desc').value.trim();
-  const file = document.getElementById('fac-img').files[0];
-  let image = null;
-  if(file) image = await toBase64(file);
-  const arr = readList(HOME_LS.facilities);
-  arr.push({title, desc, image});
-  writeList(HOME_LS.facilities, arr);
-  renderFacilities();
-  // clear inputs
-  document.getElementById('fac-title').value=''; document.getElementById('fac-desc').value=''; document.getElementById('fac-img').value='';
-}
-async function addLab(){
-  const title = document.getElementById('lab-title').value.trim();
-  const desc = document.getElementById('lab-desc').value.trim();
-  const file = document.getElementById('lab-img').files[0];
-  let image = null;
-  if(file) image = await toBase64(file);
-  const arr = readList(HOME_LS.labs);
-  arr.push({title, desc, image});
-  writeList(HOME_LS.labs, arr);
-  renderLabs();
-  document.getElementById('lab-title').value=''; document.getElementById('lab-desc').value=''; document.getElementById('lab-img').value='';
-}
-async function addFaculty(){
-  const name = document.getElementById('fac-name').value.trim();
-  const bio = document.getElementById('fac-bio').value.trim();
-  const file = document.getElementById('fac-img-person').files[0];
-  let image = null;
-  if(file) image = await toBase64(file);
-  const arr = readList(HOME_LS.faculty);
-  arr.push({name, bio, image});
-  writeList(HOME_LS.faculty, arr);
-  renderFaculty();
-  document.getElementById('fac-name').value=''; document.getElementById('fac-bio').value=''; document.getElementById('fac-img-person').value='';
-}
-
-/* delete item generic */
-function deleteItem(sectionKey, index){
-  if(!confirm('Delete item?')) return;
-  const arr = readList(sectionKey);
-  arr.splice(index,1);
-  writeList(sectionKey, arr);
-  // re-render appropriate section
-  if(sectionKey===HOME_LS.facilities) renderFacilities();
-  if(sectionKey===HOME_LS.labs) renderLabs();
-  if(sectionKey===HOME_LS.faculty) renderFaculty();
-}
-
-/* add image to existing item */
-function addImageToExisting(sectionKey, index){
-  const fi = document.createElement('input'); fi.type='file'; fi.accept='image/*';
-  fi.onchange = async ()=> {
-    if(fi.files.length){
-      const data = await toBase64(fi.files[0]);
-      const arr = readList(sectionKey);
-      if(!arr[index]) return alert('Item missing');
-      arr[index].image = data;
-      writeList(sectionKey, arr);
-      if(sectionKey===HOME_LS.facilities) renderFacilities();
-      if(sectionKey===HOME_LS.labs) renderLabs();
-      if(sectionKey===HOME_LS.faculty) renderFaculty();
+    // Helper: Convert file to base64
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+      });
     }
-  };
-  fi.click();
-}
 
-/* edit text of existing item (title/desc or name/bio) */
-function editTextItem(sectionKey, index){
-  const arr = readList(sectionKey);
-  const item = arr[index];
-  if(!item) return alert('Item missing');
-  // prompt for editing fields — keep simple and safe
-  if(sectionKey===HOME_LS.faculty){
-    const newName = prompt('Edit name/title', item.name || '');
-    const newBio  = prompt('Edit bio/description', item.bio || '');
-    if(newName!==null) item.name = newName;
-    if(newBio!==null) item.bio = newBio;
-  } else {
-    const newTitle = prompt('Edit title', item.title || '');
-    const newDesc  = prompt('Edit description', item.desc || '');
-    if(newTitle!==null) item.title = newTitle;
-    if(newDesc!==null) item.desc = newDesc;
-  }
-  arr[index] = item;
-  writeList(sectionKey, arr);
-  if(sectionKey===HOME_LS.facilities) renderFacilities();
-  if(sectionKey===HOME_LS.labs) renderLabs();
-  if(sectionKey===HOME_LS.faculty) renderFaculty();
-}
+    // ---------- Generic Image Upload ----------
+    async function uploadImage(sectionKey, index) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = async () => {
+        if (input.files.length) {
+          const base64 = await toBase64(input.files[0]);
+          const arr = JSON.parse(localStorage.getItem(sectionKey) || "[]");
+          if (!arr[index].images) arr[index].images = [];
+          arr[index].images.push(base64);
+          localStorage.setItem(sectionKey, JSON.stringify(arr));
+          renderSections();
+        }
+      };
+      input.click();
+    }
 
-/* clear a whole section */
-function clearSection(name){
-  if(!confirm('Clear all items in this section?')) return;
-  if(name==='facilities') localStorage.setItem(HOME_LS.facilities, JSON.stringify([]));
-  if(name==='labs') localStorage.setItem(HOME_LS.labs, JSON.stringify([]));
-  if(name==='faculty') localStorage.setItem(HOME_LS.faculty, JSON.stringify([]));
-  renderFacilities(); renderLabs(); renderFaculty();
-}
+    // ---------- Add Functions ----------
+    function addFacility() {
+      const text = document.getElementById("facilities-text").value.trim();
+      if (!text) return alert("Enter facility description!");
+      const arr = JSON.parse(localStorage.getItem(LS.facilities) || "[]");
+      arr.push({ text, images: [] });
+      localStorage.setItem(LS.facilities, JSON.stringify(arr));
+      document.getElementById("facilities-text").value = "";
+      renderSections();
+    }
 
-/* initial load */
-function loadAll(){
-  renderFacilities(); renderLabs(); renderFaculty();
-}
+    function addLab() {
+      const text = document.getElementById("labs-text").value.trim();
+      if (!text) return alert("Enter lab description!");
+      const arr = JSON.parse(localStorage.getItem(LS.labs) || "[]");
+      arr.push({ text, images: [] });
+      localStorage.setItem(LS.labs, JSON.stringify(arr));
+      document.getElementById("labs-text").value = "";
+      renderSections();
+    }
 
-/* bootstrap — if empty, init keys so main site can optionally read them */
-if(!localStorage.getItem(HOME_LS.facilities)) localStorage.setItem(HOME_LS.facilities, JSON.stringify([
-  { title: "Grade 6 - IGCSE 3", desc: "Standard classrooms for interactive learning.", image: null }
-]));
-if(!localStorage.getItem(HOME_LS.labs)) localStorage.setItem(HOME_LS.labs, JSON.stringify([
-  { title: "Computer Lab", desc: "Coding, robotics, and digital skills development", image: null }
-]));
-if(!localStorage.getItem(HOME_LS.faculty)) localStorage.setItem(HOME_LS.faculty, JSON.stringify([
-  { name: "Our Faculty", bio: "Experienced and dedicated teachers providing personalized attention.", image: null }
-]));
+    function addFaculty() {
+      const text = document.getElementById("faculty-text").value.trim();
+      if (!text) return alert("Enter faculty details!");
+      const arr = JSON.parse(localStorage.getItem(LS.faculty) || "[]");
+      arr.push({ text, images: [] });
+      localStorage.setItem(LS.faculty, JSON.stringify(arr));
+      document.getElementById("faculty-text").value = "";
+      renderSections();
+    }
 
-/* If admin area should auto-open (for convenience during testing), you can remove next 2 lines */
-document.getElementById('loginCard').style.display='block';
-document.getElementById('adminArea').style.display='none';
+    // ---------- Delete and Image Removal ----------
+    function deleteItem(sectionKey, index) {
+      const arr = JSON.parse(localStorage.getItem(sectionKey) || "[]");
+      arr.splice(index, 1);
+      localStorage.setItem(sectionKey, JSON.stringify(arr));
+      renderSections();
+    }
 
-/* expose some functions for console/testing if needed */
-window.HOME_LS = HOME_LS;
-window.addFacility = addFacility;
-window.addLab = addLab;
-window.addFaculty = addFaculty;
-window.deleteItem = deleteItem;
-window.renderFacilities = renderFacilities;
-window.renderLabs = renderLabs;
-window.renderFaculty = renderFaculty;
+    function removeImage(sectionKey, itemIndex, imgIndex) {
+      const arr = JSON.parse(localStorage.getItem(sectionKey) || "[]");
+      arr[itemIndex].images.splice(imgIndex, 1);
+      localStorage.setItem(sectionKey, JSON.stringify(arr));
+      renderSections();
+    }
 
-</script>
+    // ---------- Render Sections ----------
+    function renderSection(sectionKey, listId) {
+      const list = document.getElementById(listId);
+      const arr = JSON.parse(localStorage.getItem(sectionKey) || "[]");
+      list.innerHTML = arr.map((item, i) => `
+        <div class="item">
+          <p>${item.text}</p>
+          <div>
+            ${(item.images || [])
+              .map(
+                (img, j) =>
+                  <img src="${img}"/> <button class='btn btn-danger' onclick="removeImage('${sectionKey}',${i},${j})">Remove</button>
+              )
+              .join("")}
+          </div>
+          <button class="btn" onclick="uploadImage('${sectionKey}',${i})">Add Image</button>
+          <button class="btn btn-danger" onclick="deleteItem('${sectionKey}',${i})">Delete</button>
+        </div>
+      `).join('') || "<p>No entries yet.</p>";
+    }
+
+    function renderSections() {
+      renderSection(LS.facilities, "facilities-list");
+      renderSection(LS.labs, "labs-list");
+      renderSection(LS.faculty, "faculty-list");
+    }
+
+    renderSections();
+  </script>
 </body>
 </html>
