@@ -1,260 +1,397 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Crescent International</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --dark-bg: #1e3a8a;
-    --light-bg: #ffffff;
-    --dark-text: #ffffff;
-    --light-text: #000000;
+  :root{
+    --navy:#0b2b5a;
+    --white:#ffffff;
+    --muted:#333;
+    --accent:#f3f6fb;
   }
-  body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background-color: var(--dark-bg);
-    color: var(--dark-text);
-    transition: all 0.5s ease;
+  *{box-sizing:border-box}
+  body{font-family:'Poppins',sans-serif;margin:0;background:#fff;color:var(--muted);-webkit-font-smoothing:antialiased;}
+  header{background:var(--navy);color:var(--white);padding:28px 16px;text-align:center}
+  header h1{margin:0;font-size:28px;font-weight:700}
+  header p{margin:6px 0 0;font-weight:500;opacity:.95}
+
+  /* nav */
+  nav{display:flex;justify-content:center;gap:14px;padding:12px 8px;background:#f6f8fb;position:sticky;top:0;z-index:50;border-bottom:1px solid #e6e9ef}
+  nav a{padding:8px 12px;border-radius:6px;color:#0b2b5a;text-decoration:none;font-weight:600}
+  nav a.active{background:var(--navy);color:var(--white)}
+  nav a:hover{opacity:.9}
+
+  main{max-width:1100px;margin:22px auto;padding:0 16px}
+
+  /* Hero slideshow */
+  .slideshow{position:relative;height:320px;border-radius:10px;overflow:hidden;background:var(--accent);display:flex;align-items:center;justify-content:center}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+  .slide.show{opacity:1}
+  .slide img{width:100%;height:100%;object-fit:cover;display:block}
+  .slide .caption{position:absolute;left:18px;bottom:18px;background:rgba(11,43,90,.75);color:#fff;padding:8px 12px;border-radius:6px;font-weight:600}
+
+  /* section styles */
+  section{margin:20px 0;padding:18px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(12,30,60,0.05)}
+  .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .section-head h2{margin:0;color:var(--navy)}
+  .muted{color:#666;font-size:14px}
+
+  /* tables & cards */
+  table{width:100%;border-collapse:collapse;margin-top:12px}
+  th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+  th{background:#f7f9fc;color:#0b2b5a;font-weight:600}
+  .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--navy);color:#fff;border:none;font-weight:600;cursor:pointer;text-decoration:none}
+  .btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+
+  /* FAQ */
+  .faq-item{border-radius:8px;padding:10px;margin-top:8px;border:1px solid #f0f2f6}
+  .faq-q{display:flex;justify-content:space-between;cursor:pointer;font-weight:600}
+  .faq-a{margin-top:8px;color:#444;display:none}
+
+  /* attendance status */
+  .status-dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  .present{background:#16a34a}
+  .absent{background:#ef4444}
+  .half{background:#9ca3af}
+
+  /* small screens */
+  @media(max-width:900px){
+    .slideshow{height:220px}
+    nav{overflow:auto}
   }
-  body.light {
-    background-color: var(--light-bg);
-    color: var(--light-text);
-  }
-  header {
-    background-color: rgba(0,0,0,0.3);
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  header h1 { margin: 0; font-size: 28px; }
-  nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: 500;
-  }
-  body.light nav a { color: #000; }
-  .toggle-btn {
-    cursor: pointer;
-    font-size: 20px;
-  }
-  section {
-    padding: 60px 20px;
-    text-align: center;
-    max-width: 900px;
-    margin: auto;
-  }
-  h2 { font-size: 26px; margin-bottom: 20px; }
-  .slideshow img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-  .curriculum, .facilities {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-  .card {
-    background-color: rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 20px;
-    flex: 1 1 250px;
-  }
-  body.light .card { background-color: #f0f0f0; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  th, td {
-    padding: 12px;
-    border: 1px solid #ccc;
-  }
-  th {
-    background-color: rgba(255,255,255,0.1);
-  }
-  body.light th { background-color: #eee; }
-  form input, form textarea, form button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 6px;
-    border: none;
-  }
-  form button {
-    background-color: #0f172a;
-    color: white;
-    cursor: pointer;
-  }
-  body.light form button {
-    background-color: #1e3a8a;
-    color: white;
-  }
-  footer {
-    text-align: center;
-    padding: 20px;
-    background-color: rgba(0,0,0,0.3);
-    font-size: 14px;
-  }
-  body.light footer { background-color: #eee; }
+
+  /* footer */
+  footer{max-width:1100px;margin:26px auto 60px;padding:8px 16px;color:#666;font-size:14px}
+  .contact{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 </style>
 </head>
 <body>
-  <header>
-    <h1>Crescent International</h1>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#homework">Homework</a>
-      <a href="#results">Results</a>
-      <a href="#attendance">Attendance</a>
-      <a href="#events">Events</a>
-      <a href="#updates">Updates</a>
-      <a href="#flowchart">Student Data</a>
-    </nav>
-    <div class="toggle-btn" id="themeToggle">🌙</div>
-  </header>
 
-  <!-- HOME -->
-  <section id="home">
-    <div class="slideshow">
-      <img src="school1.jpg" alt="School Image 1">
-      <img src="school2.jpg" alt="School Image 2" style="display:none;">
-      <img src="school3.jpg" alt="School Image 3" style="display:none;">
+<header>
+  <h1>Crescent International</h1>
+  <p>Excellence • Respect • Growth</p>
+</header>
+
+<nav id="mainNav">
+  <a href="#home" data-page="home" class="active">Home</a>
+  <a href="#homework" data-page="homework">Homework</a>
+  <a href="#results" data-page="results">Results</a>
+  <a href="#faqs" data-page="faqs">FAQ’s</a>
+  <a href="#attendance" data-page="attendance">Student Attendance</a>
+  <a href="#events" data-page="events">Events</a>
+  <a href="#updates" data-page="updates">Updates</a>
+</nav>
+
+<main>
+  <!-- Home -->
+  <section id="home" class="page">
+    <div class="slideshow" id="slideshow">
+      <!-- slides injected here -->
     </div>
-    <h2>Lighting the Path to Brilliance</h2>
-    <p>Welcome to Crescent International — a place where education meets excellence and every student shines bright.</p>
-  </section>
 
-  <!-- WHY CHOOSE -->
-  <section>
-    <h2>Why Choose Crescent International?</h2>
-    <p>At Crescent International, we focus on holistic development — combining academics, character, and creativity to prepare our students for tomorrow’s world.</p>
-  </section>
-
-  <!-- VISION -->
-  <section>
-    <h2>Our Vision & Mission</h2>
-    <p>We aim to empower young minds with knowledge, integrity, and innovation. Our mission is to cultivate confident, responsible citizens ready to excel globally.</p>
-  </section>
-
-  <!-- CURRICULUM -->
-  <section>
-    <h2>Our Curriculum</h2>
-    <div class="curriculum">
-      <div class="card">Grade 6</div>
-      <div class="card">Grade 7</div>
-      <div class="card">IGCSE 1</div>
-      <div class="card">IGCSE 2</div>
-      <div class="card">IGCSE 3</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;align-items:center;justify-content:space-between">
+      <div>
+        <h2 style="margin:0;color:var(--navy)">Welcome to Crescent International</h2>
+        <p class="muted" style="margin-top:6px">A modern school for modern learners.</p>
+      </div>
+      <div class="contact">
+        <div style="font-weight:600">Contact:</div>
+        <div class="muted">email: info@crescent.edu</div>
+        <div class="muted">phone: +92 300 0000000</div>
+        <div class="muted">address: 123 Crescent Avenue, City</div>
+      </div>
     </div>
   </section>
 
-  <!-- FACILITIES -->
-  <section>
-    <h2>Our Facilities</h2>
-    <div class="facilities">
-      <div class="card">Library</div>
-      <div class="card">Science Laboratories</div>
-      <div class="card">Computer Labs</div>
-      <div class="card">Digital Classrooms</div>
+  <!-- Homework -->
+  <section id="homework" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Homework</h2>
+      <div>
+        <select id="hw-filter">
+          <option value="All">All Classes</option>
+          <option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option>
+        </select>
+        <button class="btn" onclick="openAdmin()">Edit (Admin)</button>
+      </div>
     </div>
-  </section>
-
-  <!-- JOIN US -->
-  <section>
-    <h2>Join Us</h2>
-    <p>Be a part of Crescent International — where every child’s journey to excellence begins.</p>
-    <form>
-      <input type="text" placeholder="Full Name" required>
-      <input type="text" placeholder="Class" required>
-      <textarea placeholder="Message" rows="4" required></textarea>
-      <button type="submit">Submit</button>
-    </form>
-  </section>
-
-  <!-- HOMEWORK -->
-  <section id="homework">
-    <h2>Homework</h2>
-    <p>Select your class and date to view homework (feature under development).</p>
-  </section>
-
-  <!-- RESULTS -->
-  <section id="results">
-    <h2>Results</h2>
-    <p>Enter Roll Number and Parent CNIC to view results (feature under development).</p>
-  </section>
-
-  <!-- ATTENDANCE -->
-  <section id="attendance">
-    <h2>Student Attendance</h2>
-    <p>Track attendance for each class (feature under development).</p>
-  </section>
-
-  <!-- EVENTS -->
-  <section id="events">
-    <h2>Events</h2>
-    <p>Check out our upcoming and past events.</p>
-    <div class="card">Independence Day 2025 – Celebration Highlights</div>
-    <div class="card">Welcome 2025 – Orientation Day Memories</div>
-  </section>
-
-  <!-- UPDATES -->
-  <section id="updates">
-    <h2>Updates</h2>
-    <div class="card"><b>CIE Updates:</b> No session underway</div>
-    <div class="card"><b>School News:</b> Breaking News! Crescent International is officially operational from August 18th. Our school welcomes its first batch of students with pride and excitement for an incredible academic year ahead!</div>
-  </section>
-
-  <!-- FLOWCHART -->
-  <section id="flowchart">
-    <h2>Student Data</h2>
-    <table>
-      <tr>
-        <th>Student Name</th>
-        <th>Parent Name</th>
-        <th>Parent CNIC</th>
-        <th>B-Form</th>
-        <th>Date of Birth</th>
-        <th>Date of Joining</th>
-        <th>Class</th>
-      </tr>
-      <tr><td>Ali Khan</td><td>Ahmed Khan</td><td>35201-1234567-1</td><td>12345-6789012-3</td><td>2010-02-10</td><td>2021-08-18</td><td>IGCSE 2</td></tr>
-      <tr><td>Fatima Ahmed</td><td>Saad Ahmed</td><td>35202-9876543-2</td><td>54321-0987654-1</td><td>2011-05-14</td><td>2022-08-18</td><td>Grade 7</td></tr>
-      <tr><td>Mikael Hussain</td><td>Hussain Ali</td><td>35201-5555555-3</td><td>67890-1234567-8</td><td>2012-09-22</td><td>2023-08-18</td><td>IGCSE 1</td></tr>
+    <table id="hw-table" aria-live="polite">
+      <thead><tr><th>Date</th><th>Class</th><th>Task</th></tr></thead>
+      <tbody></tbody>
     </table>
   </section>
 
-  <footer>© 2025 Crescent International | All Rights Reserved</footer>
+  <!-- Results -->
+  <section id="results" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Results</h2>
+      <div class="muted">Enter Roll No and Parent CNIC</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <input id="res-roll" placeholder="Roll Number" style="padding:8px;border:1px solid #ddd;border-radius:8px"/>
+      <input id="res-cnic" placeholder="Parent CNIC" style="padding:8px;border:1px solid #ddd;border-radius:8px"/>
+      <button class="btn" onclick="findResult()">Show Result</button>
+    </div>
+    <div id="result-output" style="margin-top:12px"></div>
+    <div style="margin-top:14px"><button class="btn ghost" onclick="openAdmin()">Admins: Edit Results</button></div>
+  </section>
 
-  <script>
-    // Dark / Light Toggle
-    const toggleBtn = document.getElementById("themeToggle");
-    toggleBtn.onclick = () => {
-      document.body.classList.toggle("light");
-      toggleBtn.textContent = document.body.classList.contains("light") ? "☀️" : "🌙";
-      localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
-    };
-    if (localStorage.getItem("theme") === "light") {
-      document.body.classList.add("light");
-      toggleBtn.textContent = "☀️";
+  <!-- FAQs -->
+  <section id="faqs" class="page" style="display:none">
+    <div class="section-head">
+      <h2>FAQ’s</h2>
+      <div class="muted">Categories: Admissions, Exams, Uniforms, Fees, General</div>
+    </div>
+    <div id="faq-list" style="margin-top:12px"></div>
+    <div style="margin-top:12px"><button class="btn ghost" onclick="openAdmin()">Admins: Manage FAQ’s</button></div>
+  </section>
+
+  <!-- Attendance -->
+  <section id="attendance" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Student Attendance</h2>
+      <div>
+        <select id="att-class">
+          <option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option>
+        </select>
+        <input type="date" id="att-date" />
+        <button class="btn" onclick="openAdmin()">Edit Attendance (Admin)</button>
+      </div>
+    </div>
+    <table id="att-table">
+      <thead><tr><th>Student</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- Events -->
+  <section id="events" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Events</h2>
+      <div class="muted">Hover over event names to see details</div>
+    </div>
+    <div id="events-list" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:12px"></div>
+    <div style="margin-top:12px"><button class="btn ghost" onclick="openAdmin()">Admins: Manage Events</button></div>
+  </section>
+
+  <!-- Updates -->
+  <section id="updates" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Updates</h2>
+      <div class="muted">CIE Updates & School News</div>
+    </div>
+    <div style="margin-top:12px">
+      <h4>CIE Updates</h4>
+      <p id="cie-updates" class="muted"></p>
+      <h4 style="margin-top:12px">School News</h4>
+      <p id="school-news" class="muted"></p>
+    </div>
+    <div style="margin-top:14px"><button class="btn ghost" onclick="openAdmin()">Admins: Edit Updates</button></div>
+  </section>
+
+</main>
+
+<footer>
+  <div style="max-width:1100px;margin:0 auto;padding:10px 16px;color:#666;display:flex;flex-direction:column;gap:6px">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div style="font-weight:600;color:#0b2b5a">Crescent International</div>
+      <div class="muted">© 2025 Crescent International — All rights reserved</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Simple hash routing ---------- */
+const pages = document.querySelectorAll('.page');
+const navLinks = document.querySelectorAll('nav a');
+function showPage(name){
+  pages.forEach(p=>p.style.display='none');
+  document.getElementById(name).style.display='block';
+  navLinks.forEach(a=>a.classList.remove('active'));
+  const activeLink = document.querySelector('nav a[data-page="'+name+'"]');
+  if(activeLink) activeLink.classList.add('active');
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',()=> {
+  let h = location.hash.replace('#','') || 'home';
+  showPage(h);
+});
+if(!location.hash) location.hash='#home';
+else showPage(location.hash.replace('#',''));
+
+/* ---------- localStorage keys & defaults ---------- */
+const LS = {
+  slides:'cres_slides_v1',
+  homework:'cres_homework_v1',
+  results:'cres_results_v1',
+  faqs:'cres_faqs_v1',
+  attendance:'cres_att_v1',
+  events:'cres_events_v1',
+  updates:'cres_updates_v1',
+  students:'cres_students_v1'
+}
+/* Provide initial demo data if not set */
+if(!localStorage.getItem(LS.updates)){
+  localStorage.setItem(LS.updates, JSON.stringify({
+    cie: 'No session under way.',
+    news: 'Breaking News! Crescent International is officially operational from August 18th — marking a new chapter of educational excellence and growth.'
+  }));
+}
+if(!localStorage.getItem(LS.slides)){
+  // small placeholder images (unsplash base64 links would be heavy), we'll use external images for demo
+  localStorage.setItem(LS.slides, JSON.stringify([
+    {url:'https://images.unsplash.com/photo-1601758123927-44b5b7f9d4b4?q=80&w=1400&auto=format&fit=crop',caption:'Welcome to Crescent International'},
+    {url:'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1400&auto=format&fit=crop',caption:'Learning Together'},
+    {url:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1400&auto=format&fit=crop',caption:'Growing With Care'}
+  ]));
+}
+if(!localStorage.getItem(LS.homework)) localStorage.setItem(LS.homework, JSON.stringify([]));
+if(!localStorage.getItem(LS.results)) localStorage.setItem(LS.results, JSON.stringify([]));
+if(!localStorage.getItem(LS.faqs)) localStorage.setItem(LS.faqs, JSON.stringify([
+  {q:'How to apply?',a:'Fill the admission form and submit required documents.',cat:'Admissions'},
+  {q:'What are the fees?',a:'Fees depend on class. Contact admin for details.',cat:'Fees'}
+]));
+if(!localStorage.getItem(LS.attendance)) localStorage.setItem(LS.attendance, JSON.stringify([]));
+if(!localStorage.getItem(LS.events)) localStorage.setItem(LS.events, JSON.stringify([
+  {name:'Independence Day 2025',desc:'Celebration program and parade.',images:[]},
+  {name:'Welcome 2025',desc:'Orientation for new students.' ,images:[]}
+]));
+if(!localStorage.getItem(LS.students)) localStorage.setItem(LS.students, JSON.stringify([]));
+
+/* ---------- Render functions ---------- */
+
+function renderSlides(){
+  const slides = JSON.parse(localStorage.getItem(LS.slides) || '[]');
+  const wrap = document.getElementById('slideshow');
+  wrap.innerHTML = '';
+  slides.forEach((s,i)=>{
+    const div = document.createElement('div');
+    div.className='slide'+(i===0?' show':'');
+    const img = document.createElement('img');
+    img.src = s.url;
+    img.alt = s.caption||'slide';
+    div.appendChild(img);
+    if(s.caption){
+      const c = document.createElement('div'); c.className='caption'; c.textContent=s.caption;
+      div.appendChild(c);
     }
+    wrap.appendChild(div);
+  });
+  if(slides.length>1) startSlideTimer();
+}
+let slideTimer = null;
+function startSlideTimer(){
+  clearInterval(slideTimer);
+  slideTimer = setInterval(()=>{
+    const slides = document.querySelectorAll('.slide');
+    if(!slides.length) return;
+    let idx = -1;
+    slides.forEach((s,i)=>{ if(s.classList.contains('show')) idx=i; s.classList.remove('show')});
+    idx = (idx+1) % slides.length;
+    slides[idx].classList.add('show');
+  },4000);
+}
 
-    // Slideshow
-    let slides = document.querySelectorAll(".slideshow img");
-    let current = 0;
-    setInterval(() => {
-      slides[current].style.display = "none";
-      current = (current + 1) % slides.length;
-      slides[current].style.display = "block";
-    }, 3000);
-  </script>
+/* Homework render */
+function renderHomework(){
+  const data = JSON.parse(localStorage.getItem(LS.homework) || '[]');
+  const tbody = document.querySelector('#hw-table tbody');
+  const filter = document.getElementById('hw-filter').value;
+  tbody.innerHTML='';
+  data.filter(h => filter==='All' ? true : h.class===filter).forEach(h=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${h.date}</td><td>${h.class}</td><td>${h.task}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+document.getElementById('hw-filter').addEventListener('change',renderHomework);
+
+/* Results */
+function findResult(){
+  const roll = document.getElementById('res-roll').value.trim();
+  const cnic = document.getElementById('res-cnic').value.trim();
+  const data = JSON.parse(localStorage.getItem(LS.results)||'[]');
+  const found = data.find(r=>r.roll===roll && r.cnic===cnic);
+  const out = document.getElementById('result-output');
+  if(found){
+    out.innerHTML = `<div style="padding:12px;border-radius:8px;background:#f8fbff"><strong>Result:</strong> ${found.marks || 'Marks not set'}<br><small class="muted">Class: ${found.class||'N/A'}</small></div>`;
+  } else {
+    out.innerHTML = `<div style="padding:10px;color:#ef4444">No result found for that Roll/CNIC.</div>`;
+  }
+}
+
+/* FAQs */
+function renderFaqs(){
+  const list = document.getElementById('faq-list');
+  const faqs = JSON.parse(localStorage.getItem(LS.faqs)||'[]');
+  list.innerHTML='';
+  faqs.forEach((f,idx)=>{
+    const el = document.createElement('div'); el.className='faq-item';
+    el.innerHTML = `<div class="faq-q">${f.q}<span style="opacity:.7">${f.cat||'General'}</span></div>
+                    <div class="faq-a">${f.a}</div>`;
+    el.querySelector('.faq-q').addEventListener('click', ()=> {
+      const a = el.querySelector('.faq-a');
+      a.style.display = a.style.display==='block' ? 'none' : 'block';
+    });
+    list.appendChild(el);
+  });
+}
+
+/* Attendance */
+function renderAttendance(){
+  const cls = document.getElementById('att-class').value;
+  const date = document.getElementById('att-date').value || new Date().toISOString().slice(0,10);
+  const data = JSON.parse(localStorage.getItem(LS.attendance)||'[]');
+  const tbody = document.querySelector('#att-table tbody'); tbody.innerHTML='';
+  // filter records for class & date
+  data.filter(rec => rec.class===cls && rec.date===date).forEach(rec=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${rec.name}</td><td>${rec.date}</td><td><span class="status-dot ${rec.status==='Present'?'present':rec.status==='Absent'?'absent':'half'}"></span>${rec.status}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+document.getElementById('att-class').addEventListener('change',renderAttendance);
+document.getElementById('att-date').addEventListener('change',renderAttendance);
+
+/* Events */
+function renderEvents(){
+  const list = document.getElementById('events-list');
+  const events = JSON.parse(localStorage.getItem(LS.events)||'[]');
+  list.innerHTML='';
+  events.forEach((ev,idx)=>{
+    const card = document.createElement('div');
+    card.style.minWidth='220px'; card.style.flex='0 0 auto';
+    card.style.border='1px solid #eef2f6'; card.style.padding='12px'; card.style.borderRadius='10px';
+    card.innerHTML = `<div style="font-weight:700;color:var(--navy)">${ev.name}</div><div class="muted" style="margin-top:6px">${ev.desc}</div>`;
+    card.title = ev.desc;
+    list.appendChild(card);
+  });
+}
+
+/* Updates */
+function renderUpdates(){
+  const up = JSON.parse(localStorage.getItem(LS.updates) || '{}');
+  document.getElementById('cie-updates').textContent = up.cie || 'No session under way.';
+  document.getElementById('school-news').textContent = up.news || '';
+}
+
+/* initial render */
+renderSlides(); renderHomework(); renderFaqs(); renderAttendance(); renderEvents(); renderUpdates();
+
+/* open admin (hidden) */
+function openAdmin(){ alert('Admin dashboard is hidden. Go to /adminportal.html to log in.'); }
+
+/* allow external triggers from admin page via localStorage events */
+window.addEventListener('storage', (e)=> {
+  if([LS.slides,LS.homework,LS.faqs,LS.attendance,LS.events,LS.results,LS.updates,LS.students].includes(e.key)){
+    // re-render all to reflect changes made in adminportal.html on another tab
+    renderSlides(); renderHomework(); renderFaqs(); renderAttendance(); renderEvents(); renderUpdates();
+  }
+});
+</script>
+
 </body>
 </html>
