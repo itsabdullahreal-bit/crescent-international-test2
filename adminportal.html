@@ -3,440 +3,199 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Admin Portal — Crescent International</title>
+<title>Crescent International</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{--navy:#0b2b5a;--white:#fff}
-  *{box-sizing:border-box}
-  body{font-family:'Poppins',sans-serif;margin:0;background:#f3f6fb;color:#222}
-  header{background:var(--navy);color:var(--white);padding:18px;text-align:center}
-  .wrap{max-width:1100px;margin:18px auto;padding:16px}
-  .card{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px;box-shadow:0 8px 24px rgba(12,30,60,0.06)}
-  input,textarea,select{width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;margin-top:8px}
-  .row{display:flex;gap:12px}
-  .col{flex:1}
-  .btn{background:var(--navy);color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
-  .small{font-size:13px;color:#666}
-  label{font-weight:600}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media(max-width:800px){.grid{grid-template-columns:1fr}}
+:root{--navy:#0b2b5a;--white:#fff;--muted:#ccc;--accent:#111;}
+*{box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;margin:0;background:#000;color:var(--muted);}
+header{background:var(--navy);color:var(--white);padding:28px 16px;text-align:center}
+header h1{margin:0;font-size:28px;font-weight:700;}
+header p{margin:6px 0 0;font-weight:500;opacity:.95}
+nav{display:flex;justify-content:center;gap:14px;padding:12px 8px;background:var(--navy);position:sticky;top:0;z-index:50;border-bottom:1px solid #333;flex-wrap:wrap}
+nav a{padding:8px 12px;border-radius:6px;color:#fff;text-decoration:none;font-weight:600}
+nav a.active{background:#444;color:#fff}
+.nav-toggle{display:none;cursor:pointer;font-size:22px;padding:8px;background:#222;border-radius:6px;margin-left:auto;margin-right:16px;color:#fff}
+main{max-width:1100px;margin:22px auto;padding:0 16px}
+section{margin:20px 0;padding:18px;background:#111;border-radius:10px;box-shadow:0 6px 18px rgba(12,30,60,0.1)}
+.page{display:none}
+footer{max-width:1100px;margin:26px auto 60px;padding:8px 16px;color:#666;font-size:14px}
+button{padding:6px 12px;border:none;border-radius:6px;background:#0b2b5a;color:#fff;cursor:pointer}
+input,select,textarea{padding:6px;border-radius:6px;border:1px solid #333;background:#111;color:#ccc;margin-right:6px}
+table{width:100%;border-collapse:collapse;margin-top:12px;color:#ccc}
+th,td{padding:10px;border-bottom:1px solid #333;text-align:left}
+th{background:#222;color:#fff;font-weight:600}
+.flowchart{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+.flowchart div{padding:8px 12px;background:#222;border-radius:8px;color:#ccc;flex:1 1 150px;text-align:center}
+ul{padding-left:20px}
 </style>
 </head>
 <body>
 <header>
-  <h2>Admin Portal — Crescent International</h2>
-  <div style="font-size:13px;opacity:.9">Hidden URL. Keep it secret.</div>
+  <h1>Crescent International</h1>
+  <p>Excellence • Respect • Growth</p>
 </header>
+<nav id="mainNav">
+  <span class="nav-toggle" onclick="toggleNav()">☰ Menu</span>
+  <a href="#home" data-page="home" class="active mobile-show">Home</a>
+  <a href="#admin" data-page="admin" class="mobile-show">Admin Dashboard</a>
+</nav>
+<main>
+  <!-- Home Page -->
+  <section id="home" class="page">
+    <h2 style="color:#fff">Facilities</h2>
+    <ul id="facilities-list" style="color:#ccc"></ul>
+    <h2 style="color:#fff;margin-top:20px">Labs</h2>
+    <ul id="labs-list" style="color:#ccc"></ul>
+  </section>
 
-<div class="wrap">
-  <div class="card" id="loginCard">
-    <h3>Admin Login</h3>
-    <p class="small">Use the test admin email and password. You can change them once from Settings.</p>
-    <label>Email</label>
-    <input id="login-email" placeholder="admin email" value="ayubandabdullah835@gmail.com"/>
-    <label>Password</label>
-    <input id="login-pass" type="password" placeholder="password" value="admin@123"/>
-    <div style="margin-top:10px"><button class="btn" onclick="login()">Login</button></div>
-    <div id="login-msg" style="margin-top:8px;color:#b91c1c"></div>
+  <!-- Admin Dashboard -->
+  <section id="admin" class="page">
+    <h2 style="color:#fff">Admin Dashboard</h2>
+
+    <!-- Add Student -->
+    <h3 style="color:#fff">Add Student</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
+      <input placeholder="Name" id="st-name">
+      <input placeholder="Roll No" id="st-roll">
+      <input placeholder="Class" id="st-class">
+      <input placeholder="Parent CNIC" id="st-cnic">
+      <input placeholder="B-Form / Smart Card" id="st-bform">
+      <input type="date" placeholder="DOB" id="st-dob">
+      <input type="date" placeholder="Date of Joining" id="st-join">
+      <button onclick="addStudent()">Add</button>
+    </div>
+
+    <h3 style="color:#fff">Student List</h3>
+    <button onclick="exportCSV()">Export CSV</button>
+    <div class="flowchart" id="flowchart"></div>
+
+    <!-- Add Facilities -->
+    <h3 style="color:#fff;margin-top:20px">Add Facility</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
+      <input placeholder="Facility Name" id="facility-input">
+      <button onclick="addFacility()">Add</button>
+    </div>
+
+    <!-- Add Labs -->
+    <h3 style="color:#fff;margin-top:20px">Add Lab</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
+      <input placeholder="Lab Name" id="lab-input">
+      <button onclick="addLab()">Add</button>
+    </div>
+  </section>
+</main>
+<footer>
+  <div style="max-width:1100px;margin:0 auto;padding:10px 16px;color:#666;display:flex;flex-direction:column;gap:6px">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div style="font-weight:600;color:#fff">Crescent International</div>
+      <div class="muted">© 2025 Crescent International — All rights reserved</div>
+    </div>
   </div>
-
-  <div id="adminArea" style="display:none">
-
-    <!-- Settings -->
-    <div class="card">
-      <h3>Settings (Change login — one-time)</h3>
-      <div class="grid">
-        <div>
-          <label>Admin Email</label>
-          <input id="set-email" />
-        </div>
-        <div>
-          <label>Admin Password</label>
-          <input id="set-pass" type="password" />
-        </div>
-      </div>
-      <div style="margin-top:10px"><button class="btn" onclick="changeLogin()">Change (one-time)</button>
-        <div class="small" style="margin-top:8px">This action is allowed only once for demo. It stores values in your browser localStorage.</div>
-      </div>
-    </div>
-
-    <!-- Home Slideshow -->
-    <div class="card">
-      <h3>Home Slideshow</h3>
-      <p class="small">Upload images — they will appear on the homepage. Files are stored in browser (localStorage) as base64 (demo).</p>
-      <input id="slide-files" type="file" accept="image/*" multiple />
-      <label>Caption (optional)</label><input id="slide-caption" placeholder="Caption for uploaded images" />
-      <div style="margin-top:10px"><button class="btn" onclick="uploadSlides()">Upload</button>
-      <button class="btn" style="background:#666;margin-left:8px" onclick="clearSlides()">Clear slides</button></div>
-      <div id="slides-preview" style="margin-top:12px"></div>
-    </div>
-
-    <!-- Homework Manager -->
-    <div class="card">
-      <h3>Homework Manager</h3>
-      <div class="row">
-        <div class="col">
-          <label>Class</label>
-          <select id="hw-class"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select>
-          <label>Date</label><input id="hw-date" type="date"/>
-        </div>
-        <div class="col">
-          <label>Task</label><textarea id="hw-task" rows="3"></textarea>
-        </div>
-      </div>
-      <div style="margin-top:10px"><button class="btn" onclick="addHomework()">Add Homework</button></div>
-      <div id="hw-list" style="margin-top:12px"></div>
-    </div>
-
-    <!-- Results Manager -->
-    <div class="card">
-      <h3>Results Manager</h3>
-      <div class="grid">
-        <div>
-          <label>Roll Number</label><input id="res-roll"/>
-          <label>Parent CNIC</label><input id="res-cnic"/>
-        </div>
-        <div>
-          <label>Class</label><select id="res-class"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select>
-          <label>Marks/Text</label><input id="res-marks"/>
-        </div>
-      </div>
-      <div style="margin-top:10px"><button class="btn" onclick="addResult()">Save Result</button></div>
-      <div id="res-list" style="margin-top:12px"></div>
-    </div>
-
-    <!-- FAQ Manager -->
-    <div class="card">
-      <h3>FAQ Manager</h3>
-      <div class="grid">
-        <div><label>Question</label><input id="faq-q"/></div>
-        <div><label>Category</label><input id="faq-cat" placeholder="Admissions/Fees/etc"/></div>
-      </div>
-      <label>Answer</label><textarea id="faq-a" rows="3"></textarea>
-      <div style="margin-top:10px"><button class="btn" onclick="addFaq()">Add FAQ</button></div>
-      <div id="faq-manage" style="margin-top:12px"></div>
-    </div>
-
-    <!-- Attendance Manager -->
-    <div class="card">
-      <h3>Attendance Manager</h3>
-      <div class="row">
-        <div class="col"><label>Class</label><select id="att-class-set"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select></div>
-        <div class="col"><label>Date</label><input id="att-date-set" type="date" value=""></div>
-      </div>
-      <div style="margin-top:10px">
-        <label>Student Name</label><input id="att-name" placeholder="Student full name"/>
-        <label>Status</label><select id="att-status"><option>Present</option><option>Absent</option><option>Half</option></select>
-      </div>
-      <div style="margin-top:10px"><button class="btn" onclick="addAttendance()">Add Attendance</button></div>
-      <div id="att-manage" style="margin-top:12px"></div>
-    </div>
-
-    <!-- Events Manager -->
-    <div class="card">
-      <h3>Events Manager</h3>
-      <label>Event Name</label><input id="ev-name"/>
-      <label>Description</label><textarea id="ev-desc" rows="3"></textarea>
-      <label>Upload Images</label><input type="file" id="ev-files" multiple accept="image/*"/>
-      <div style="margin-top:10px"><button class="btn" onclick="addEvent()">Add Event</button></div>
-      <div id="ev-manage" style="margin-top:12px"></div>
-    </div>
-
-    <!-- Updates Manager -->
-    <div class="card">
-      <h3>Updates Manager</h3>
-      <label>CIE Updates</label><textarea id="u-cie" rows="2"></textarea>
-      <label>School News</label><textarea id="u-news" rows="3"></textarea>
-      <div style="margin-top:8px"><button class="btn" onclick="saveUpdates()">Save Updates</button></div>
-    </div>
-
-    <!-- Students / Flowchart -->
-    <div class="card">
-      <h3>Student Records</h3>
-      <div class="grid">
-        <div><label>Student Name</label><input id="s-name"/></div>
-        <div><label>Parent(s) Name</label><input id="s-parents"/></div>
-        <div><label>Class</label><select id="s-class"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select></div>
-      </div>
-      <div style="margin-top:8px"><button class="btn" onclick="addStudent()">Add Student</button></div>
-      <div id="s-list" style="margin-top:12px"></div>
-    </div>
-
-    <!-- ===================== Home Page Editor ===================== -->
-    <div class="card">
-      <h3>Home Page Editor</h3>
-      <label>About Section</label>
-      <textarea id="home-about" rows="4" placeholder="Write about the school..."></textarea>
-      
-      <h4>Labs</h4>
-      <input type="file" id="lab-files" multiple accept="image/*"/>
-      <div id="lab-preview" style="margin-top:8px"></div>
-      <button class="btn" onclick="addLabImage()" style="margin-top:6px">Add Lab Images</button>
-      
-      <h4>Facilities</h4>
-      <input type="file" id="facility-files" multiple accept="image/*"/>
-      <div id="facility-preview" style="margin-top:8px"></div>
-      <button class="btn" onclick="addFacilityImage()" style="margin-top:6px">Add Facility Images</button>
-      
-      <div style="margin-top:12px">
-        <button class="btn" onclick="saveHome()">Save Home Page</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+</footer>
 
 <script>
-/* ===================== LOGIN ===================== */
-function login(){
-  const email = document.getElementById('login-email').value;
-  const pass = document.getElementById('login-pass').value;
-  const sEmail = localStorage.getItem('cres_admin_email') || 'ayubandabdullah835@gmail.com';
-  const sPass = localStorage.getItem('cres_admin_pass') || 'admin@123';
-  if(email===sEmail && pass===sPass){
-    document.getElementById('loginCard').style.display='none';
-    document.getElementById('adminArea').style.display='block';
-  }else{
-    document.getElementById('login-msg').innerText='Wrong credentials!';
-  }
+const pages=document.querySelectorAll('.page');
+const navLinks=document.querySelectorAll('nav a[data-page]');
+function showPage(name){
+  pages.forEach(p=>p.style.display='none');
+  document.getElementById(name).style.display='block';
+  navLinks.forEach(a=>a.classList.remove('active'));
+  const activeLink=document.querySelector('nav a[data-page="'+name+'"]');
+  if(activeLink) activeLink.classList.add('active');
+  window.scrollTo(0,0);
 }
-function changeLogin(){
-  const e=document.getElementById('set-email').value.trim();
-  const p=document.getElementById('set-pass').value.trim();
-  if(!e||!p){alert('Enter both email & pass'); return;}
-  localStorage.setItem('cres_admin_email', e);
-  localStorage.setItem('cres_admin_pass', p);
-  alert('Login changed successfully (one-time demo). Refresh to login.');
-}
+window.addEventListener('hashchange',()=>showPage(location.hash.replace('#','')));
+if(!location.hash) location.hash='#home'; else showPage(location.hash.replace('#',''));
+function toggleNav(){document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('mobile-show'));}
 
-/* ===================== SLIDES ===================== */
-function uploadSlides(){
-  const files = document.getElementById('slide-files').files;
-  if(!files.length){alert('Select image'); return;}
-  let slides = JSON.parse(localStorage.getItem('cres_slides')||'[]');
-  for(let f of files){
-    const reader = new FileReader();
-    reader.onload=e=>{
-      slides.push({img:e.target.result,caption:document.getElementById('slide-caption').value||''});
-      localStorage.setItem('cres_slides',JSON.stringify(slides));
-      renderSlides();
-    };
-    reader.readAsDataURL(f);
-  }
-}
-function renderSlides(){
-  const slides=JSON.parse(localStorage.getItem('cres_slides')||'[]');
-  const html=slides.map(s=>`<div style="display:inline-block;margin:6px"><img src="${s.img}" style="width:100px;height:60px;object-fit:cover;border-radius:6px"/><div class="small">${s.caption}</div></div>`).join('');
-  document.getElementById('slides-preview').innerHTML=html;
-}
-function clearSlides(){localStorage.removeItem('cres_slides');renderSlides();}
+/* ---------- Local Storage ---------- */
+const LS={
+  students:'cres_students_v1',
+  facilities:'cres_facilities_v1',
+  labs:'cres_labs_v1'
+};
+if(!localStorage.getItem(LS.students)) localStorage.setItem(LS.students,JSON.stringify([]));
+if(!localStorage.getItem(LS.facilities)) localStorage.setItem(LS.facilities,JSON.stringify([]));
+if(!localStorage.getItem(LS.labs)) localStorage.setItem(LS.labs,JSON.stringify([]));
 
-/* ===================== HOMEWORK ===================== */
-function addHomework(){
-  const cls=document.getElementById('hw-class').value;
-  const date=document.getElementById('hw-date').value;
-  const task=document.getElementById('hw-task').value.trim();
-  if(!task||!date){alert('Fill date and task'); return;}
-  const hw=JSON.parse(localStorage.getItem('cres_hw')||'[]');
-  hw.push({cls,date,task});
-  localStorage.setItem('cres_hw',JSON.stringify(hw));
-  renderHomework();
-}
-function renderHomework(){
-  const hw=JSON.parse(localStorage.getItem('cres_hw')||'[]');
-  document.getElementById('hw-list').innerHTML=hw.map((h,i)=>`<div>${h.date} [${h.cls}] - ${h.task}</div>`).join('');
-}
-renderHomework();
-
-/* ===================== RESULTS ===================== */
-function addResult(){
-  const roll=document.getElementById('res-roll').value.trim();
-  const cnic=document.getElementById('res-cnic').value.trim();
-  const cls=document.getElementById('res-class').value;
-  const marks=document.getElementById('res-marks').value.trim();
-  if(!roll||!cnic||!marks){alert('Fill all'); return;}
-  const res=JSON.parse(localStorage.getItem('cres_res')||'[]');
-  res.push({roll,cnic,cls,marks});
-  localStorage.setItem('cres_res',JSON.stringify(res));
-  renderResults();
-}
-function renderResults(){
-  const res=JSON.parse(localStorage.getItem('cres_res')||'[]');
-  document.getElementById('res-list').innerHTML=res.map(r=>`<div>[${r.cls}] Roll:${r.roll} CNIC:${r.cnic} - ${r.marks}</div>`).join('');
-}
-renderResults();
-
-/* ===================== FAQ ===================== */
-function addFaq(){
-  const q=document.getElementById('faq-q').value.trim();
-  const a=document.getElementById('faq-a').value.trim();
-  const cat=document.getElementById('faq-cat').value.trim();
-  if(!q||!a){alert('Fill Q&A'); return;}
-  const faq=JSON.parse(localStorage.getItem('cres_faq')||'[]');
-  faq.push({q,a,cat});
-  localStorage.setItem('cres_faq',JSON.stringify(faq));
-  renderFaq();
-}
-function renderFaq(){
-  const faq=JSON.parse(localStorage.getItem('cres_faq')||'[]');
-  document.getElementById('faq-manage').innerHTML=faq.map(f=>`<div><b>${f.q}</b> (${f.cat})<br>${f.a}</div>`).join('');
-}
-renderFaq();
-
-/* ===================== ATTENDANCE ===================== */
-function addAttendance(){
-  const name=document.getElementById('att-name').value.trim();
-  const cls=document.getElementById('att-class-set').value;
-  const date=document.getElementById('att-date-set').value;
-  const status=document.getElementById('att-status').value;
-  if(!name||!date){alert('Fill all'); return;}
-  const att=JSON.parse(localStorage.getItem('cres_att')||'[]');
-  att.push({name,cls,date,status});
-  localStorage.setItem('cres_att',JSON.stringify(att));
-  renderAttendance();
-}
-function renderAttendance(){
-  const att=JSON.parse(localStorage.getItem('cres_att')||'[]');
-  document.getElementById('att-manage').innerHTML=att.map(a=>`<div>${a.date} [${a.cls}] ${a.name} - ${a.status}</div>`).join('');
-}
-renderAttendance();
-
-/* ===================== EVENTS ===================== */
-function addEvent(){
-  const name=document.getElementById('ev-name').value.trim();
-  const desc=document.getElementById('ev-desc').value.trim();
-  const files=document.getElementById('ev-files').files;
-  if(!name||!desc){alert('Fill all'); return;}
-  const ev=JSON.parse(localStorage.getItem('cres_ev')||'[]');
-  const images=[];
-  if(files.length){
-    for(let f of files){
-      const reader=new FileReader();
-      reader.onload=e=>{
-        images.push(e.target.result);
-        if(images.length===files.length){
-          ev.push({name,desc,images});
-          localStorage.setItem('cres_ev',JSON.stringify(ev));
-          renderEvents();
-        }
-      }; reader.readAsDataURL(f);
-    }
-  } else {
-    ev.push({name,desc,images:[]});
-    localStorage.setItem('cres_ev',JSON.stringify(ev));
-    renderEvents();
-  }
-}
-function renderEvents(){
-  const ev=JSON.parse(localStorage.getItem('cres_ev')||'[]');
-  document.getElementById('ev-manage').innerHTML=ev.map(e=>`<div><b>${e.name}</b><br>${e.desc}<br>${e.images.map(i=>`<img src="${i}" style="width:100px;height:60px;object-fit:cover;margin:2px;border-radius:6px"/>`).join('')}</div>`).join('');
-}
-renderEvents();
-
-/* ===================== UPDATES ===================== */
-function saveUpdates(){
-  const cie=document.getElementById('u-cie').value.trim();
-  const news=document.getElementById('u-news').value.trim();
-  localStorage.setItem('cres_updates',JSON.stringify({cie,news}));
-  alert('Updates saved (demo)');
-}
-
-/* ===================== STUDENTS ===================== */
+/* ---------- Students ---------- */
 function addStudent(){
-  const name=document.getElementById('s-name').value.trim();
-  const parents=document.getElementById('s-parents').value.trim();
-  const cls=document.getElementById('s-class').value;
-  if(!name||!parents){alert('Fill all'); return;}
-  const s=JSON.parse(localStorage.getItem('cres_stud')||'[]');
-  s.push({name,parents,cls});
-  localStorage.setItem('cres_stud',JSON.stringify(s));
-  renderStudents();
+  const s={
+    name:document.getElementById('st-name').value.trim(),
+    roll:document.getElementById('st-roll').value.trim(),
+    class:document.getElementById('st-class').value.trim(),
+    cnic:document.getElementById('st-cnic').value.trim(),
+    bform:document.getElementById('st-bform').value.trim(),
+    dob:document.getElementById('st-dob').value,
+    join:document.getElementById('st-join').value
+  };
+  if(!s.name||!s.roll){alert('Name and Roll are required');return;}
+  const data=JSON.parse(localStorage.getItem(LS.students)||'[]');
+  data.push(s);
+  localStorage.setItem(LS.students,JSON.stringify(data));
+  renderFlowchart();
+  alert('Student added!');
 }
-function renderStudents(){
-  const s=JSON.parse(localStorage.getItem('cres_stud')||'[]');
-  document.getElementById('s-list').innerHTML=s.map(s=>`<div>[${s.cls}] ${s.name} - ${s.parents}</div>`).join('');
+function renderFlowchart(){
+  const data=JSON.parse(localStorage.getItem(LS.students)||'[]');
+  const wrap=document.getElementById('flowchart');
+  wrap.innerHTML='';
+  data.forEach(s=>{
+    const div=document.createElement('div');
+    div.textContent=`${s.name} (${s.class})`;
+    wrap.appendChild(div);
+  });
 }
-renderStudents();
-
-/* ===================== HOME PAGE EDITOR ===================== */
-if(!localStorage.getItem('cres_homepage_v1')){
-  localStorage.setItem('cres_homepage_v1', JSON.stringify({about:'', labs:[], facilities:[]}));
-}
-
-/* Reusable function to render images with remove buttons */
-function renderImages(containerId, images, onRemove){
-  const container=document.getElementById(containerId);
-  container.innerHTML=images.map((img,i)=>`
-    <div style="display:inline-block;position:relative;margin-right:6px;margin-bottom:6px">
-      <img src="${img}" style="width:120px;height:70px;object-fit:cover;border-radius:6px"/>
-      <button onclick="${onRemove}(${i})" style="position:absolute;top:0;right:0;background:#c33;color:white;border:none;border-radius:50%;cursor:pointer;padding:2px 6px">x</button>
-    </div>`).join('');
-}
-
-/* Labs images */
-function addLabImage(){
-  const files=document.getElementById('lab-files').files;
-  if(!files.length) return alert('Choose image');
-  const labs=JSON.parse(localStorage.getItem('cres_homepage_labs')||'[]');
-  for(let f of files){
-    const reader=new FileReader();
-    reader.onload=e=>{
-      labs.push(e.target.result);
-      localStorage.setItem('cres_homepage_labs', JSON.stringify(labs));
-      renderImages('lab-preview', labs, 'removeLabImage');
-    };
-    reader.readAsDataURL(f);
-  }
-}
-function removeLabImage(index){
-  const labs=JSON.parse(localStorage.getItem('cres_homepage_labs')||'[]');
-  labs.splice(index,1);
-  localStorage.setItem('cres_homepage_labs', JSON.stringify(labs));
-  renderImages('lab-preview', labs, 'removeLabImage');
+function exportCSV(){
+  const data=JSON.parse(localStorage.getItem(LS.students)||'[]');
+  if(!data.length){alert('No students to export');return;}
+  const header=['Name','Roll','Class','Parent CNIC','B-Form/Smart Card','DOB','Date of Joining'];
+  const rows=data.map(s=>[s.name,s.roll,s.class,s.cnic,s.bform,s.dob,s.join].join(','));
+  const csv=[header.join(','),...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='students.csv';a.click();URL.revokeObjectURL(url);
 }
 
-/* Facilities images */
-function addFacilityImage(){
-  const files=document.getElementById('facility-files').files;
-  if(!files.length) return alert('Choose image');
-  const fac=JSON.parse(localStorage.getItem('cres_homepage_facilities')||'[]');
-  for(let f of files){
-    const reader=new FileReader();
-    reader.onload=e=>{
-      fac.push(e.target.result);
-      localStorage.setItem('cres_homepage_facilities', JSON.stringify(fac));
-      renderImages('facility-preview', fac, 'removeFacilityImage');
-    };
-    reader.readAsDataURL(f);
-  }
+/* ---------- Facilities & Labs ---------- */
+function addFacility(){
+  const f=document.getElementById('facility-input').value.trim();
+  if(!f)return;
+  const data=JSON.parse(localStorage.getItem(LS.facilities)||'[]');
+  data.push(f);
+  localStorage.setItem(LS.facilities,JSON.stringify(data));
+  renderFacilities();
 }
-function removeFacilityImage(index){
-  const fac=JSON.parse(localStorage.getItem('cres_homepage_facilities')||'[]');
-  fac.splice(index,1);
-  localStorage.setItem('cres_homepage_facilities', JSON.stringify(fac));
-  renderImages('facility-preview', fac, 'removeFacilityImage');
+function addLab(){
+  const l=document.getElementById('lab-input').value.trim();
+  if(!l)return;
+  const data=JSON.parse(localStorage.getItem(LS.labs)||'[]');
+  data.push(l);
+  localStorage.setItem(LS.labs,JSON.stringify(data));
+  renderLabs();
 }
-
-/* Save Home page data */
-function saveHome(){
-  const about=document.getElementById('home-about').value.trim();
-  const labs=JSON.parse(localStorage.getItem('cres_homepage_labs')||'[]');
-  const facilities=JSON.parse(localStorage.getItem('cres_homepage_facilities')||'[]');
-  localStorage.setItem('cres_homepage_v1', JSON.stringify({about,labs,facilities}));
-  alert('Home page saved (demo).');
+function renderFacilities(){
+  const data=JSON.parse(localStorage.getItem(LS.facilities)||'[]');
+  const ul=document.getElementById('facilities-list');
+  ul.innerHTML='';
+  data.forEach(f=>{
+    const li=document.createElement('li'); li.textContent=f; ul.appendChild(li);
+  });
 }
-
-/* Load Home editor on admin login */
-function loadHomeEditor(){
-  const data=JSON.parse(localStorage.getItem('cres_homepage_v1')||'{}');
-  document.getElementById('home-about').value=data.about||'';
-  renderImages('lab-preview', JSON.parse(localStorage.getItem('cres_homepage_labs')||'[]'), 'removeLabImage');
-  renderImages('facility-preview', JSON.parse(localStorage.getItem('cres_homepage_facilities')||'[]'), 'removeFacilityImage');
+function renderLabs(){
+  const data=JSON.parse(localStorage.getItem(LS.labs)||'[]');
+  const ul=document.getElementById('labs-list');
+  ul.innerHTML='';
+  data.forEach(l=>{
+    const li=document.createElement('li'); li.textContent=l; ul.appendChild(li);
+  });
 }
 
-/* Run on admin login */
-loadHomeEditor();
-
+/* ---------- Init ---------- */
+renderFlowchart();
+renderFacilities();
+renderLabs();
 </script>
 </body>
 </html>
