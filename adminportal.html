@@ -1,332 +1,379 @@
 <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Crescent International</title>
+<title>Admin — Edit Homepage (Facilities / Labs / Faculty)</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0b2b5a;--white:#ffffff;--muted:#ccc;--accent:#111;}
-*{box-sizing:border-box}
-body{font-family:'Poppins',sans-serif;margin:0;background:#000;color:var(--muted);-webkit-font-smoothing:antialiased;}
-header{background:var(--navy);color:var(--white);padding:28px 16px;text-align:center}
-header h1{margin:0;font-size:28px;font-weight:700;text-align:center}
-header p{margin:6px 0 0;font-weight:500;opacity:.95}
-nav{display:flex;justify-content:center;gap:14px;padding:12px 8px;background:var(--navy);position:sticky;top:0;z-index:50;border-bottom:1px solid #333;flex-wrap:wrap}
-nav a{padding:8px 12px;border-radius:6px;color:#fff;text-decoration:none;font-weight:600}
-nav a.active{background:#444;color:#fff}
-nav a:hover{opacity:.9}
-.nav-toggle{display:none;cursor:pointer;font-size:22px;padding:8px;background:#222;border-radius:6px;margin-left:auto;margin-right:16px;color:#fff}
-main{max-width:1100px;margin:22px auto;padding:0 16px}
-.slideshow{position:relative;height:320px;border-radius:10px;overflow:hidden;background:var(--accent);display:flex;align-items:center;justify-content:center}
-.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
-.slide.show{opacity:1}
-.slide img{width:100%;height:100%;object-fit:cover;display:block}
-.slide .caption{position:absolute;left:18px;bottom:18px;background:rgba(11,43,90,.75);color:#fff;padding:8px 12px;border-radius:6px;font-weight:600}
-section{margin:20px 0;padding:18px;background:#111;border-radius:10px;box-shadow:0 6px 18px rgba(12,30,60,0.1)}
-.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.section-head h2{margin:0;color:var(--white)}
-.muted{color:#aaa;font-size:14px}
-table{width:100%;border-collapse:collapse;margin-top:12px;color:#ccc}
-th,td{padding:10px;border-bottom:1px solid #333;text-align:left}
-th{background:#222;color:#fff;font-weight:600}
-.faq-item{border-radius:8px;padding:10px;margin-top:8px;border:1px solid #333}
-.faq-q{display:flex;justify-content:space-between;cursor:pointer;font-weight:600}
-.faq-a{margin-top:8px;color:#ccc;display:none}
-.status-dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:middle}
-.present{background:#16a34a}
-.absent{background:#ef4444}
-.half{background:#9ca3af}
-@media(max-width:900px){
-.slideshow{height:220px}
-nav a{display:none;width:100%;padding:12px 0;text-align:center}
-nav a.mobile-show{display:block}
-.nav-toggle{display:block}
-}
-footer{max-width:1100px;margin:26px auto 60px;padding:8px 16px;color:#666;font-size:14px}
-.contact{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-input, select, button, textarea{background:#111;color:#ccc;border:1px solid #333;border-radius:6px;padding:6px;font-family:'Poppins',sans-serif}
-button{cursor:pointer}
+  :root{--navy:#0b2b5a;--white:#fff}
+  *{box-sizing:border-box}
+  body{font-family:'Poppins',sans-serif;margin:0;background:#f3f6fb;color:#222}
+  header{background:var(--navy);color:var(--white);padding:18px;text-align:center}
+  .wrap{max-width:1100px;margin:18px auto;padding:16px}
+  .card{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px;box-shadow:0 8px 24px rgba(12,30,60,0.06)}
+  input,textarea,select{width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;margin-top:8px}
+  .row{display:flex;gap:12px}
+  .col{flex:1}
+  .btn{background:var(--navy);color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+  .small{font-size:13px;color:#666}
+  label{font-weight:600}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .list-item{padding:8px;border-bottom:1px dashed #eee;display:flex;gap:10px;align-items:flex-start}
+  .thumb{width:120px;height:70px;object-fit:cover;border-radius:6px}
+  .meta{flex:1}
+  .actions{display:flex;gap:8px;margin-top:8px}
+  .img-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .img-row img{width:120px;height:70px;object-fit:cover;border-radius:6px}
+  @media(max-width:800px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
 <header>
-  <h1>Crescent International</h1>
-  <p>Excellence • Respect • Growth</p>
+  <h2>Admin — Homepage Editor (Facilities / Labs / Faculty)</h2>
+  <div class="small">This is standalone admin. It saves to localStorage keys — your main site is not modified.</div>
 </header>
 
-<nav id="mainNav">
-  <span class="nav-toggle" onclick="toggleNav()">☰ Menu</span>
-  <a href="#home" data-page="home" class="active mobile-show">Home</a>
-  <a href="#homework" data-page="homework" class="mobile-show">Homework</a>
-  <a href="#results" data-page="results" class="mobile-show">Results</a>
-  <a href="#faqs" data-page="faqs" class="mobile-show">FAQ’s</a>
-  <a href="#attendance" data-page="attendance" class="mobile-show">Student Attendance</a>
-  <a href="#events" data-page="events" class="mobile-show">Events</a>
-  <a href="#updates" data-page="updates" class="mobile-show">Updates</a>
-  <a href="#admin" data-page="admin" class="mobile-show">Admin Login</a>
-</nav>
+<div class="wrap">
+  <!-- Login -->
+  <div class="card" id="loginCard">
+    <h3>Admin Login</h3>
+    <p class="small">Demo admin credentials can be changed once from Settings.</p>
+    <label>Email</label>
+    <input id="login-email" value="ayubandabdullah835@gmail.com"/>
+    <label>Password</label>
+    <input id="login-pass" type="password" value="admin@123"/>
+    <div style="margin-top:10px"><button class="btn" onclick="login()">Login</button></div>
+    <div id="login-msg" style="margin-top:8px;color:#b91c1c"></div>
+  </div>
 
-<main>
-  <!-- Home -->
-  <section id="home" class="page">
-    <div class="slideshow" id="slideshow"></div>
-    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;align-items:center;justify-content:space-between">
-      <div>
-        <h2 style="margin:0;color:var(--white)">Welcome to Crescent International</h2>
-        <p class="muted" style="margin-top:6px">A modern school for modern learners.</p>
-      </div>
-    </div>
-
-    <!-- Facilities -->
-    <section style="margin-top:20px;">
-      <h2 style="color:var(--white)">Facilities</h2>
-      <section id="facilities-list" style="background:#222;padding:16px;border-radius:10px;margin-bottom:16px;">
-        <!-- JS will populate facilities here -->
-      </section>
-
-      <!-- Labs -->
-      <section id="labs-list" style="background:#222;padding:16px;border-radius:10px;margin-bottom:16px;">
-        <h3 style="color:#fff;margin-bottom:12px;">Labs</h3>
-        <ul id="labs-ul" style="color:#ccc;line-height:1.6"></ul>
-      </section>
-    </section>
-
-    <!-- Faculty -->
-    <section id="faculty-list" style="background:#222;padding:16px;border-radius:10px;margin-top:16px;">
-      <h2 style="color:#fff;margin-bottom:12px;">Faculty</h2>
-      <ul id="faculty-ul" style="color:#ccc;line-height:1.6"></ul>
-    </section>
-
-    <!-- Contact info at end -->
-    <section style="margin-top:20px;">
-      <h2 style="color:var(--white)">Contact Information</h2>
-      <div class="contact">
-        <div style="font-weight:600">Contact:</div>
-        <div class="muted">Email: admissions@crescentinternational.edu</div>
-        <div class="muted">Phone: +92 321 1234567</div>
-        <div class="muted">Address: 45 Crescent Boulevard, Islamabad, Pakistan</div>
-      </div>
-    </section>
-  </section>
-
-  <!-- Homework -->
-  <section id="homework" class="page" style="display:none">
-    <div class="section-head">
-      <h2>Homework</h2>
-      <div>
-        <select id="hw-filter">
-          <option value="All">All Classes</option>
-          <option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option>
-        </select>
-      </div>
-    </div>
-    <table id="hw-table" aria-live="polite">
-      <thead><tr><th>Date</th><th>Class</th><th>Task</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </section>
-
-  <!-- Results -->
-  <section id="results" class="page" style="display:none">
-    <div class="section-head">
-      <h2>Results</h2>
-      <div class="muted">Enter Roll No and Parent CNIC</div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-      <input id="res-roll" placeholder="Roll Number" />
-      <input id="res-cnic" placeholder="Parent CNIC" />
-      <button onclick="findResult()">Show Result</button>
-    </div>
-    <div id="result-output" style="margin-top:12px"></div>
-  </section>
-
-  <!-- FAQs -->
-  <section id="faqs" class="page" style="display:none">
-    <div class="section-head">
-      <h2>FAQ’s</h2>
-      <div class="muted">Categories: Admissions, Exams, Uniforms, Fees, General</div>
-    </div>
-    <div id="faq-list" style="margin-top:12px"></div>
-  </section>
-
-  <!-- Attendance -->
-  <section id="attendance" class="page" style="display:none">
-    <div class="section-head">
-      <h2>Student Attendance</h2>
-      <div>
-        <select id="att-class">
-          <option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option>
-        </select>
-        <input type="date" id="att-date" />
-      </div>
-    </div>
-    <table id="att-table">
-      <thead><tr><th>Student</th><th>Date</th><th>Status</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </section>
-
-  <!-- Events -->
-  <section id="events" class="page" style="display:none">
-    <div class="section-head">
-      <h2>Events</h2>
-      <div class="muted">Hover over event names to see details</div>
-    </div>
-    <div id="events-list" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:12px"></div>
-  </section>
-
-  <!-- Updates -->
-  <section id="updates" class="page" style="display:none">
-    <div class="section-head">
-      <h2>Updates</h2>
-      <div class="muted">CIE Updates & School News</div>
-    </div>
-    <div style="margin-top:12px">
-      <h4>CIE Updates</h4>
-      <p id="cie-updates" class="muted"></p>
-      <h4 style="margin-top:12px">School News</h4>
-      <p id="school-news" class="muted"></p>
-    </div>
-  </section>
-
-  <!-- Admin Portal -->
-  <section id="admin" class="page" style="display:none">
-    <div style="max-width:500px;margin:0 auto;">
-      <h2 style="color:#fff">Admin Login</h2>
-      <input id="admin-email" placeholder="Email" />
-      <input id="admin-pass" placeholder="Password" type="password" />
-      <button onclick="loginAdmin()">Login</button>
-      <div id="admin-msg" style="margin-top:8px;color:#ef4444"></div>
-
-      <div id="admin-panel" style="display:none;margin-top:16px">
-        <h3 style="color:#fff">Admin Panel</h3>
-        <button onclick="logoutAdmin()">Logout</button>
-        <div style="margin-top:12px">
-          <h4>Add Facility</h4>
-          <input id="fac-name" placeholder="Facility Name" />
-          <button onclick="addFacility()">Add</button>
-          <ul id="facilities-admin" style="color:#ccc;margin-top:8px"></ul>
+  <div id="adminArea" style="display:none">
+    <div class="card">
+      <h3>Settings (change login — one-time)</h3>
+      <div class="grid">
+        <div>
+          <label>Admin Email</label>
+          <input id="set-email" />
         </div>
-        <div style="margin-top:12px">
-          <h4>Add Lab</h4>
-          <input id="lab-name" placeholder="Lab Name/Details" />
-          <button onclick="addLab()">Add</button>
-          <ul id="labs-admin" style="color:#ccc;margin-top:8px"></ul>
-        </div>
-        <div style="margin-top:12px">
-          <h4>Add Faculty</h4>
-          <input id="faculty-name" placeholder="Faculty Name/Details" />
-          <button onclick="addFaculty()">Add</button>
-          <ul id="faculty-admin" style="color:#ccc;margin-top:8px"></ul>
+        <div>
+          <label>Admin Password</label>
+          <input id="set-pass" type="password" />
         </div>
       </div>
+      <div style="margin-top:10px">
+        <button class="btn" onclick="changeLogin()">Change (one-time)</button>
+        <div class="small" style="margin-top:8px">Stored only in browser for demo.</div>
+      </div>
     </div>
-  </section>
-</main>
 
-<footer>
-  <div style="max-width:1100px;margin:0 auto;padding:10px 16px;color:#666;display:flex;flex-direction:column;gap:6px">
-    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
-      <div style="font-weight:600;color:#fff">Crescent International</div>
-      <div class="muted">© 2025 Crescent International — All rights reserved</div>
+    <!-- Facilities editor -->
+    <div class="card">
+      <h3>Facilities — Add Text / Image</h3>
+      <div class="grid">
+        <div>
+          <label>New Facility Title (optional)</label>
+          <input id="fac-title" placeholder="e.g. Science Block"/>
+        </div>
+        <div>
+          <label>Upload Image (optional)</label>
+          <input id="fac-img" type="file" accept="image/*" />
+        </div>
+      </div>
+      <label>Description (text)</label>
+      <textarea id="fac-desc" rows="3" placeholder="Short description"></textarea>
+      <div style="margin-top:10px">
+        <button class="btn" onclick="addFacility()">Add Facility</button>
+        <button class="btn" style="background:#666;margin-left:8px" onclick="clearSection('facilities')">Clear All Facilities</button>
+      </div>
+      <div id="fac-list" style="margin-top:12px"></div>
+    </div>
+
+    <!-- Labs editor -->
+    <div class="card">
+      <h3>Labs — Add Text / Image</h3>
+      <div class="grid">
+        <div>
+          <label>Lab Title</label>
+          <input id="lab-title" placeholder="e.g. Computer Lab"/>
+        </div>
+        <div>
+          <label>Upload Image (optional)</label>
+          <input id="lab-img" type="file" accept="image/*" />
+        </div>
+      </div>
+      <label>Description</label>
+      <textarea id="lab-desc" rows="3" placeholder="Short description"></textarea>
+      <div style="margin-top:10px">
+        <button class="btn" onclick="addLab()">Add Lab</button>
+        <button class="btn" style="background:#666;margin-left:8px" onclick="clearSection('labs')">Clear All Labs</button>
+      </div>
+      <div id="lab-list" style="margin-top:12px"></div>
+    </div>
+
+    <!-- Faculty editor -->
+    <div class="card">
+      <h3>Faculty — Add Person / Text / Image</h3>
+      <div class="grid">
+        <div>
+          <label>Name / Title</label>
+          <input id="fac-name" placeholder="e.g. Ms. Ayesha — Math Teacher"/>
+        </div>
+        <div>
+          <label>Upload Portrait (optional)</label>
+          <input id="fac-img-person" type="file" accept="image/*" />
+        </div>
+      </div>
+      <label>Bio / Description</label>
+      <textarea id="fac-bio" rows="3" placeholder="Short bio"></textarea>
+      <div style="margin-top:10px">
+        <button class="btn" onclick="addFaculty()">Add Faculty</button>
+        <button class="btn" style="background:#666;margin-left:8px" onclick="clearSection('faculty')">Clear All Faculty</button>
+      </div>
+      <div id="faculty-list" style="margin-top:12px"></div>
+    </div>
+
+    <div style="margin-top:12px" class="card">
+      <button class="btn" onclick="logout()">Logout</button>
+      <div class="small" style="margin-top:8px">This admin saves everything in browser localStorage. Your main site is NOT changed by this file.</div>
     </div>
   </div>
-</footer>
+</div>
 
 <script>
-const pages = document.querySelectorAll('.page');
-const navLinks = document.querySelectorAll('nav a[data-page]');
-function showPage(name){
-  pages.forEach(p=>p.style.display='none');
-  document.getElementById(name).style.display='block';
-  navLinks.forEach(a=>a.classList.remove('active'));
-  const activeLink = document.querySelector('nav a[data-page="'+name+'"]');
-  if(activeLink) activeLink.classList.add('active');
-  window.scrollTo(0,0);
-}
-window.addEventListener('hashchange',()=>{showPage(location.hash.replace('#','')||'home');});
-if(!location.hash) location.hash='#home';
-else showPage(location.hash.replace('#',''));
-function toggleNav(){document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('mobile-show'));}
-
-// ---------- localStorage ----------
-const LS = {
-  slides:'cres_slides_v2',
-  homework:'cres_homework_v2',
-  results:'cres_results_v2',
-  faqs:'cres_faqs_v2',
-  attendance:'cres_att_v2',
-  events:'cres_events_v2',
-  updates:'cres_updates_v2',
-  students:'cres_students_v2',
-  facilities:'cres_facilities_v2',
-  labs:'cres_labs_v2',
-  faculty:'cres_faculty_v2',
-  admin:'cres_admin_v2'
+/* localStorage keys used by this admin (standalone) */
+const HOME_LS = {
+  facilities: 'cres_home_facilities_v1',
+  labs: 'cres_home_labs_v1',
+  faculty: 'cres_home_faculty_v1',
+  adminCred: 'cres_admin_v1',
+  adminChanged: 'cres_admin_changed_v1'
 };
 
-// Default data init
-if(!localStorage.getItem(LS.slides)) localStorage.setItem(LS.slides, JSON.stringify([]));
-if(!localStorage.getItem(LS.facilities)) localStorage.setItem(LS.facilities, JSON.stringify([]));
-if(!localStorage.getItem(LS.labs)) localStorage.setItem(LS.labs, JSON.stringify([]));
-if(!localStorage.getItem(LS.faculty)) localStorage.setItem(LS.faculty, JSON.stringify([]));
-if(!localStorage.getItem(LS.updates)) localStorage.setItem(LS.updates, JSON.stringify({cie:'No session',news:'No news'}));
-if(!localStorage.getItem(LS.admin)) localStorage.setItem(LS.admin, JSON.stringify({email:'ayubandabdullah835@gmail.com',pass:'admin@123'}));
-
-// ---------- Slides ----------
-function renderSlides(){
-  const slides=JSON.parse(localStorage.getItem(LS.slides)||'[]');
-  const wrap=document.getElementById('slideshow'); wrap.innerHTML='';
-  slides.forEach((s,i)=>{const div=document.createElement('div');div.className='slide'+(i===0?' show':''); const img=document.createElement('img'); img.src=s.url; img.alt=s.caption||'slide'; div.appendChild(img); if(s.caption){const c=document.createElement('div');c.className='caption';c.textContent=s.caption; div.appendChild(c);} wrap.appendChild(div);});
-  if(slides.length>1) startSlideTimer();
+/* setup demo credentials if not present */
+if(!localStorage.getItem(HOME_LS.adminCred)){
+  localStorage.setItem(HOME_LS.adminCred, JSON.stringify({email:'ayubandabdullah835@gmail.com', pass:'admin@123'}));
 }
-let slideTimer=null;
-function startSlideTimer(){clearInterval(slideTimer);slideTimer=setInterval(()=>{const slides=document.querySelectorAll('.slide');if(!slides.length)return;let idx=-1;slides.forEach((s,i)=>{if(s.classList.contains('show')) idx=i;s.classList.remove('show');});idx=(idx+1)%slides.length;slides[idx].classList.add('show');},4000);}
-renderSlides();
 
-// ---------- Facilities ----------
+/* login functions */
+function getAdmin(){ return JSON.parse(localStorage.getItem(HOME_LS.adminCred)||'{}'); }
+function login(){
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const admin = getAdmin(); const msg = document.getElementById('login-msg');
+  if(email===admin.email && pass===admin.pass){
+    msg.textContent=''; document.getElementById('loginCard').style.display='none'; document.getElementById('adminArea').style.display='block';
+    loadAll();
+  } else { msg.textContent='Wrong email or password.'; }
+}
+function changeLogin(){
+  if(localStorage.getItem(HOME_LS.adminChanged)){ alert('Login change already used once (demo).'); return; }
+  const e = document.getElementById('set-email').value.trim(); const p = document.getElementById('set-pass').value;
+  if(!e||!p){ alert('Provide both email and password'); return; }
+  localStorage.setItem(HOME_LS.adminCred, JSON.stringify({email:e,pass:p}));
+  localStorage.setItem(HOME_LS.adminChanged,'1');
+  alert('Login changed (stored in browser).');
+}
+function logout(){ document.getElementById('adminArea').style.display='none'; document.getElementById('loginCard').style.display='block'; }
+
+/* util: file -> base64 */
+function toBase64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }) }
+
+/* read / write lists helpers */
+function readList(key){ return JSON.parse(localStorage.getItem(key) || '[]'); }
+function writeList(key, arr){ localStorage.setItem(key, JSON.stringify(arr)); }
+
+/* render functions */
 function renderFacilities(){
-  const facs=JSON.parse(localStorage.getItem(LS.facilities)||'[]');
-  const ul=document.getElementById('facilities-list'); ul.innerHTML='';
-  facs.forEach(f=>{const div=document.createElement('div');div.textContent=f;ul.appendChild(div);});
+  const container = document.getElementById('fac-list');
+  const arr = readList(HOME_LS.facilities);
+  if(!arr.length){ container.innerHTML = '<div class="small">No facilities yet</div>'; return; }
+  container.innerHTML = arr.map((it,i)=>`
+    <div class="list-item">
+      ${it.image ? <img src="${it.image}" class="thumb" /> : ''}
+      <div class="meta">
+        <strong>${it.title || '(no title)'}</strong>
+        <div class="small" style="margin-top:6px">${it.desc||''}</div>
+        <div class="actions">
+          <button class="btn" style="background:#c33" onclick="deleteItem('${HOME_LS.facilities}', ${i})">Delete</button>
+          <button class="btn" style="background:#555" onclick="addImageToExisting('${HOME_LS.facilities}', ${i})">Add Image</button>
+          <button class="btn" style="background:#777" onclick="editTextItem('${HOME_LS.facilities}', ${i})">Edit Text</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
 function renderLabs(){
-  const labs=JSON.parse(localStorage.getItem(LS.labs)||'[]');
-  const ul=document.getElementById('labs-ul'); ul.innerHTML='';
-  labs.forEach(l=>{const li=document.createElement('li'); li.textContent=l; ul.appendChild(li);});
+  const container = document.getElementById('lab-list');
+  const arr = readList(HOME_LS.labs);
+  if(!arr.length){ container.innerHTML = '<div class="small">No labs yet</div>'; return; }
+  container.innerHTML = arr.map((it,i)=>`
+    <div class="list-item">
+      ${it.image ? <img src="${it.image}" class="thumb" /> : ''}
+      <div class="meta">
+        <strong>${it.title || '(no title)'}</strong>
+        <div class="small" style="margin-top:6px">${it.desc||''}</div>
+        <div class="actions">
+          <button class="btn" style="background:#c33" onclick="deleteItem('${HOME_LS.labs}', ${i})">Delete</button>
+          <button class="btn" style="background:#555" onclick="addImageToExisting('${HOME_LS.labs}', ${i})">Add Image</button>
+          <button class="btn" style="background:#777" onclick="editTextItem('${HOME_LS.labs}', ${i})">Edit Text</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
 function renderFaculty(){
-  const facs=JSON.parse(localStorage.getItem(LS.faculty)||'[]');
-  const ul=document.getElementById('faculty-ul'); ul.innerHTML='';
-  facs.forEach(f=>{const li=document.createElement('li'); li.textContent=f; ul.appendChild(li);});
-}
-renderFacilities(); renderLabs(); renderFaculty();
-
-// ---------- Admin ----------
-function loginAdmin(){
-  const email=document.getElementById('admin-email').value.trim();
-  const pass=document.getElementById('admin-pass').value.trim();
-  const admin=JSON.parse(localStorage.getItem(LS.admin)||'{}');
-  if(email===admin.email && pass===admin.pass){document.getElementById('admin-msg').textContent=''; document.getElementById('admin-panel').style.display='block'; renderAdminLists();} 
-  else document.getElementById('admin-msg').textContent='Incorrect email or password';
-}
-function logoutAdmin(){document.getElementById('admin-panel').style.display='none';document.getElementById('admin-msg').textContent='Logged out';}
-function renderAdminLists(){
-  const facs=JSON.parse(localStorage.getItem(LS.facilities)||'[]');
-  const facUl=document.getElementById('facilities-admin'); facUl.innerHTML=''; facs.forEach((f,i)=>{const li=document.createElement('li');li.textContent=f+' ';const btn=document.createElement('button');btn.textContent='Delete';btn.onclick=()=>{facs.splice(i,1);localStorage.setItem(LS.facilities,JSON.stringify(facs));renderFacilities();renderAdminLists();};li.appendChild(btn);facUl.appendChild(li);});
-
-  const labs=JSON.parse(localStorage.getItem(LS.labs)||'[]');
-  const labUl=document.getElementById('labs-admin'); labUl.innerHTML=''; labs.forEach((l,i)=>{const li=document.createElement('li');li.textContent=l+' ';const btn=document.createElement('button');btn.textContent='Delete';btn.onclick=()=>{labs.splice(i,1);localStorage.setItem(LS.labs,JSON.stringify(labs));renderLabs();renderAdminLists();};li.appendChild(btn);labUl.appendChild(li);});
-
-  const facs2=JSON.parse(localStorage.getItem(LS.faculty)||'[]');
-  const fac2Ul=document.getElementById('faculty-admin'); fac2Ul.innerHTML=''; facs2.forEach((f,i)=>{const li=document.createElement('li');li.textContent=f+' ';const btn=document.createElement('button');btn.textContent='Delete';btn.onclick=()=>{facs2.splice(i,1);localStorage.setItem(LS.faculty,JSON.stringify(facs2));renderFaculty();renderAdminLists();};li.appendChild(btn);fac2Ul.appendChild(li);});
+  const container = document.getElementById('faculty-list');
+  const arr = readList(HOME_LS.faculty);
+  if(!arr.length){ container.innerHTML = '<div class="small">No faculty yet</div>'; return; }
+  container.innerHTML = arr.map((it,i)=>`
+    <div class="list-item">
+      ${it.image ? <img src="${it.image}" class="thumb" /> : ''}
+      <div class="meta">
+        <strong>${it.name || '(no name)'}</strong>
+        <div class="small" style="margin-top:6px">${it.bio||''}</div>
+        <div class="actions">
+          <button class="btn" style="background:#c33" onclick="deleteItem('${HOME_LS.faculty}', ${i})">Delete</button>
+          <button class="btn" style="background:#555" onclick="addImageToExisting('${HOME_LS.faculty}', ${i})">Add Image</button>
+          <button class="btn" style="background:#777" onclick="editTextItem('${HOME_LS.faculty}', ${i})">Edit Text</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
 
-function addFacility(){const name=document.getElementById('fac-name').value.trim();if(!name)return;const facs=JSON.parse(localStorage.getItem(LS.facilities)||'[]');facs.push(name);localStorage.setItem(LS.facilities,JSON.stringify(facs));renderFacilities();renderAdminLists();document.getElementById('fac-name').value='';}
-function addLab(){const name=document.getElementById('lab-name').value.trim();if(!name)return;const labs=JSON.parse(localStorage.getItem(LS.labs)||'[]');labs.push(name);localStorage.setItem(LS.labs,JSON.stringify(labs));renderLabs();renderAdminLists();document.getElementById('lab-name').value='';}
-function addFaculty(){const name=document.getElementById('faculty-name').value.trim();if(!name)return;const facs=JSON.parse(localStorage.getItem(LS.faculty)||'[]');facs.push(name);localStorage.setItem(LS.faculty,JSON.stringify(facs));renderFaculty();renderAdminLists();document.getElementById('faculty-name').value='';}
+/* add functions */
+async function addFacility(){
+  const title = document.getElementById('fac-title').value.trim();
+  const desc = document.getElementById('fac-desc').value.trim();
+  const file = document.getElementById('fac-img').files[0];
+  let image = null;
+  if(file) image = await toBase64(file);
+  const arr = readList(HOME_LS.facilities);
+  arr.push({title, desc, image});
+  writeList(HOME_LS.facilities, arr);
+  renderFacilities();
+  // clear inputs
+  document.getElementById('fac-title').value=''; document.getElementById('fac-desc').value=''; document.getElementById('fac-img').value='';
+}
+async function addLab(){
+  const title = document.getElementById('lab-title').value.trim();
+  const desc = document.getElementById('lab-desc').value.trim();
+  const file = document.getElementById('lab-img').files[0];
+  let image = null;
+  if(file) image = await toBase64(file);
+  const arr = readList(HOME_LS.labs);
+  arr.push({title, desc, image});
+  writeList(HOME_LS.labs, arr);
+  renderLabs();
+  document.getElementById('lab-title').value=''; document.getElementById('lab-desc').value=''; document.getElementById('lab-img').value='';
+}
+async function addFaculty(){
+  const name = document.getElementById('fac-name').value.trim();
+  const bio = document.getElementById('fac-bio').value.trim();
+  const file = document.getElementById('fac-img-person').files[0];
+  let image = null;
+  if(file) image = await toBase64(file);
+  const arr = readList(HOME_LS.faculty);
+  arr.push({name, bio, image});
+  writeList(HOME_LS.faculty, arr);
+  renderFaculty();
+  document.getElementById('fac-name').value=''; document.getElementById('fac-bio').value=''; document.getElementById('fac-img-person').value='';
+}
+
+/* delete item generic */
+function deleteItem(sectionKey, index){
+  if(!confirm('Delete item?')) return;
+  const arr = readList(sectionKey);
+  arr.splice(index,1);
+  writeList(sectionKey, arr);
+  // re-render appropriate section
+  if(sectionKey===HOME_LS.facilities) renderFacilities();
+  if(sectionKey===HOME_LS.labs) renderLabs();
+  if(sectionKey===HOME_LS.faculty) renderFaculty();
+}
+
+/* add image to existing item */
+function addImageToExisting(sectionKey, index){
+  const fi = document.createElement('input'); fi.type='file'; fi.accept='image/*';
+  fi.onchange = async ()=> {
+    if(fi.files.length){
+      const data = await toBase64(fi.files[0]);
+      const arr = readList(sectionKey);
+      if(!arr[index]) return alert('Item missing');
+      arr[index].image = data;
+      writeList(sectionKey, arr);
+      if(sectionKey===HOME_LS.facilities) renderFacilities();
+      if(sectionKey===HOME_LS.labs) renderLabs();
+      if(sectionKey===HOME_LS.faculty) renderFaculty();
+    }
+  };
+  fi.click();
+}
+
+/* edit text of existing item (title/desc or name/bio) */
+function editTextItem(sectionKey, index){
+  const arr = readList(sectionKey);
+  const item = arr[index];
+  if(!item) return alert('Item missing');
+  // prompt for editing fields — keep simple and safe
+  if(sectionKey===HOME_LS.faculty){
+    const newName = prompt('Edit name/title', item.name || '');
+    const newBio  = prompt('Edit bio/description', item.bio || '');
+    if(newName!==null) item.name = newName;
+    if(newBio!==null) item.bio = newBio;
+  } else {
+    const newTitle = prompt('Edit title', item.title || '');
+    const newDesc  = prompt('Edit description', item.desc || '');
+    if(newTitle!==null) item.title = newTitle;
+    if(newDesc!==null) item.desc = newDesc;
+  }
+  arr[index] = item;
+  writeList(sectionKey, arr);
+  if(sectionKey===HOME_LS.facilities) renderFacilities();
+  if(sectionKey===HOME_LS.labs) renderLabs();
+  if(sectionKey===HOME_LS.faculty) renderFaculty();
+}
+
+/* clear a whole section */
+function clearSection(name){
+  if(!confirm('Clear all items in this section?')) return;
+  if(name==='facilities') localStorage.setItem(HOME_LS.facilities, JSON.stringify([]));
+  if(name==='labs') localStorage.setItem(HOME_LS.labs, JSON.stringify([]));
+  if(name==='faculty') localStorage.setItem(HOME_LS.faculty, JSON.stringify([]));
+  renderFacilities(); renderLabs(); renderFaculty();
+}
+
+/* initial load */
+function loadAll(){
+  renderFacilities(); renderLabs(); renderFaculty();
+}
+
+/* bootstrap — if empty, init keys so main site can optionally read them */
+if(!localStorage.getItem(HOME_LS.facilities)) localStorage.setItem(HOME_LS.facilities, JSON.stringify([
+  { title: "Grade 6 - IGCSE 3", desc: "Standard classrooms for interactive learning.", image: null }
+]));
+if(!localStorage.getItem(HOME_LS.labs)) localStorage.setItem(HOME_LS.labs, JSON.stringify([
+  { title: "Computer Lab", desc: "Coding, robotics, and digital skills development", image: null }
+]));
+if(!localStorage.getItem(HOME_LS.faculty)) localStorage.setItem(HOME_LS.faculty, JSON.stringify([
+  { name: "Our Faculty", bio: "Experienced and dedicated teachers providing personalized attention.", image: null }
+]));
+
+/* If admin area should auto-open (for convenience during testing), you can remove next 2 lines */
+document.getElementById('loginCard').style.display='block';
+document.getElementById('adminArea').style.display='none';
+
+/* expose some functions for console/testing if needed */
+window.HOME_LS = HOME_LS;
+window.addFacility = addFacility;
+window.addLab = addLab;
+window.addFaculty = addFaculty;
+window.deleteItem = deleteItem;
+window.renderFacilities = renderFacilities;
+window.renderLabs = renderLabs;
+window.renderFaculty = renderFaculty;
+
 </script>
 </body>
 </html>
