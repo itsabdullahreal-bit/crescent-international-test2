@@ -3,56 +3,42 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Dashboard — Crescent International</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#071223;
-    --card:#0b1530;
-    --accent:#0b2b5a;
-    --muted:#9aa6bf;
-    --white:#eaf1ff;
-    --danger:#ef4444;
-    --ok:#16a34a;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(180deg,#031020 0%, #071223 100%);color:var(--muted)}
-  .container{display:flex;min-height:100vh}
-  aside{width:260px;background:var(--card);padding:20px;border-right:1px solid rgba(255,255,2…
-[22:46, 21/10/2025] 𝕬𝖇𝖉𝖚𝖑𝖑𝖆𝖍 𝕱𝖆𝖍𝖆𝖉: <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Admin Dashboard — Crescent International</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{--navy:#0b2b5a;--white:#fff}
+  :root{
+    --navy:#0b2b5a;
+    --white:#fff;
+    --muted:#666;
+    --card:#fff;
+    --accent:#111;
+  }
   *{box-sizing:border-box}
-  body{font-family:'Poppins',sans-serif;margin:0;background:#f3f6fb;color:#222}
+  body{font-family:'Poppins',sans-serif;margin:0;background:#f3f6fb;color:#222;-webkit-font-smoothing:antialiased}
   header{background:var(--navy);color:var(--white);padding:18px;text-align:center}
   .wrap{max-width:1100px;margin:18px auto;padding:16px}
-  .card{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px;box-shadow:0 8px 24px rgba(12,30,60,0.06)}
+  .card{background:var(--card);padding:14px;border-radius:10px;margin-bottom:12px;box-shadow:0 8px 24px rgba(12,30,60,0.06)}
+  input,textarea,select,button{font-family:inherit}
   input,textarea,select{width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;margin-top:8px}
   .row{display:flex;gap:12px}
   .col{flex:1}
-  .btn{background:var(--navy);color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
-  .btn.gray{background:#666}
-  .small{font-size:13px;color:#666}
+  .btn{background:var(--navy);color:var(--white);padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+  .btn-ghost{background:transparent;border:1px solid #ddd;color:#222}
+  .small{font-size:13px;color:var(--muted)}
   label{font-weight:600}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media(max-width:800px){.grid{grid-template-columns:1fr}}
-  .img-preview{width:120px;height:70px;object-fit:cover;border-radius:6px;margin-right:6px}
-  .section-row{display:flex;gap:12px;align-items:flex-start}
-  .images-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-  .muted{color:#666;font-size:13px}
+  .img-preview{width:120px;height:70px;object-fit:cover;border-radius:6px;margin-right:6px;margin-top:6px}
+  .flex{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  @media(max-width:900px){.row{flex-direction:column}.grid{grid-template-columns:1fr}}
   .danger{background:#c33}
+  .muted{color:#666}
+  .section-title{display:flex;align-items:center;justify-content:space-between}
 </style>
 </head>
 <body>
 <header>
   <h2>Admin Dashboard — Crescent International</h2>
-  <div style="font-size:13px;opacity:.9">This dashboard edits the site content (stored in browser localStorage).</div>
+  <div class="small">This is the admin dashboard (demo). Data stored in your browser.</div>
 </header>
 
 <div class="wrap">
@@ -60,16 +46,28 @@
   <!-- LOGIN -->
   <div class="card" id="loginCard">
     <h3>Admin Login</h3>
-    <p class="small">Use the admin email & password. Change email allowed once.</p>
+    <p class="small">Demo: default admin email and password provided. You can change once (one-time).</p>
     <label>Email</label>
-    <input id="login-email" placeholder="admin email" value="admin@crescent.local"/>
+    <input id="login-email" placeholder="admin email" value="admin@crescent.demo"/>
     <label>Password</label>
-    <input id="login-pass" type="password" placeholder="password" value="admin123"/>
-    <div style="margin-top:10px">
-      <button class="btn" onclick="handleLogin()">Login</button>
-      <button class="btn gray" onclick="openForgot()">Forgot Password</button>
+    <input id="login-pass" type="password" placeholder="password" value="admin@123"/>
+    <div style="margin-top:8px" class="flex">
+      <button class="btn" onclick="login()">Login</button>
+      <button class="btn-ghost" onclick="showForgot()">Forgot password</button>
     </div>
     <div id="login-msg" style="margin-top:8px;color:#b91c1c"></div>
+    <div id="forgot-box" style="display:none;margin-top:12px">
+      <div class="small">Forgot password demo: generates a secure reset token (for demo only). In production this would be emailed.</div>
+      <div style="margin-top:8px">
+        <label>Admin email to send token</label>
+        <input id="forgot-email" />
+        <div style="margin-top:8px" class="flex">
+          <button class="btn" onclick="forgotPassword()">Generate token</button>
+          <button class="btn-ghost" onclick="hideForgot()">Cancel</button>
+        </div>
+      </div>
+      <div id="forgot-result" style="margin-top:8px;"></div>
+    </div>
   </div>
 
   <!-- ADMIN AREA -->
@@ -77,84 +75,150 @@
 
     <!-- SETTINGS -->
     <div class="card">
-      <h3>Settings (One-time email change)</h3>
-      <div class="grid">
-        <div>
-          <label>Admin Email</label>
-          <input id="set-email" />
-        </div>
-        <div>
-          <label>Admin Password (new)</label>
-          <input id="set-pass" type="password" />
-        </div>
+      <div class="section-title">
+        <h3>Settings (one-time email change)</h3>
+        <div class="small">One-time change allowed</div>
       </div>
-      <div style="margin-top:10px">
-        <button class="btn" id="change-email-btn" onclick="changeLoginOneTime()">Change (one-time)</button>
-        <button class="btn gray" style="margin-left:8px" onclick="changePassword()">Change Password</button>
+      <div class="grid" style="margin-top:8px">
+        <div><label>Admin Email</label><input id="set-email" /></div>
+        <div><label>Admin Password (new)</label><input id="set-pass" type="password" /></div>
       </div>
-      <div class="small" style="margin-top:8px">Email change allowed only once. Password change uses hashing and updates stored credential.</div>
+      <div style="margin-top:10px" class="flex">
+        <button class="btn" onclick="changeLogin()">Change (one-time)</button>
+        <button class="btn-ghost" onclick="logout()">Logout</button>
+      </div>
+      <div class="small" style="margin-top:8px">This stores values locally and can be changed only once (demo behavior).</div>
     </div>
 
-    <!-- HOME EDIT (Facilities / Labs / Faculty) -->
-    <div class="card">
-      <h3>Home Page — Edit Sections</h3>
-      <p class="small">Edit the homepage sections: Facilities, Labs, Faculty. You can add text and images. These values are stored in localStorage and will be used by the website when it reads the same keys.</p>
-
-      <!-- Facilities -->
-      <div style="margin-top:10px">
-        <h4>Facilities (editable)</h4>
-        <label>Text (HTML allowed)</label>
-        <textarea id="home-facilities-text" rows="4" placeholder="Write content for Facilities..."></textarea>
-        <label>Upload Images</label>
-        <input type="file" id="home-facilities-files" accept="image/*" multiple />
-        <div style="margin-top:8px">
-          <button class="btn" onclick="saveHomeSection('facilities')">Save Facilities</button>
-          <button class="btn gray" style="margin-left:8px" onclick="clearHomeSection('facilities')">Clear Facilities</button>
-        </div>
-        <div id="home-facilities-preview" class="images-row"></div>
+    <!-- HOMEPAGE EDITOR -->
+    <div class="card" id="homeEditor">
+      <div class="section-title">
+        <h3>Homepage Editor — Facilities / Labs / Faculty</h3>
+        <div class="small">Edit text & upload images for homepage sections. Click Apply to Site to update main site (same origin).</div>
       </div>
 
-      <!-- Labs -->
-      <div style="margin-top:14px">
-        <h4>Labs (editable)</h4>
-        <label>Text (HTML allowed)</label>
-        <textarea id="home-labs-text" rows="3" placeholder="Write content for Labs..."></textarea>
-        <label>Upload Images</label>
-        <input type="file" id="home-labs-files" accept="image/*" multiple />
-        <div style="margin-top:8px">
-          <button class="btn" onclick="saveHomeSection('labs')">Save Labs</button>
-          <button class="btn gray" style="margin-left:8px" onclick="clearHomeSection('labs')">Clear Labs</button>
-        </div>
-        <div id="home-labs-preview" class="images-row"></div>
+      <div style="margin-top:12px">
+        <label>Facilities - Text (HTML allowed)</label>
+        <textarea id="hp-facilities-text" rows="4" placeholder="Facilities description..."></textarea>
+        <label style="margin-top:8px">Facilities - Images</label>
+        <input id="hp-facilities-files" type="file" accept="image/*" multiple />
+        <div id="hp-facilities-preview" class="flex"></div>
       </div>
 
-      <!-- Faculty -->
-      <div style="margin-top:14px">
-        <h4>Faculty (editable)</h4>
-        <label>Text (HTML allowed)</label>
-        <textarea id="home-faculty-text" rows="4" placeholder="Write content for Faculty..."></textarea>
-        <label>Upload Images</label>
-        <input type="file" id="home-faculty-files" accept="image/*" multiple />
-        <div style="margin-top:8px">
-          <button class="btn" onclick="saveHomeSection('faculty')">Save Faculty</button>
-          <button class="btn gray" style="margin-left:8px" onclick="clearHomeSection('faculty')">Clear Faculty</button>
-        </div>
-        <div id="home-faculty-preview" class="images-row"></div>
+      <div style="margin-top:12px">
+        <label>Labs - Text</label>
+        <textarea id="hp-labs-text" rows="3" placeholder="Labs description..."></textarea>
+        <label style="margin-top:8px">Labs - Images</label>
+        <input id="hp-labs-files" type="file" accept="image/*" multiple />
+        <div id="hp-labs-preview" class="flex"></div>
       </div>
 
+      <div style="margin-top:12px">
+        <label>Faculty - Text</label>
+        <textarea id="hp-faculty-text" rows="3" placeholder="Faculty description..."></textarea>
+        <label style="margin-top:8px">Faculty - Images</label>
+        <input id="hp-faculty-files" type="file" accept="image/*" multiple />
+        <div id="hp-faculty-preview" class="flex"></div>
+      </div>
+
+      <div style="margin-top:12px" class="flex">
+        <button class="btn" onclick="saveHomepage()">Save Homepage</button>
+        <button class="btn-ghost" onclick="clearHomepage()">Clear Homepage</button>
+        <button class="btn" onclick="applyToSite()">Apply to Site</button>
+      </div>
+      <div class="small" style="margin-top:8px">Tip: open your main website in another tab (same domain) and it will pick changes immediately via localStorage events.</div>
     </div>
 
-    <!-- SLIDES / HOME IMAGES -->
+    <!-- SLIDES -->
     <div class="card">
-      <h3>Homepage Slideshow</h3>
-      <p class="small">Upload images for the main slideshow (these are displayed by the website when it uses the same key).</p>
+      <h3>Home Slideshow</h3>
+      <p class="small">Upload images — stored in localStorage as base64.</p>
       <input id="slide-files" type="file" accept="image/*" multiple />
       <label>Caption (optional)</label><input id="slide-caption" placeholder="Caption for uploaded images" />
-      <div style="margin-top:10px">
+      <div style="margin-top:10px" class="flex">
         <button class="btn" onclick="uploadSlides()">Upload</button>
-        <button class="btn gray" style="margin-left:8px" onclick="clearSlides()">Clear slides</button>
+        <button class="btn danger" onclick="clearSlides()">Clear slides</button>
       </div>
-      <div id="slides-preview" style="margin-top:12px" class="images-row"></div>
+      <div id="slides-preview" style="margin-top:12px" class="flex"></div>
+    </div>
+
+    <!-- HOMEWORK -->
+    <div class="card">
+      <h3>Homework Manager</h3>
+      <div class="row">
+        <div class="col">
+          <label>Class</label>
+          <select id="hw-class"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select>
+          <label>Date</label><input id="hw-date" type="date"/>
+        </div>
+        <div class="col">
+          <label>Task</label><textarea id="hw-task" rows="3"></textarea>
+        </div>
+      </div>
+      <div style="margin-top:10px" class="flex"><button class="btn" onclick="addHomework()">Add Homework</button></div>
+      <div id="hw-list" style="margin-top:12px"></div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="card">
+      <h3>Results Manager</h3>
+      <div class="grid">
+        <div>
+          <label>Roll Number</label><input id="res-roll"/>
+          <label>Parent CNIC</label><input id="res-cnic"/>
+        </div>
+        <div>
+          <label>Class</label><select id="res-class"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select>
+          <label>Marks/Text</label><input id="res-marks"/>
+        </div>
+      </div>
+      <div style="margin-top:10px" class="flex"><button class="btn" onclick="addResult()">Save Result</button></div>
+      <div id="res-list" style="margin-top:12px"></div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="card">
+      <h3>FAQ Manager</h3>
+      <div class="grid">
+        <div><label>Question</label><input id="faq-q"/></div>
+        <div><label>Category</label><input id="faq-cat" placeholder="Admissions/Fees/etc"/></div>
+      </div>
+      <label>Answer</label><textarea id="faq-a" rows="3"></textarea>
+      <div style="margin-top:10px" class="flex"><button class="btn" onclick="addFaq()">Add FAQ</button></div>
+      <div id="faq-manage" style="margin-top:12px"></div>
+    </div>
+
+    <!-- ATTENDANCE -->
+    <div class="card">
+      <h3>Attendance Manager</h3>
+      <div class="row">
+        <div class="col"><label>Class</label><select id="att-class-set"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select></div>
+        <div class="col"><label>Date</label><input id="att-date-set" type="date" /></div>
+      </div>
+      <div style="margin-top:10px">
+        <label>Student Name</label><input id="att-name" placeholder="Student full name"/>
+        <label>Status</label><select id="att-status"><option>Present</option><option>Absent</option><option>Half</option></select>
+      </div>
+      <div style="margin-top:10px" class="flex"><button class="btn" onclick="addAttendance()">Add Attendance</button></div>
+      <div id="att-manage" style="margin-top:12px"></div>
+    </div>
+
+    <!-- EVENTS -->
+    <div class="card">
+      <h3>Events Manager</h3>
+      <label>Event Name</label><input id="ev-name"/>
+      <label>Description</label><textarea id="ev-desc" rows="3"></textarea>
+      <label>Upload Images</label><input type="file" id="ev-files" multiple accept="image/*"/>
+      <div style="margin-top:10px" class="flex"><button class="btn" onclick="addEvent()">Add Event</button></div>
+      <div id="ev-manage" style="margin-top:12px"></div>
+    </div>
+
+    <!-- UPDATES -->
+    <div class="card">
+      <h3>Updates Manager</h3>
+      <label>CIE Updates</label><textarea id="u-cie" rows="2"></textarea>
+      <label>School News</label><textarea id="u-news" rows="3"></textarea>
+      <div style="margin-top:8px" class="flex"><button class="btn" onclick="saveUpdates()">Save Updates</button></div>
     </div>
 
     <!-- STUDENTS -->
@@ -163,56 +227,28 @@
       <div class="grid">
         <div><label>Student Name</label><input id="s-name"/></div>
         <div><label>Parent(s) Name</label><input id="s-parents"/></div>
-        <div><label>Parent CNIC</label><input id="s-pcnic"/></div>
-        <div><label>Student CNIC</label><input id="s-cnic"/></div>
+        <div><label>Parent CNIC</label><input id="s-cnic"/></div>
         <div><label>B-Form / SmartCard</label><input id="s-bform"/></div>
         <div><label>Date of Birth</label><input type="date" id="s-dob"/></div>
         <div><label>Date of Joining</label><input type="date" id="s-join"/></div>
-        <div><label>Class</label>
-          <select id="s-class">
-            <option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option>
-          </select>
-        </div>
+        <div><label>Class</label><select id="s-class"><option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option></select></div>
       </div>
-      <div style="margin-top:10px">
+      <div style="margin-top:10px" class="flex">
         <button class="btn" onclick="addStudent()">Add Student</button>
-        <button class="btn gray" style="margin-left:8px" onclick="exportStudentsCSV()">Export CSV</button>
+        <button class="btn-ghost" onclick="exportStudentsCSV()">Export CSV (All)</button>
+        <button class="btn-ghost" onclick="exportStudentsEVS()">Export CSV (EVS)</button>
       </div>
       <div id="students-list" style="margin-top:12px"></div>
     </div>
 
-    <!-- HOME CONTENT PREVIEW / APPLY -->
-    <div class="card">
-      <h3>Preview / Apply to Website</h3>
-      <p class="small">The website loads the same localStorage keys for content. You can preview saved values here and copy them to your website if needed.</p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn" onclick="previewHomeContent()">Preview Home Content</button>
-        <button class="btn gray" onclick="clearAllHomeContent()">Clear All Home Content</button>
-      </div>
-      <div id="home-preview" style="margin-top:12px"></div>
-    </div>
-
-    <div style="margin-top:12px" class="card">
-      <button class="btn" onclick="logout()">Logout</button>
-      <div class="small" style="margin-top:8px">Data stored in browser localStorage. Clearing storage erases edits. For production use a server-backed DB.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- FORGOT PASSWORD MODAL (SIMULATED) -->
-<div id="forgot-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;">
-  <div style="background:#fff;padding:16px;border-radius:8px;max-width:420px;margin:auto">
-    <h4>Forgot Password</h4>
-    <p class="small">Enter admin email to receive a verification code. (Simulation: code will be shown here for local demo.)</p>
-    <label>Email</label><input id="forgot-email" />
-    <div style="margin-top:8px"><button class="btn" onclick="sendForgotCode()">Send Code</button> <button class="btn gray" onclick="closeForgot()">Close</button></div>
-    <div id="forgot-output" style="margin-top:8px"></div>
+    <div class="small">All changes are saved to your browser. If you want changes to appear on the main site, open that site in another tab (same origin) and click "Apply to Site" here or wait for localStorage events.</div>
   </div>
 </div>
 
 <script>
-/* -------------------- Keys -------------------- */
+/* -------------------------
+   LocalStorage keys & defaults
+   ------------------------- */
 const LS = {
   slides:'cres_slides_v1',
   homework:'cres_homework_v1',
@@ -222,209 +258,199 @@ const LS = {
   events:'cres_events_v1',
   updates:'cres_updates_v1',
   students:'cres_students_v1',
-  adminCred:'cres_admin_dash_cred_v1',
-  adminChangedFlag:'cres_admin_dash_changed_v1',
-  homeSections:'cres_home_sections_v1' // holds facilities, labs, faculty
+  homepage:'cres_homepage_v1',
+  adminCred:'cres_admin_v1',
+  adminChangedFlag:'cres_admin_changed_v1',
+  forgotTokenKey:'cres_forgot_token_v1'
 };
 
-/* ---------- Default initialization ---------- */
-(function initDefaults(){
-  if(!localStorage.getItem(LS.adminCred)){
-    // default hashed password for "admin123" computed at runtime below if needed
-    const defaultCred = {email:'admin@crescent.local', passHash:''};
-    // we'll set a hashed password asynchronously if missing
-    localStorage.setItem(LS.adminCred, JSON.stringify(defaultCred));
-  }
-  if(!localStorage.getItem(LS.homeSections)){
-    const empty = {
-      facilities: {text:'', images:[]},
-      labs: {text:'', images:[]},
-      faculty: {text:'', images:[]}
-    };
-    localStorage.setItem(LS.homeSections, JSON.stringify(empty));
-  }
-  if(!localStorage.getItem(LS.slides)) localStorage.setItem(LS.slides, JSON.stringify([]));
-  if(!localStorage.getItem(LS.homework)) localStorage.setItem(LS.homework, JSON.stringify([]));
-  if(!localStorage.getItem(LS.results)) localStorage.setItem(LS.results, JSON.stringify([]));
-  if(!localStorage.getItem(LS.faqs)) localStorage.setItem(LS.faqs, JSON.stringify([]));
-  if(!localStorage.getItem(LS.attendance)) localStorage.setItem(LS.attendance, JSON.stringify([]));
-  if(!localStorage.getItem(LS.events)) localStorage.setItem(LS.events, JSON.stringify([]));
-  if(!localStorage.getItem(LS.students)) localStorage.setItem(LS.students, JSON.stringify([]));
-  if(!localStorage.getItem(LS.updates)) localStorage.setItem(LS.updates, JSON.stringify({cie:'', news:''}));
+/* initialize defaults (only if missing) */
+if(!localStorage.getItem(LS.updates)){
+  localStorage.setItem(LS.updates, JSON.stringify({cie:'No session under way.', news:'No news'}));
+}
+if(!localStorage.getItem(LS.slides)){
+  localStorage.setItem(LS.slides, JSON.stringify([])); // empty by default
+}
+if(!localStorage.getItem(LS.homepage)){
+  const demoHP = {
+    facilities:{text:'Our campus offers modern classrooms and labs.', images:[]},
+    labs:{text:'Computer Lab: modern desktops and robotics kits.', images:[]},
+    faculty:{text:'Experienced faculty committed to student success.', images:[]},
+    contact:{email:'admissions@crescentinternational.edu', phone:'+92 321 1234567', address:'45 Crescent Boulevard, Islamabad, Pakistan'}
+  };
+  localStorage.setItem(LS.homepage, JSON.stringify(demoHP));
+}
+if(!localStorage.getItem(LS.homework)) localStorage.setItem(LS.homework, JSON.stringify([]));
+if(!localStorage.getItem(LS.results)) localStorage.setItem(LS.results, JSON.stringify([]));
+if(!localStorage.getItem(LS.faqs)) localStorage.setItem(LS.faqs, JSON.stringify([]));
+if(!localStorage.getItem(LS.attendance)) localStorage.setItem(LS.attendance, JSON.stringify([]));
+if(!localStorage.getItem(LS.events)) localStorage.setItem(LS.events, JSON.stringify([]));
+if(!localStorage.getItem(LS.students)) localStorage.setItem(LS.students, JSON.stringify([]));
 
-  // Ensure admin has a hashed password (default "admin123")
-  ensureAdminPasswordHash();
+/* default admin credentials - store hashed password */
+(async function initAdmin(){
+  if(!localStorage.getItem(LS.adminCred)){
+    // default: email admin@crescent.demo, password admin@123 (hashed)
+    const pwdHash = await sha256('admin@123');
+    localStorage.setItem(LS.adminCred, JSON.stringify({email:'admin@crescent.demo', passHash: pwdHash}));
+  }
 })();
 
-/* ---------- Utilities ---------- */
-function toBase64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }) }
-async function sha256hex(str){
+/* -------------------------
+   Utility: SHA-256 (hex)
+   ------------------------- */
+async function sha256(msg){
   const enc = new TextEncoder();
-  const data = enc.encode(str);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b=>b.toString(16).padStart(2,'0')).join('');
+  const data = enc.encode(msg);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  const arr = Array.from(new Uint8Array(hash));
+  return arr.map(b => b.toString(16).padStart(2,'0')).join('');
 }
 
-/* Ensure admin has hashed password (if empty) */
-async function ensureAdminPasswordHash(){
-  const cred = JSON.parse(localStorage.getItem(LS.adminCred)||'{}');
-  if(!cred.passHash){
-    const defaultPw = 'admin123';
-    cred.passHash = await sha256hex(defaultPw);
-    localStorage.setItem(LS.adminCred, JSON.stringify(cred));
-    console.info('Default admin password set to "admin123" (hash stored). Change it after login.');
-  }
-}
+/* -------------------------
+   Login / auth
+   ------------------------- */
+function getAdmin(){ return JSON.parse(localStorage.getItem(LS.adminCred)||'{}'); }
 
-/* ---------- Auth (login / logout / change) ---------- */
-async function handleLogin(){
+async function login(){
   const email = document.getElementById('login-email').value.trim();
   const pass = document.getElementById('login-pass').value;
-  const cred = JSON.parse(localStorage.getItem(LS.adminCred)||'{}');
+  const admin = getAdmin();
   const msg = document.getElementById('login-msg');
-  if(!email || !pass){ msg.textContent='Enter both email and password.'; return; }
-  const passHash = await sha256hex(pass);
-  if(email===cred.email && passHash===cred.passHash){
-    msg.textContent=''; document.getElementById('loginCard').style.display='none'; document.getElementById('adminArea').style.display='block';
-    loadAdminArea();
+  const passHash = await sha256(pass||'');
+  if(email === admin.email && passHash === admin.passHash){
+    msg.textContent='';
+    document.getElementById('loginCard').style.display='none';
+    document.getElementById('adminArea').style.display='block';
+    loadAllManagers();
   } else {
     msg.textContent='Wrong email or password.';
   }
 }
+
 function logout(){
   document.getElementById('adminArea').style.display='none';
   document.getElementById('loginCard').style.display='block';
 }
 
-/* One-time email change */
-function changeLoginOneTime(){
-  if(localStorage.getItem(LS.adminChangedFlag)){ alert('One-time email change already used.'); return; }
-  const e = document.getElementById('set-email').value.trim();
-  if(!e){ alert('Enter new email.'); return; }
-  const cred = JSON.parse(localStorage.getItem(LS.adminCred)||'{}');
-  cred.email = e;
-  localStorage.setItem(LS.adminCred, JSON.stringify(cred));
-  localStorage.setItem(LS.adminChangedFlag, '1');
-  document.getElementById('change-email-btn').disabled = true;
-  alert('Admin email changed (one-time). Use new email next login.');
-}
-
-/* Change password (allowed repeatedly) */
-async function changePassword(){
-  const p = document.getElementById('set-pass').value;
-  if(!p){ alert('Enter new password'); return; }
-  const cred = JSON.parse(localStorage.getItem(LS.adminCred)||'{}');
-  cred.passHash = await sha256hex(p);
-  localStorage.setItem(LS.adminCred, JSON.stringify(cred));
-  alert('Password updated.');
-}
-
-/* ---------- Forgot password (simulated) ---------- */
-function openForgot(){ document.getElementById('forgot-modal').style.display='flex'; document.getElementById('forgot-output').innerHTML=''; }
-function closeForgot(){ document.getElementById('forgot-modal').style.display='none'; }
-function sendForgotCode(){
-  const email = document.getElementById('forgot-email').value.trim();
-  const cred = JSON.parse(localStorage.getItem(LS.adminCred)||'{}');
-  if(!email) { document.getElementById('forgot-output').textContent='Enter email.'; return; }
-  if(email!==cred.email){ document.getElementById('forgot-output').textContent='Email does not match admin account.'; return; }
-  const code = Math.floor(100000 + Math.random()*900000).toString();
-  // Store code in sessionStorage for verification (simple simulation)
-  sessionStorage.setItem('cres_reset_code', code);
-  sessionStorage.setItem('cres_reset_email', email);
-  // Simulation: show code to the admin in the dialog (in real app you'd send email)
-  document.getElementById('forgot-output').innerHTML = `<div class="small">Verification code (simulation): <strong>${code}</strong></div>
-    <div style="margin-top:8px"><label>Enter code</label><input id="forgot-code" /><div style="margin-top:8px"><button class="btn" onclick="applyForgotCode()">Verify & Reset</button></div></div>`;
-}
-
-/* After code verified, allow setting new password */
-async function applyForgotCode(){
-  const entered = document.getElementById('forgot-code').value.trim();
-  const stored = sessionStorage.getItem('cres_reset_code');
-  if(!entered) return alert('Enter code.');
-  if(entered !== stored) return alert('Wrong code.');
-  const newPass = prompt('Enter new password for admin:');
-  if(!newPass) return alert('Password not changed.');
-  const cred = JSON.parse(localStorage.getItem(LS.adminCred)||'{}');
-  cred.passHash = await sha256hex(newPass);
-  localStorage.setItem(LS.adminCred, JSON.stringify(cred));
-  sessionStorage.removeItem('cres_reset_code');
-  sessionStorage.removeItem('cres_reset_email');
-  alert('Password reset complete. You can log in with the new password.');
-  closeForgot();
-}
-
-/* ---------- Home sections (facilities/labs/faculty) ---------- */
-async function saveHomeSection(key){
-  const store = JSON.parse(localStorage.getItem(LS.homeSections)||'{}');
-  const section = store[key] || {text:'',images:[]};
-
-  // get text
-  const text = document.getElementById(home-${key}-text).value;
-  section.text = text;
-
-  // process files (if any)
-  const fileInput = document.getElementById(home-${key}-files);
-  if(fileInput && fileInput.files && fileInput.files.length){
-    for(let f of fileInput.files){
-      const b = await toBase64(f);
-      section.images.push(b);
-    }
-    fileInput.value = '';
+/* one-time change login */
+async function changeLogin(){
+  if(localStorage.getItem(LS.adminChangedFlag)){
+    alert('Login change already used once (demo).');
+    return;
   }
-
-  store[key] = section;
-  localStorage.setItem(LS.homeSections, JSON.stringify(store));
-  renderHomeSectionPreview(key);
-  alert(${capitalize(key)} saved.);
-}
-function clearHomeSection(key){
-  const store = JSON.parse(localStorage.getItem(LS.homeSections)||'{}');
-  store[key] = {text:'', images:[]};
-  localStorage.setItem(LS.homeSections, JSON.stringify(store));
-  renderHomeSectionPreview(key);
-}
-function renderHomeSectionPreview(key){
-  const store = JSON.parse(localStorage.getItem(LS.homeSections)||'{}');
-  const sec = store[key] || {text:'',images:[]};
-  // show text in textarea (keep sync)
-  const ta = document.getElementById(home-${key}-text);
-  if(ta) ta.value = sec.text || '';
-  // show images
-  const container = document.getElementById(home-${key}-preview);
-  container.innerHTML = '';
-  (sec.images||[]).forEach((im,idx)=>{
-    const img = document.createElement('img');
-    img.src = im; img.className='img-preview';
-    img.title = 'Click to remove';
-    img.style.cursor = 'pointer';
-    img.onclick = ()=>{ if(confirm('Remove this image?')){ removeHomeImage(key, idx); } };
-    container.appendChild(img);
-  });
-}
-function removeHomeImage(key, idx){
-  const store = JSON.parse(localStorage.getItem(LS.homeSections)||'{}');
-  (store[key].images||[]).splice(idx,1);
-  localStorage.setItem(LS.homeSections, JSON.stringify(store));
-  renderHomeSectionPreview(key);
-}
-function clearAllHomeContent(){
-  if(!confirm('Clear all home content (facilities, labs, faculty)?')) return;
-  localStorage.setItem(LS.homeSections, JSON.stringify({
-    facilities:{text:'',images:[]},
-    labs:{text:'',images:[]},
-    faculty:{text:'',images:[]}
-  }));
-  renderHomeSectionPreview('facilities');
-  renderHomeSectionPreview('labs');
-  renderHomeSectionPreview('faculty');
-  alert('All home content cleared.');
+  const e = document.getElementById('set-email').value.trim();
+  const p = document.getElementById('set-pass').value;
+  if(!e || !p){ alert('Provide both email and password'); return; }
+  const ph = await sha256(p);
+  localStorage.setItem(LS.adminCred, JSON.stringify({email:e, passHash:ph}));
+  localStorage.setItem(LS.adminChangedFlag,'1');
+  alert('Login changed. Use new credentials next time.');
 }
 
-/* ---------- Slides functions ---------- */
+/* Forgot password (demo only) */
+function showForgot(){ document.getElementById('forgot-box').style.display='block'; }
+function hideForgot(){ document.getElementById('forgot-box').style.display='none'; document.getElementById('forgot-result').innerHTML=''; }
+
+function randomToken(len=36){
+  const arr = new Uint8Array(len);
+  crypto.getRandomValues(arr);
+  return Array.from(arr).map(b => (b%36).toString(36)).join('');
+}
+async function forgotPassword(){
+  const em = document.getElementById('forgot-email').value.trim();
+  if(!em){ alert('Enter admin email'); return; }
+  const admin = getAdmin();
+  if(em !== admin.email){ alert('Email does not match admin account'); return; }
+  const token = randomToken(48);
+  const expires = Date.now() + 1000*60*15; // 15 minutes
+  const tokenObj = {token,expires};
+  localStorage.setItem(LS.forgotTokenKey, JSON.stringify(tokenObj));
+  // In production you'd email the token. For demo we show it:
+  document.getElementById('forgot-result').innerHTML = <div class="small" style="margin-top:8px">Reset token (demo): <strong style="word-break:break-all">${token}</strong><br>Use this token in the console to reset password or replace it with a real email backend. Expires in 15 minutes.</div>;
+  alert('Reset token generated (demo). In production this would be emailed to the admin.');
+}
+
+/* -------------------------
+   Base64 helper
+   ------------------------- */
+function toBase64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }) }
+
+/* -------------------------
+   Homepage editor: save/load
+   ------------------------- */
+async function handleFilesToBase64(fileList){
+  const out = [];
+  for(let f of fileList) out.push(await toBase64(f));
+  return out;
+}
+function renderHomepageEditor(){
+  const hp = JSON.parse(localStorage.getItem(LS.homepage) || '{}');
+  document.getElementById('hp-facilities-text').value = (hp.facilities && hp.facilities.text) || '';
+  document.getElementById('hp-labs-text').value = (hp.labs && hp.labs.text) || '';
+  document.getElementById('hp-faculty-text').value = (hp.faculty && hp.faculty.text) || '';
+  // previews
+  const showImgs = (els, containerId) => {
+    const cont = document.getElementById(containerId);
+    cont.innerHTML = (els||[]).map(src=><img src="${src}" class="img-preview"/>).join('');
+  };
+  showImgs(hp.facilities && hp.facilities.images, 'hp-facilities-preview');
+  showImgs(hp.labs && hp.labs.images, 'hp-labs-preview');
+  showImgs(hp.faculty && hp.faculty.images, 'hp-faculty-preview');
+}
+async function saveHomepage(){
+  const hp = JSON.parse(localStorage.getItem(LS.homepage) || '{}');
+  hp.facilities = hp.facilities||{};
+  hp.labs = hp.labs||{};
+  hp.faculty = hp.faculty||{};
+  hp.facilities.text = document.getElementById('hp-facilities-text').value.trim();
+  hp.labs.text = document.getElementById('hp-labs-text').value.trim();
+  hp.faculty.text = document.getElementById('hp-faculty-text').value.trim();
+  // handle new files appended
+  const fFiles = document.getElementById('hp-facilities-files').files;
+  const lFiles = document.getElementById('hp-labs-files').files;
+  const faFiles = document.getElementById('hp-faculty-files').files;
+  if(fFiles.length){
+    const arr = await handleFilesToBase64(fFiles);
+    hp.facilities.images = (hp.facilities.images||[]).concat(arr);
+    document.getElementById('hp-facilities-files').value='';
+  }
+  if(lFiles.length){
+    const arr = await handleFilesToBase64(lFiles);
+    hp.labs.images = (hp.labs.images||[]).concat(arr);
+    document.getElementById('hp-labs-files').value='';
+  }
+  if(faFiles.length){
+    const arr = await handleFilesToBase64(faFiles);
+    hp.faculty.images = (hp.faculty.images||[]).concat(arr);
+    document.getElementById('hp-faculty-files').value='';
+  }
+  localStorage.setItem(LS.homepage, JSON.stringify(hp));
+  notifyChange(LS.homepage);
+  renderHomepageEditor();
+  alert('Homepage content saved.');
+}
+function clearHomepage(){
+  if(!confirm('Clear homepage content?')) return;
+  localStorage.setItem(LS.homepage, JSON.stringify({facilities:{text:'',images:[]}, labs:{text:'',images:[]}, faculty:{text:'',images:[]}, contact:{}}));
+  notifyChange(LS.homepage);
+  renderHomepageEditor();
+}
+
+/* Apply to site (notify) */
+function applyToSite(){
+  notifyChange(LS.homepage);
+  notifyChange(LS.slides);
+  notifyChange(LS.updates);
+  alert('Applied to site (localStorage updated). Open main site (same origin) to see changes.');
+}
+
+/* -------------------------
+   Slides management
+   ------------------------- */
 async function uploadSlides(){
   const files = document.getElementById('slide-files').files;
-  if(!files.length){ alert('Choose images to upload'); return; }
+  if(!files.length){ alert('Choose images'); return; }
   const caption = document.getElementById('slide-caption').value.trim();
   const existing = JSON.parse(localStorage.getItem(LS.slides)||'[]');
   for(let f of files){
@@ -432,162 +458,300 @@ async function uploadSlides(){
     existing.push({url:b,caption:caption});
   }
   localStorage.setItem(LS.slides, JSON.stringify(existing));
+  notifyChange(LS.slides);
   renderSlidesPreview();
-  alert('Slides uploaded.');
   document.getElementById('slide-files').value='';
   document.getElementById('slide-caption').value='';
-}
-function renderSlidesPreview(){
-  const container = document.getElementById('slides-preview');
-  const slides = JSON.parse(localStorage.getItem(LS.slides)||'[]');
-  container.innerHTML = '';
-  slides.forEach((s,i)=>{
-    const img = document.createElement('img'); img.src=s.url; img.className='img-preview';
-    img.title='Click to remove';
-    img.style.cursor='pointer';
-    img.onclick = ()=>{ if(confirm('Remove this slide?')){ removeSlide(i); } };
-    container.appendChild(img);
-  });
-}
-function removeSlide(i){
-  const arr = JSON.parse(localStorage.getItem(LS.slides)||'[]');
-  arr.splice(i,1); localStorage.setItem(LS.slides, JSON.stringify(arr)); renderSlidesPreview();
+  alert('Slides uploaded.');
 }
 function clearSlides(){
   if(!confirm('Clear all slides?')) return;
   localStorage.setItem(LS.slides, JSON.stringify([]));
+  notifyChange(LS.slides);
   renderSlidesPreview();
 }
+function renderSlidesPreview(){
+  const container = document.getElementById('slides-preview');
+  const slides = JSON.parse(localStorage.getItem(LS.slides)||'[]');
+  container.innerHTML = slides.map(s=><div><img src="${s.url}" class="img-preview"/><div class="small">${s.caption||''}</div></div>).join('');
+}
 
-/* ---------- Students: add / list / delete / export ---------- */
+/* -------------------------
+   Homework
+   ------------------------- */
+function addHomework(){
+  const cls = document.getElementById('hw-class').value;
+  const date = document.getElementById('hw-date').value;
+  const task = document.getElementById('hw-task').value.trim();
+  if(!date || !task){ alert('Provide date and task'); return; }
+  const arr = JSON.parse(localStorage.getItem(LS.homework)||'[]');
+  arr.push({class:cls,date:date,task:task, images:[]});
+  localStorage.setItem(LS.homework, JSON.stringify(arr));
+  notifyChange(LS.homework);
+  renderHWList();
+}
+function renderHWList(){
+  const list = document.getElementById('hw-list');
+  const arr = JSON.parse(localStorage.getItem(LS.homework)||'[]');
+  if(!arr.length){ list.innerHTML='<div class="small">No homework</div>'; return; }
+  list.innerHTML = arr.map((h,i)=>`
+    <div style="padding:8px;border-bottom:1px dashed #eee">
+      <strong>${h.class}</strong> | ${h.date}
+      <div class="small" style="margin-top:6px">${h.task}</div>
+      ${ (h.images||[]).map(im=><img src="${im}" class="img-preview">).join('') }
+      <div style="margin-top:6px" class="flex">
+        <button class="btn danger" onclick="deleteHW(${i})">Delete</button>
+        <button class="btn" onclick="addImageToItem('${LS.homework}',${i})">Add Image</button>
+      </div>
+    </div>`).join('');
+}
+function deleteHW(i){ const arr=JSON.parse(localStorage.getItem(LS.homework)||'[]'); arr.splice(i,1); localStorage.setItem(LS.homework,JSON.stringify(arr)); notifyChange(LS.homework); renderHWList(); }
+
+/* -------------------------
+   Results
+   ------------------------- */
+function addResult(){
+  const roll=document.getElementById('res-roll').value.trim();
+  const cnic=document.getElementById('res-cnic').value.trim();
+  const cls=document.getElementById('res-class').value;
+  const marks=document.getElementById('res-marks').value.trim();
+  if(!roll || !cnic){ alert('Roll and CNIC needed'); return; }
+  const arr=JSON.parse(localStorage.getItem(LS.results)||'[]');
+  arr.push({roll,cnic,class:cls,marks,images:[]});
+  localStorage.setItem(LS.results,JSON.stringify(arr));
+  notifyChange(LS.results);
+  renderResultsList();
+}
+function renderResultsList(){
+  const node = document.getElementById('res-list');
+  const arr = JSON.parse(localStorage.getItem(LS.results)||'[]');
+  if(!arr.length){ node.innerHTML='<div class="small">No results</div>'; return; }
+  node.innerHTML = arr.map((r,i)=>`
+    <div style="padding:8px;border-bottom:1px dashed #eee">
+      <strong>Roll ${r.roll}</strong> | CNIC ${r.cnic} | ${r.class}
+      <div class="small">${r.marks||''}</div>
+      ${(r.images||[]).map(im=><img src="${im}" class="img-preview">).join('')}
+      <div style="margin-top:6px" class="flex">
+        <button class="btn danger" onclick="deleteResult(${i})">Delete</button>
+        <button class="btn" onclick="addImageToItem('${LS.results}',${i})">Add Image</button>
+      </div>
+    </div>`).join('');
+}
+function deleteResult(i){ const arr=JSON.parse(localStorage.getItem(LS.results)||'[]'); arr.splice(i,1); localStorage.setItem(LS.results,JSON.stringify(arr)); notifyChange(LS.results); renderResultsList(); }
+
+/* -------------------------
+   FAQs
+   ------------------------- */
+function addFaq(){
+  const q=document.getElementById('faq-q').value.trim();
+  const a=document.getElementById('faq-a').value.trim();
+  const c=document.getElementById('faq-cat').value.trim()||'General';
+  if(!q||!a){ alert('Add question and answer'); return; }
+  const arr=JSON.parse(localStorage.getItem(LS.faqs)||'[]');
+  arr.push({q,a,cat:c,images:[]});
+  localStorage.setItem(LS.faqs,JSON.stringify(arr)); notifyChange(LS.faqs); renderFaqManage();
+}
+function renderFaqManage(){
+  const node = document.getElementById('faq-manage'), arr=JSON.parse(localStorage.getItem(LS.faqs)||'[]');
+  if(!arr.length){ node.innerHTML='<div class="small">No FAQ</div>'; return; }
+  node.innerHTML = arr.map((f,i)=>`
+    <div style="padding:8px;border-bottom:1px dashed #eee">
+      <strong>${f.q}</strong> <div class="small">${f.cat}</div>
+      <div style="margin-top:6px">${f.a}</div>
+      ${(f.images||[]).map(im=><img src="${im}" class="img-preview">).join('')}
+      <div style="margin-top:6px" class="flex">
+        <button class="btn danger" onclick="deleteFaq(${i})">Delete</button>
+        <button class="btn" onclick="addImageToItem('${LS.faqs}',${i})">Add Image</button>
+      </div>
+    </div>`).join('');
+}
+function deleteFaq(i){ const arr=JSON.parse(localStorage.getItem(LS.faqs)||'[]'); arr.splice(i,1); localStorage.setItem(LS.faqs,JSON.stringify(arr)); notifyChange(LS.faqs); renderFaqManage(); }
+
+/* -------------------------
+   Attendance
+   ------------------------- */
+function addAttendance(){
+  const cls=document.getElementById('att-class-set').value;
+  const date=document.getElementById('att-date-set').value || new Date().toISOString().slice(0,10);
+  const name=document.getElementById('att-name').value.trim();
+  const status=document.getElementById('att-status').value;
+  if(!name){alert('Student name');return;}
+  const arr=JSON.parse(localStorage.getItem(LS.attendance)||'[]');
+  arr.push({class:cls,date,name, status, images:[]});
+  localStorage.setItem(LS.attendance,JSON.stringify(arr)); notifyChange(LS.attendance); renderAttManage();
+}
+function renderAttManage(){
+  const node=document.getElementById('att-manage'), arr=JSON.parse(localStorage.getItem(LS.attendance)||'[]');
+  if(!arr.length){ node.innerHTML='<div class="small">No attendance records</div>'; return; }
+  node.innerHTML = arr.map((r,i)=>`
+    <div style="padding:8px;border-bottom:1px dashed #eee">
+      <strong>${r.name}</strong> | ${r.class} | ${r.date} | ${r.status}
+      ${(r.images||[]).map(im=><img src="${im}" class="img-preview">).join('')}
+      <div style="margin-top:6px" class="flex">
+        <button class="btn danger" onclick="deleteAtt(${i})">Delete</button>
+        <button class="btn" onclick="addImageToItem('${LS.attendance}',${i})">Add Image</button>
+      </div>
+    </div>`).join('');
+}
+function deleteAtt(i){ const arr=JSON.parse(localStorage.getItem(LS.attendance)||'[]'); arr.splice(i,1); localStorage.setItem(LS.attendance,JSON.stringify(arr)); notifyChange(LS.attendance); renderAttManage(); }
+
+/* -------------------------
+   Events
+   ------------------------- */
+async function addEvent(){
+  const name=document.getElementById('ev-name').value.trim();
+  const desc=document.getElementById('ev-desc').value.trim();
+  const files=document.getElementById('ev-files').files;
+  if(!name||!desc){ alert('Name & description required'); return; }
+  const images=[];
+  for(let f of files) images.push(await toBase64(f));
+  const arr = JSON.parse(localStorage.getItem(LS.events)||'[]');
+  arr.push({name,desc,images});
+  localStorage.setItem(LS.events,JSON.stringify(arr)); notifyChange(LS.events); renderEvManage();
+}
+function renderEvManage(){
+  const node=document.getElementById('ev-manage'), arr=JSON.parse(localStorage.getItem(LS.events)||'[]');
+  if(!arr.length){ node.innerHTML='<div class="small">No events</div>'; return; }
+  node.innerHTML = arr.map((ev,i)=>`
+    <div style="padding:8px;border-bottom:1px dashed #eee">
+      <strong>${ev.name}</strong><div class="small">${ev.desc}</div>
+      <div style="margin-top:6px">${(ev.images||[]).map(im=><img src="${im}" class="img-preview">).join('')}</div>
+      <div style="margin-top:6px"><button class="btn danger" onclick="deleteEvent(${i})">Delete</button></div>
+    </div>`).join('');
+}
+function deleteEvent(i){ const arr=JSON.parse(localStorage.getItem(LS.events)||'[]'); arr.splice(i,1); localStorage.setItem(LS.events,JSON.stringify(arr)); notifyChange(LS.events); renderEvManage(); }
+
+/* -------------------------
+   Updates
+   ------------------------- */
+function saveUpdates(){
+  const cie = document.getElementById('u-cie').value.trim();
+  const news = document.getElementById('u-news').value.trim();
+  localStorage.setItem(LS.updates, JSON.stringify({cie:cie||'No session under way.', news:news||''}));
+  notifyChange(LS.updates);
+  alert('Updates saved');
+}
+
+/* -------------------------
+   Students (with parent CNIC/B-form/etc)
+   ------------------------- */
 function addStudent(){
   const s = {
     name: document.getElementById('s-name').value.trim(),
     parents: document.getElementById('s-parents').value.trim(),
-    parentCnic: document.getElementById('s-pcnic').value.trim(),
     cnic: document.getElementById('s-cnic').value.trim(),
     bform: document.getElementById('s-bform').value.trim(),
     dob: document.getElementById('s-dob').value,
     join: document.getElementById('s-join').value,
-    class: document.getElementById('s-class').value
+    class: document.getElementById('s-class').value,
+    images:[]
   };
   if(!s.name){ alert('Student name required'); return; }
   const arr = JSON.parse(localStorage.getItem(LS.students)||'[]');
-  arr.push(s);
-  localStorage.setItem(LS.students, JSON.stringify(arr));
-  renderStudents();
-  alert('Student added.');
-  // clear inputs
-  ['s-name','s-parents','s-pcnic','s-cnic','s-bform','s-dob','s-join'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  arr.push(s); localStorage.setItem(LS.students, JSON.stringify(arr)); notifyChange(LS.students); renderStudents();
 }
 function renderStudents(){
   const list = document.getElementById('students-list');
   const arr = JSON.parse(localStorage.getItem(LS.students)||'[]');
-  list.innerHTML = arr.map((st,i)=>{
-    return `<div style="padding:8px;border-bottom:1px dashed #eee">
-      <strong>${escapeHtml(st.name)}</strong>
-      <div class="small">${escapeHtml(st.class)} | CNIC: ${escapeHtml(st.cnic)}</div>
-      <div style="margin-top:6px" class="small">Parent(s): ${escapeHtml(st.parents)} | Parent CNIC: ${escapeHtml(st.parentCnic)} | B-Form: ${escapeHtml(st.bform)}</div>
-      <div style="margin-top:6px">
+  if(!arr.length){ list.innerHTML = '<div class="small">No students</div>'; return; }
+  list.innerHTML = arr.map((st,i)=>`
+    <div style="padding:8px;border-bottom:1px dashed #eee">
+      <strong>${st.name}</strong>
+      <div class="small">${st.class} | CNIC: ${st.cnic}</div>
+      <div style="margin-top:6px">${st.parents} | B-Form: ${st.bform}</div>
+      ${(st.images||[]).map(im=><img src="${im}" class="img-preview">).join('')}
+      <div style="margin-top:6px" class="flex">
         <button class="btn danger" onclick="deleteStudent(${i})">Delete</button>
-        <button class="btn gray" style="margin-left:8px" onclick="editStudent(${i})">Edit</button>
+        <button class="btn" onclick="addImageToItem('${LS.students}',${i})">Add Image</button>
       </div>
-    </div>`;
-  }).join('') || '<div class="small">No students</div>';
+    </div>`).join('');
 }
-function deleteStudent(i){
-  if(!confirm('Delete this student?')) return;
-  const arr = JSON.parse(localStorage.getItem(LS.students)||'[]');
-  arr.splice(i,1);
-  localStorage.setItem(LS.students, JSON.stringify(arr));
-  renderStudents();
-}
-function editStudent(i){
-  const arr = JSON.parse(localStorage.getItem(LS.students)||'[]');
-  const st = arr[i];
-  if(!st) return alert('Record not found.');
-  // populate inputs
-  document.getElementById('s-name').value = st.name;
-  document.getElementById('s-parents').value = st.parents;
-  document.getElementById('s-pcnic').value = st.parentCnic || '';
-  document.getElementById('s-cnic').value = st.cnic;
-  document.getElementById('s-bform').value = st.bform;
-  document.getElementById('s-dob').value = st.dob;
-  document.getElementById('s-join').value = st.join;
-  document.getElementById('s-class').value = st.class;
-  // delete original; user will Add Student to save edited record
-  arr.splice(i,1);
-  localStorage.setItem(LS.students, JSON.stringify(arr));
-  renderStudents();
-  alert('Edit the fields and click Add Student to save changes.');
-}
+function deleteStudent(i){ const arr=JSON.parse(localStorage.getItem(LS.students)||'[]'); arr.splice(i,1); localStorage.setItem(LS.students, JSON.stringify(arr)); notifyChange(LS.students); renderStudents(); }
 function exportStudentsCSV(){
   const arr = JSON.parse(localStorage.getItem(LS.students)||'[]');
   if(!arr.length){ alert('No students to export'); return; }
-  const keys = ['name','parents','parentCnic','cnic','bform','dob','join','class'];
+  const keys = ['name','parents','cnic','bform','dob','join','class'];
   const csv = [keys.join(',')].concat(arr.map(r=>keys.map(k=>"${((r[k]||'')+'').replace(/"/g,'""')}").join(','))).join('\n');
   const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = 'students.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 }
+/* EVS export (filter by class or special tag) */
+function exportStudentsEVS(){
+  const arr = JSON.parse(localStorage.getItem(LS.students)||'[]').filter(s=> s.class && s.class.toLowerCase().includes('evs') );
+  if(!arr.length){ alert('No EVS students to export'); return; }
+  const keys = ['name','parents','cnic','bform','dob','join','class'];
+  const csv = [keys.join(',')].concat(arr.map(r=>keys.map(k=>"${((r[k]||'')+'').replace(/"/g,'""')}").join(','))).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'students_evs.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
 
-/* ---------- Preview home content ---------- */
-function previewHomeContent(){
-  const store = JSON.parse(localStorage.getItem(LS.homeSections)||'{}');
-  const out = document.getElementById('home-preview');
-  out.innerHTML = '';
-  ['facilities','labs','faculty'].forEach(key=>{
-    const s = store[key]||{text:'',images:[]};
-    const box = document.createElement('div');
-    box.style.background='#fff'; box.style.padding='12px'; box.style.borderRadius='8px'; box.style.marginBottom='12px';
-    box.innerHTML = <h4 style="margin:0 0 8px">${capitalize(key)}</h4><div>${s.text||'<em>No content</em>'}</div>;
-    if((s.images||[]).length){
-      const imgs = document.createElement('div'); imgs.className='images-row';
-      s.images.forEach(im=>{
-        const iel = document.createElement('img'); iel.src = im; iel.className='img-preview';
-        imgs.appendChild(iel);
-      });
-      box.appendChild(imgs);
+/* -------------------------
+   Generic: add image to array item (homework/results/faqs/attendance/students)
+   ------------------------- */
+async function addImageToItem(sectionKey, index){
+  const fileInput = document.createElement('input'); fileInput.type='file'; fileInput.accept='image/*';
+  fileInput.onchange = async ()=>{
+    if(fileInput.files.length){
+      const base64 = await toBase64(fileInput.files[0]);
+      const arr = JSON.parse(localStorage.getItem(sectionKey)||'[]');
+      if(!arr[index]){ alert('Item not found'); return;}
+      arr[index].images = arr[index].images || [];
+      arr[index].images.push(base64);
+      localStorage.setItem(sectionKey, JSON.stringify(arr));
+      notifyChange(sectionKey);
+      // re-render
+      if(sectionKey===LS.homework) renderHWList();
+      if(sectionKey===LS.results) renderResultsList();
+      if(sectionKey===LS.faqs) renderFaqManage();
+      if(sectionKey===LS.attendance) renderAttManage();
+      if(sectionKey===LS.students) renderStudents();
     }
-    out.appendChild(box);
-  });
+  };
+  fileInput.click();
 }
 
-/* ---------- Admin area loader ---------- */
-function loadAdminArea(){
-  // populate settings
-  const cred = JSON.parse(localStorage.getItem(LS.adminCred)||'{}');
-  document.getElementById('set-email').value = cred.email || '';
-  // render home previews
-  renderHomeSectionPreview('facilities');
-  renderHomeSectionPreview('labs');
-  renderHomeSectionPreview('faculty');
-  renderSlidesPreview();
-  renderStudents();
+/* -------------------------
+   notifyChange helper (fires storage event)
+   ------------------------- */
+function notifyChange(key){
+  // write and then dispatch storage event by toggling same value
+  localStorage.setItem(key, localStorage.getItem(key));
+  window.dispatchEvent(new Event('storage'));
 }
 
-/* ---------- Helpers ---------- */
-function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-function escapeHtml(s){ if(!s) return ''; return s.replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;" })[m]); }
-
-/* initialize admin UI if already logged-in session (none persisted intentionally) */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // fill textareas with stored home content
-  const store = JSON.parse(localStorage.getItem(LS.homeSections)||'{}');
-  ['facilities','labs','faculty'].forEach(k=>{
-    const s = store[k]||{text:'',images:[]};
-    const ta = document.getElementById(home-${k}-text);
-    if(ta) ta.value = s.text||'';
-  });
+/* -------------------------
+   Load initial state
+   ------------------------- */
+function loadAllManagers(){
   renderSlidesPreview();
-  renderHomeSectionPreview('facilities');
-  renderHomeSectionPreview('labs');
-  renderHomeSectionPreview('faculty');
+  renderHWList();
+  renderResultsList();
+  renderFaqManage();
+  renderAttManage();
+  renderEvManage();
   renderStudents();
-});
+  renderHomepageEditor();
+  // preload updates
+  const up = JSON.parse(localStorage.getItem(LS.updates)||'{}');
+  document.getElementById('u-cie').value = up.cie||'';
+  document.getElementById('u-news').value = up.news||'';
+}
 
-/* export for debug */
-window._dbg = {LS, renderStudents, renderSlidesPreview, renderHomeSectionPreview};
+/* render homepage editor on changes from anywhere */
+window.addEventListener('storage', ()=> renderHomepageEditor());
 
+/* initial render (if already logged in, optionally) */
+(function init(){
+  // keep login display based on a simple flag? we show login by default
+  renderSlidesPreview();
+  renderHWList();
+  renderResultsList();
+  renderFaqManage();
+  renderAttManage();
+  renderEvManage();
+  renderStudents();
+  renderHomepageEditor();
+})();
 </script>
 </body>
 </html>
