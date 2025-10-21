@@ -6,58 +6,58 @@
 <title>Crescent International</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --navy:#0b2b5a;
-    --white:#ffffff;
-    --muted:#333;
-    --accent:#f3f6fb;
-  }
-  *{box-sizing:border-box}
-  body{font-family:'Poppins',sans-serif;margin:0;background:#fff;color:var(--muted);-webkit-font-smoothing:antialiased;}
-  header{background:var(--navy);color:var(--white);padding:28px 16px;text-align:center}
-  header h1{margin:0;font-size:28px;font-weight:700}
-  header p{margin:6px 0 0;font-weight:500;opacity:.95}
+:root{
+  --navy:#0b2b5a;
+  --white:#ffffff;
+  --muted:#333;
+  --accent:#f3f6fb;
+}
+*{box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;margin:0;background:#fff;color:var(--muted);-webkit-font-smoothing:antialiased;}
+header{background:var(--navy);color:var(--white);padding:28px 16px;text-align:center}
+header h1{margin:0;font-size:28px;font-weight:700}
+header p{margin:6px 0 0;font-weight:500;opacity:.95}
 
-  nav{display:flex;justify-content:center;gap:14px;padding:12px 8px;background:#f6f8fb;position:sticky;top:0;z-index:50;border-bottom:1px solid #e6e9ef}
-  nav a{padding:8px 12px;border-radius:6px;color:#0b2b5a;text-decoration:none;font-weight:600}
-  nav a.active{background:var(--navy);color:var(--white)}
-  nav a:hover{opacity:.9}
+nav{display:flex;justify-content:center;gap:14px;padding:12px 8px;background:#f6f8fb;position:sticky;top:0;z-index:50;border-bottom:1px solid #e6e9ef}
+nav a{padding:8px 12px;border-radius:6px;color:#0b2b5a;text-decoration:none;font-weight:600}
+nav a.active{background:var(--navy);color:var(--white)}
+nav a:hover{opacity:.9}
 
-  main{max-width:1100px;margin:22px auto;padding:0 16px}
+main{max-width:1100px;margin:22px auto;padding:0 16px}
 
-  .slideshow{position:relative;height:320px;border-radius:10px;overflow:hidden;background:var(--accent);display:flex;align-items:center;justify-content:center}
-  .slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
-  .slide.show{opacity:1}
-  .slide img{width:100%;height:100%;object-fit:cover;display:block}
-  .slide .caption{position:absolute;left:18px;bottom:18px;background:rgba(11,43,90,.75);color:#fff;padding:8px 12px;border-radius:6px;font-weight:600}
+.slideshow{position:relative;height:320px;border-radius:10px;overflow:hidden;background:var(--accent);display:flex;align-items:center;justify-content:center}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+.slide.show{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.slide .caption{position:absolute;left:18px;bottom:18px;background:rgba(11,43,90,.75);color:#fff;padding:8px 12px;border-radius:6px;font-weight:600}
 
-  section{margin:20px 0;padding:18px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(12,30,60,0.05)}
-  .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .section-head h2{margin:0;color:var(--navy)}
-  .muted{color:#666;font-size:14px}
+section{margin:20px 0;padding:18px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(12,30,60,0.05)}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.section-head h2{margin:0;color:var(--navy)}
+.muted{color:#666;font-size:14px}
 
-  table{width:100%;border-collapse:collapse;margin-top:12px}
-  th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
-  th{background:#f7f9fc;color:#0b2b5a;font-weight:600}
-  .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--navy);color:#fff;border:none;font-weight:600;cursor:pointer;text-decoration:none}
-  .btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+th{background:#f7f9fc;color:#0b2b5a;font-weight:600}
+.status-dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:middle}
+.present{background:#16a34a}
+.absent{background:#ef4444}
+.half{background:#9ca3af}
 
-  .faq-item{border-radius:8px;padding:10px;margin-top:8px;border:1px solid #f0f2f6}
-  .faq-q{display:flex;justify-content:space-between;cursor:pointer;font-weight:600}
-  .faq-a{margin-top:8px;color:#444;display:none}
+.faq-item{border-radius:8px;padding:10px;margin-top:8px;border:1px solid #f0f2f6}
+.faq-q{display:flex;justify-content:space-between;cursor:pointer;font-weight:600}
+.faq-a{margin-top:8px;color:#444;display:none}
 
-  .status-dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:middle}
-  .present{background:#16a34a}
-  .absent{background:#ef4444}
-  .half{background:#9ca3af}
+.admin-panel{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:flex;justify-content:center;align-items:center;z-index:999;display:none}
+.admin-box{background:#fff;padding:24px;border-radius:10px;max-width:600px;width:90%;max-height:90%;overflow:auto}
 
-  @media(max-width:900px){
-    .slideshow{height:220px}
-    nav{overflow:auto}
-  }
+@media(max-width:900px){
+  .slideshow{height:220px}
+  nav{overflow:auto}
+}
 
-  footer{max-width:1100px;margin:26px auto 60px;padding:8px 16px;color:#666;font-size:14px}
-  .contact{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+footer{max-width:1100px;margin:26px auto 60px;padding:8px 16px;color:#666;font-size:14px}
+.contact{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 </style>
 </head>
 <body>
@@ -75,176 +75,174 @@
   <a href="#attendance" data-page="attendance">Student Attendance</a>
   <a href="#events" data-page="events">Events</a>
   <a href="#updates" data-page="updates">Updates</a>
+  <a href="#" id="adminLoginBtn">Admin Login</a>
 </nav>
 
 <main>
-  <section id="home" class="page">
-    <div class="slideshow" id="slideshow"></div>
-    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;align-items:center;justify-content:space-between">
-      <div>
-        <h2 style="margin:0;color:var(--navy)">Welcome to Crescent International</h2>
-        <p class="muted" style="margin-top:6px">A modern school for modern learners.</p>
-      </div>
-      <div class="contact">
-        <div style="font-weight:600">Contact:</div>
-        <div class="muted">email: info@crescent.edu</div>
-        <div class="muted">phone: +92 300 0000000</div>
-        <div class="muted">address: 123 Crescent Avenue, City</div>
-      </div>
+<section id="home" class="page">
+  <div class="slideshow" id="slideshow"></div>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;align-items:center;justify-content:space-between">
+    <div>
+      <h2 style="margin:0;color:var(--navy)">Welcome to Crescent International</h2>
+      <p class="muted" style="margin-top:6px">A modern school for modern learners.</p>
     </div>
-  </section>
+    <div class="contact">
+      <div style="font-weight:600">Contact:</div>
+      <div class="muted">email: info@crescent.edu</div>
+      <div class="muted">phone: +92 300 0000000</div>
+      <div class="muted">address: 123 Crescent Avenue, City</div>
+    </div>
+  </div>
+</section>
 
-  <section id="homework" class="page" style="display:none">
-    <div class="section-head">
-      <h2>Homework</h2>
-      <div>
-        <select id="hw-filter">
-          <option value="All">All Classes</option>
-          <option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option>
-        </select>
-        <button class="btn" onclick="openAdmin()">Edit (Admin)</button>
-      </div>
-    </div>
-    <table id="hw-table" aria-live="polite">
-      <thead><tr><th>Date</th><th>Class</th><th>Task</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </section>
+<section id="homework" class="page" style="display:none">
+  <div class="section-head"><h2>Homework</h2></div>
+  <table id="hw-table">
+    <thead><tr><th>Date</th><th>Class</th><th>Task</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</section>
 
-  <section id="results" class="page" style="display:none">
-    <div class="section-head">
-      <h2>Results</h2>
-      <div class="muted">Enter Roll No and Parent CNIC</div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-      <input id="res-roll" placeholder="Roll Number" style="padding:8px;border:1px solid #ddd;border-radius:8px"/>
-      <input id="res-cnic" placeholder="Parent CNIC" style="padding:8px;border:1px solid #ddd;border-radius:8px"/>
-      <button class="btn" onclick="findResult()">Show Result</button>
-    </div>
-    <div id="result-output" style="margin-top:12px"></div>
-    <div style="margin-top:14px"><button class="btn ghost" onclick="openAdmin()">Admins: Edit Results</button></div>
-  </section>
+<section id="results" class="page" style="display:none">
+  <div class="section-head"><h2>Results</h2></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+    <input id="res-roll" placeholder="Roll Number" style="padding:8px;border:1px solid #ddd;border-radius:8px"/>
+    <input id="res-cnic" placeholder="Parent CNIC" style="padding:8px;border:1px solid #ddd;border-radius:8px"/>
+    <button class="btn" onclick="findResult()">Show Result</button>
+  </div>
+  <div id="result-output" style="margin-top:12px"></div>
+</section>
 
-  <section id="faqs" class="page" style="display:none">
-    <div class="section-head">
-      <h2>FAQ’s</h2>
-      <div class="muted">Categories: Admissions, Exams, Uniforms, Fees, General</div>
-    </div>
-    <div id="faq-list" style="margin-top:12px"></div>
-    <div style="margin-top:12px"><button class="btn ghost" onclick="openAdmin()">Admins: Manage FAQ’s</button></div>
-  </section>
+<section id="faqs" class="page" style="display:none">
+  <div class="section-head"><h2>FAQ’s</h2></div>
+  <div id="faq-list" style="margin-top:12px"></div>
+</section>
 
-  <section id="attendance" class="page" style="display:none">
-    <div class="section-head">
-      <h2>Student Attendance</h2>
-      <div>
-        <select id="att-class">
-          <option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option>
-        </select>
-        <input type="date" id="att-date" />
-        <button class="btn" onclick="openAdmin()">Edit Attendance (Admin)</button>
-      </div>
-    </div>
-    <table id="att-table">
-      <thead><tr><th>Student</th><th>Date</th><th>Status</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </section>
+<section id="attendance" class="page" style="display:none">
+  <div class="section-head"><h2>Student Attendance</h2></div>
+  <table id="att-table">
+    <thead><tr><th>Student</th><th>Date</th><th>Status</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</section>
 
-  <section id="events" class="page" style="display:none"></section>
-  <section id="updates" class="page" style="display:none"></section>
+<section id="events" class="page" style="display:none">
+  <div class="section-head"><h2>Events</h2></div>
+  <div id="events-list" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:12px"></div>
+</section>
+
+<section id="updates" class="page" style="display:none">
+  <div class="section-head"><h2>Updates</h2></div>
+  <div style="margin-top:12px">
+    <h4>CIE Updates</h4>
+    <p id="cie-updates" class="muted"></p>
+    <h4 style="margin-top:12px">School News</h4>
+    <p id="school-news" class="muted"></p>
+  </div>
+</section>
 </main>
 
 <footer>
-  <div>&copy; 2025 Crescent International | All Rights Reserved</div>
+  <div style="max-width:1100px;margin:0 auto;padding:10px 16px;color:#666;display:flex;flex-direction:column;gap:6px">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div style="font-weight:600;color:#0b2b5a">Crescent International</div>
+      <div class="muted">© 2025 Crescent International — All rights reserved</div>
+    </div>
+  </div>
 </footer>
 
+<!-- Admin Panel -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-box">
+    <h2>Admin Login</h2>
+    <input type="email" id="adminEmail" placeholder="Email" style="width:100%;padding:8px;margin:6px 0"/>
+    <input type="password" id="adminPass" placeholder="Password" style="width:100%;padding:8px;margin:6px 0"/>
+    <button class="btn" id="loginBtn">Login</button>
+    <div id="loginMsg" style="margin-top:6px;color:red"></div>
+    <hr>
+    <div id="adminControls" style="display:none">
+      <h3>Edit Data</h3>
+      <p>All changes will persist automatically.</p>
+    </div>
+    <button class="btn ghost" id="closeAdmin">Close</button>
+  </div>
+</div>
+
 <script>
-const navLinks = document.querySelectorAll('nav a');
+// Tab Navigation
 const pages = document.querySelectorAll('.page');
-navLinks.forEach(link=>{
-  link.addEventListener('click', e=>{
-    e.preventDefault();
-    const page = link.dataset.page;
-    pages.forEach(p=>p.style.display='none');
-    document.getElementById(page).style.display='block';
-    navLinks.forEach(a=>a.classList.remove('active'));
-    link.classList.add('active');
-  });
-});
-
-// LocalStorage fix: initialize only if empty
-if(!localStorage.getItem('homework')) localStorage.setItem('homework', JSON.stringify([]));
-if(!localStorage.getItem('results')) localStorage.setItem('results', JSON.stringify([]));
-if(!localStorage.getItem('attendance')) localStorage.setItem('attendance', JSON.stringify([]));
-if(!localStorage.getItem('faqs')) localStorage.setItem('faqs', JSON.stringify([]));
-
-function loadHomework(){
-  const hwTable = document.querySelector('#hw-table tbody');
-  const homework = JSON.parse(localStorage.getItem('homework'));
-  hwTable.innerHTML='';
-  homework.forEach(hw=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML=`<td>${hw.date}</td><td>${hw.class}</td><td>${hw.task}</td>`;
-    hwTable.appendChild(tr);
-  });
+const navLinks = document.querySelectorAll('nav a:not(#adminLoginBtn)');
+function showPage(name){
+  pages.forEach(p=>p.style.display='none');
+  document.getElementById(name).style.display='block';
+  navLinks.forEach(a=>a.classList.remove('active'));
+  const activeLink = document.querySelector('nav a[data-page="'+name+'"]');
+  if(activeLink) activeLink.classList.add('active');
+  window.scrollTo(0,0);
 }
-function loadAttendance(){
-  const attTable = document.querySelector('#att-table tbody');
-  const attendance = JSON.parse(localStorage.getItem('attendance'));
-  attTable.innerHTML='';
-  attendance.forEach(att=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML=`<td>${att.student}</td><td>${att.date}</td><td><span class="status-dot ${att.status.toLowerCase()}"></span>${att.status}</td>`;
-    attTable.appendChild(tr);
-  });
-}
-function loadFAQs(){
-  const faqList = document.querySelector('#faq-list');
-  const faqs = JSON.parse(localStorage.getItem('faqs'));
-  faqList.innerHTML='';
-  faqs.forEach(f=>{
-    const div = document.createElement('div');
-    div.className='faq-item';
-    div.innerHTML=`<div class="faq-q">${f.q}<span>+</span></div><div class="faq-a">${f.a}</div>`;
-    faqList.appendChild(div);
-    const q = div.querySelector('.faq-q');
-    const a = div.querySelector('.faq-a');
-    q.addEventListener('click',()=>a.style.display=(a.style.display==='block'?'none':'block'));
-  });
-}
+window.addEventListener('hashchange',()=>showPage(location.hash.replace('#','')||'home'));
+if(!location.hash) location.hash='#home'; else showPage(location.hash.replace('#',''));
 
-// Initial load
-loadHomework();
-loadAttendance();
-loadFAQs();
-
-// Dummy functions
-function openAdmin(){alert('Admin panel placeholder');}
-function findResult(){alert('Result search placeholder');}
-
-// Slideshow example
-const slides = [
-  {img:'https://picsum.photos/1100/320?1',caption:'Welcome to Crescent International'},
-  {img:'https://picsum.photos/1100/320?2',caption:'Empowering students for success'},
-  {img:'https://picsum.photos/1100/320?3',caption:'Join our growing community'}
+// Slideshow
+const slidesData=[
+  {url:'https://picsum.photos/1100/320?1',caption:'Welcome to Crescent International'},
+  {url:'https://picsum.photos/1100/320?2',caption:'Empowering students for success'},
+  {url:'https://picsum.photos/1100/320?3',caption:'Join our growing community'}
 ];
-let currentSlide=0;
 const slideContainer=document.getElementById('slideshow');
-slides.forEach((s,i)=>{
-  const div=document.createElement('div');
-  div.className='slide'+(i===0?' show':'');
-  div.innerHTML=`<img src="${s.img}"><div class="caption">${s.caption}</div>`;
+slidesData.forEach((s,i)=>{
+  const div=document.createElement('div'); div.className='slide'+(i===0?' show':'');
+  div.innerHTML=`<img src="${s.url}"><div class="caption">${s.caption}</div>`;
   slideContainer.appendChild(div);
 });
+let currentSlide=0;
 setInterval(()=>{
   const allSlides=document.querySelectorAll('.slide');
   allSlides[currentSlide].classList.remove('show');
-  currentSlide=(currentSlide+1)%slides.length;
+  currentSlide=(currentSlide+1)%slidesData.length;
   allSlides[currentSlide].classList.add('show');
 },4000);
-</script>
 
+// LocalStorage defaults
+if(!localStorage.getItem('homework')) localStorage.setItem('homework', JSON.stringify([]));
+if(!localStorage.getItem('results')) localStorage.setItem('results', JSON.stringify([]));
+if(!localStorage.getItem('attendance')) localStorage.setItem('attendance', JSON.stringify([]));
+if(!localStorage.getItem('faqs')) localStorage.setItem('faqs', JSON.stringify([
+  {q:'How to apply?',a:'Fill the admission form and submit required documents.'},
+  {q:'What are the fees?',a:'Fees depend on class. Contact admin for details.'}
+]));
+if(!localStorage.getItem('events')) localStorage.setItem('events', JSON.stringify([]));
+if(!localStorage.getItem('updates')) localStorage.setItem('updates', JSON.stringify({cie:'No session under way.',news:'Breaking News! Crescent International is operational from August 18th.'}));
+
+// Render Functions
+function renderHomework(){ const tbody=document.querySelector('#hw-table tbody'); const data=JSON.parse(localStorage.getItem('homework')); tbody.innerHTML=''; data.forEach(h=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${h.date}</td><td>${h.class}</td><td>${h.task}</td>`; tbody.appendChild(tr); }); }
+function renderAttendance(){ const tbody=document.querySelector('#att-table tbody'); const data=JSON.parse(localStorage.getItem('attendance')); tbody.innerHTML=''; data.forEach(a=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${a.student}</td><td>${a.date}</td><td><span class="status-dot ${a.status.toLowerCase()}"></span>${a.status}</td>`; tbody.appendChild(tr); }); }
+function renderFaqs(){ const faqList=document.getElementById('faq-list'); const faqs=JSON.parse(localStorage.getItem('faqs')); faqList.innerHTML=''; faqs.forEach(f=>{ const div=document.createElement('div'); div.className='faq-item'; div.innerHTML=`<div class="faq-q">${f.q}<span>+</span></div><div class="faq-a">${f.a}</div>`; faqList.appendChild(div); const q=div.querySelector('.faq-q'); const a=div.querySelector('.faq-a'); q.addEventListener('click',()=>a.style.display=(a.style.display==='block'?'none':'block')); }); }
+function renderEvents(){ const list=document.getElementById('events-list'); const evs=JSON.parse(localStorage.getItem('events')); list.innerHTML=''; evs.forEach(ev=>{ const card=document.createElement('div'); card.style.minWidth='220px'; card.style.flex='0 0 auto'; card.style.border='1px solid #eef2f6'; card.style.padding='12px'; card.style.borderRadius='10px'; card.innerHTML=`<div style="font-weight:700;color:var(--navy)">${ev.name}</div><div class="muted" style="margin-top:6px">${ev.desc}</div>`; card.title=ev.desc; list.appendChild(card); }); }
+function renderUpdates(){ const up=JSON.parse(localStorage.getItem('updates')); document.getElementById('cie-updates').textContent=up.cie||''; document.getElementById('school-news').textContent=up.news||''; }
+
+// Initial render
+renderHomework(); renderAttendance(); renderFaqs(); renderEvents(); renderUpdates();
+
+// Results search
+function findResult(){ const roll=document.getElementById('res-roll').value.trim(); const cnic=document.getElementById('res-cnic').value.trim(); const data=JSON.parse(localStorage.getItem('results')); const found=data.find(r=>r.roll===roll&&r.cnic===cnic); const out=document.getElementById('result-output'); out.innerHTML=found?`<div style="padding:12px;border-radius:8px;background:#f8fbff"><strong>Result:</strong> ${found.marks||'Marks not set'}<br><small class="muted">Class: ${found.class||'N/A'}</small></div>`:`<div style="padding:10px;color:#ef4444">No result found for that Roll/CNIC.</div>`; }
+
+// Admin login
+const adminPanel=document.getElementById('adminPanel');
+const adminLoginBtn=document.getElementById('adminLoginBtn');
+const closeAdmin=document.getElementById('closeAdmin');
+const loginBtn=document.getElementById('loginBtn');
+const loginMsg=document.getElementById('loginMsg');
+const adminControls=document.getElementById('adminControls');
+
+adminLoginBtn.addEventListener('click',()=>{ adminPanel.style.display='flex'; });
+closeAdmin.addEventListener('click',()=>{ adminPanel.style.display='none'; loginMsg.textContent=''; adminControls.style.display='none'; });
+loginBtn.addEventListener('click',()=>{
+  const email=document.getElementById('adminEmail').value;
+  const pass=document.getElementById('adminPass').value;
+  if(email==='admin@123.com' && pass==='admin123'){ loginMsg.style.color='green'; loginMsg.textContent='Login successful!'; adminControls.style.display='block'; } 
+  else{ loginMsg.style.color='red'; loginMsg.textContent='Invalid credentials'; }
+});
+</script>
 </body>
 </html>
-
