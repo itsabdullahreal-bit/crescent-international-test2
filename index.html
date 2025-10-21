@@ -81,9 +81,9 @@
       </div>
       <div class="contact">
         <div style="font-weight:600">Contact:</div>
-        <div class="muted">email: info@crescent.edu</div>
-        <div class="muted">phone: +92 300 0000000</div>
-        <div class="muted">address: 123 Crescent Avenue, City</div>
+        <div class="muted">email: admissions@crescentinternational.edu</div>
+        <div class="muted">phone: +92 321 1234567</div>
+        <div class="muted">address: 45 Crescent Boulevard, Islamabad, Pakistan</div>
       </div>
     </div>
 
@@ -290,22 +290,10 @@ function startSlideTimer(){clearInterval(slideTimer);slideTimer=setInterval(()=>
 function renderHomework(){const data=JSON.parse(localStorage.getItem(LS.homework)||'[]');const tbody=document.querySelector('#hw-table tbody');const filter=document.getElementById('hw-filter').value;tbody.innerHTML='';data.filter(h=>filter==='All'?true:h.class===filter).forEach(h=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${h.date}</td><td>${h.class}</td><td>${h.task}</td>`;tbody.appendChild(tr);});}
 document.getElementById('hw-filter').addEventListener('change',renderHomework);
 function findResult(){const roll=document.getElementById('res-roll').value.trim();const cnic=document.getElementById('res-cnic').value.trim();const data=JSON.parse(localStorage.getItem(LS.results)||'[]');const found=data.find(r=>r.roll===roll&&r.cnic===cnic);const out=document.getElementById('result-output');if(found){out.innerHTML=`<div style="padding:12px;border-radius:8px;background:#111"><strong>Result:</strong> ${found.marks||'Marks not set'}<br><small class="muted">Class: ${found.class||'N/A'}</small></div>`;}else{out.innerHTML=`<div style="padding:10px;color:#ef4444">No result found for that Roll/CNIC.</div>`;}}
-function renderFaqs(){const list=document.getElementById('faq-list');const faqs=JSON.parse(localStorage.getItem(LS.faqs)||'[]');list.innerHTML='';faqs.forEach(f=>{const div=document.createElement('div');div.className='faq-item';div.innerHTML=`<div class="faq-q">${f.q}<span>+</span></div><div class="faq-a">${f.a}</div>`;div.querySelector('.faq-q').addEventListener('click',()=>{const a=div.querySelector('.faq-a');a.style.display=a.style.display==='block'?'none':'block';});list.appendChild(div);});}
-function renderAttendance(){const data=JSON.parse(localStorage.getItem(LS.attendance)||'[]');const tbody=document.querySelector('#att-table tbody');const cls=document.getElementById('att-class').value;const dt=document.getElementById('att-date').value;tbody.innerHTML='';data.filter(s=>s.class===cls&&(dt? s.date===dt:true)).forEach(s=>{const tr=document.createElement('tr');const statusClass=s.status==='Present'?'present':s.status==='Absent'?'absent':'half';tr.innerHTML=`<td>${s.name}</td><td>${s.date}</td><td><span class="status-dot ${statusClass}"></span>${s.status}</td>`;tbody.appendChild(tr);});}
-document.getElementById('att-class').addEventListener('change',renderAttendance);document.getElementById('att-date').addEventListener('change',renderAttendance);
-function renderEvents(){const data=JSON.parse(localStorage.getItem(LS.events)||'[]');const wrap=document.getElementById('events-list');wrap.innerHTML='';data.forEach(ev=>{const div=document.createElement('div');div.style.background='#222';div.style.padding='12px';div.style.borderRadius='10px';div.style.flex='1 1 200px';div.innerHTML=`<strong>${ev.name}</strong><p class="muted" style="margin-top:6px">${ev.desc}</p>`;wrap.appendChild(div);});}
-function renderUpdates(){const upd=JSON.parse(localStorage.getItem(LS.updates)||'{}');document.getElementById('cie-updates').textContent=upd.cie||'';document.getElementById('school-news').textContent=upd.news||'';}
-renderSlides();renderHomework();renderFaqs();renderAttendance();renderEvents();renderUpdates();
-
-/* Dark/light mode based on device theme */
-const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-if(prefersDark){
-  document.body.style.background = '#000';
-  document.body.style.color = '#ccc';
-} else {
-  document.body.style.background = '#fff';
-  document.body.style.color = '#111';
-}
+function renderFaqs(){const list=document.getElementById('faq-list');const faqs=JSON.parse(localStorage.getItem(LS.faqs)||'[]');list.innerHTML='';faqs.forEach(f=>{const div=document.createElement('div');div.className='faq-item';div.innerHTML=`<div class="faq-q">${f.q} <span>+</span></div><div class="faq-a">${f.a}</div>`;list.appendChild(div);});document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{const a=q.nextElementSibling; a.style.display=a.style.display==='block'?'none':'block';})});}
+function renderUpdates(){const upd=JSON.parse(localStorage.getItem(LS.updates)||'{}');document.getElementById('cie-updates').textContent=upd.cie||'No updates';document.getElementById('school-news').textContent=upd.news||'No news';}
+function init(){renderSlides();renderHomework();renderFaqs();renderUpdates();}
+init();
 </script>
 
 </body>
