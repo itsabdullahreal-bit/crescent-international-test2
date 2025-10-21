@@ -74,17 +74,9 @@
   <!-- Home -->
   <section id="home" class="page">
     <div class="slideshow" id="slideshow"></div>
-    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;align-items:center;justify-content:space-between">
-      <div>
-        <h2 style="margin:0;color:var(--white)">Welcome to Crescent International</h2>
-        <p class="muted" style="margin-top:6px">A modern school for modern learners.</p>
-      </div>
-      <div class="contact">
-        <div style="font-weight:600">Contact:</div>
-        <div class="muted">email: admissions@crescentinternational.edu</div>
-        <div class="muted">phone: +92 321 1234567</div>
-        <div class="muted">address: 45 Crescent Boulevard, Islamabad, Pakistan</div>
-      </div>
+    <div style="margin-top:16px;">
+      <h2 style="margin:0;color:var(--white)">Welcome to Crescent International</h2>
+      <p class="muted" style="margin-top:6px">A modern school for modern learners.</p>
     </div>
 
     <!-- Facilities -->
@@ -117,6 +109,14 @@
       <p style="color:#ccc;line-height:1.6">
         Our experienced and dedicated faculty members ensure personalized attention and quality education for all students.
       </p>
+    </section>
+
+    <!-- CONTACT INFO MOVED TO THE END -->
+    <section style="margin-top:20px;padding:16px;background:#111;border-radius:10px;">
+      <h2 style="color:var(--white)">Contact</h2>
+      <div class="muted">Email: admissions@crescentinternational.edu</div>
+      <div class="muted">Phone: +92 321 1234567</div>
+      <div class="muted">Address: 45 Crescent Boulevard, Islamabad, Pakistan</div>
     </section>
   </section>
 
@@ -290,10 +290,12 @@ function startSlideTimer(){clearInterval(slideTimer);slideTimer=setInterval(()=>
 function renderHomework(){const data=JSON.parse(localStorage.getItem(LS.homework)||'[]');const tbody=document.querySelector('#hw-table tbody');const filter=document.getElementById('hw-filter').value;tbody.innerHTML='';data.filter(h=>filter==='All'?true:h.class===filter).forEach(h=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${h.date}</td><td>${h.class}</td><td>${h.task}</td>`;tbody.appendChild(tr);});}
 document.getElementById('hw-filter').addEventListener('change',renderHomework);
 function findResult(){const roll=document.getElementById('res-roll').value.trim();const cnic=document.getElementById('res-cnic').value.trim();const data=JSON.parse(localStorage.getItem(LS.results)||'[]');const found=data.find(r=>r.roll===roll&&r.cnic===cnic);const out=document.getElementById('result-output');if(found){out.innerHTML=`<div style="padding:12px;border-radius:8px;background:#111"><strong>Result:</strong> ${found.marks||'Marks not set'}<br><small class="muted">Class: ${found.class||'N/A'}</small></div>`;}else{out.innerHTML=`<div style="padding:10px;color:#ef4444">No result found for that Roll/CNIC.</div>`;}}
-function renderFaqs(){const list=document.getElementById('faq-list');const faqs=JSON.parse(localStorage.getItem(LS.faqs)||'[]');list.innerHTML='';faqs.forEach(f=>{const div=document.createElement('div');div.className='faq-item';div.innerHTML=`<div class="faq-q">${f.q} <span>+</span></div><div class="faq-a">${f.a}</div>`;list.appendChild(div);});document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{const a=q.nextElementSibling; a.style.display=a.style.display==='block'?'none':'block';})});}
-function renderUpdates(){const upd=JSON.parse(localStorage.getItem(LS.updates)||'{}');document.getElementById('cie-updates').textContent=upd.cie||'No updates';document.getElementById('school-news').textContent=upd.news||'No news';}
-function init(){renderSlides();renderHomework();renderFaqs();renderUpdates();}
-init();
+
+function renderFaqs(){const list=document.getElementById('faq-list');const faqs=JSON.parse(localStorage.getItem(LS.faqs)||'[]');list.innerHTML='';faqs.forEach(f=>{const div=document.createElement('div');div.className='faq-item';const q=document.createElement('div');q.className='faq-q';q.textContent=f.q;const a=document.createElement('div');a.className='faq-a';a.textContent=f.a;q.onclick=()=>a.style.display=a.style.display==='block'?'none':'block';div.appendChild(q);div.appendChild(a);list.appendChild(div);});}
+
+renderSlides();renderHomework();renderFaqs();
+document.getElementById('cie-updates').textContent=JSON.parse(localStorage.getItem(LS.updates)||'{}').cie||'No updates';
+document.getElementById('school-news').textContent=JSON.parse(localStorage.getItem(LS.updates)||'{}').news||'No news';
 </script>
 
 </body>
