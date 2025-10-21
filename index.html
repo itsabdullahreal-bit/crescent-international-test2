@@ -86,6 +86,38 @@
         <div class="muted">address: 123 Crescent Avenue, City</div>
       </div>
     </div>
+
+    <!-- Facilities -->
+    <section style="margin-top:20px;">
+      <h2 style="color:var(--white)">Facilities</h2>
+      <!-- Classes -->
+      <section style="background:#222;padding:16px;border-radius:10px;margin-bottom:16px;">
+        <h3 style="color:#fff;margin-bottom:12px;">Classes</h3>
+        <ul style="color:#ccc;line-height:1.6">
+          <li>Grade 6</li>
+          <li>Grade 7</li>
+          <li>IGCSE 1</li>
+          <li>IGCSE 2</li>
+          <li>IGCSE 3</li>
+        </ul>
+      </section>
+
+      <!-- Labs -->
+      <section style="background:#222;padding:16px;border-radius:10px;margin-bottom:16px;">
+        <h3 style="color:#fff;margin-bottom:12px;">Labs</h3>
+        <ul style="color:#ccc;line-height:1.6">
+          <li>Computer Lab: Coding, robotics, and digital skills development</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- Faculty -->
+    <section style="background:#222;padding:16px;border-radius:10px;margin-top:16px;">
+      <h2 style="color:#fff;margin-bottom:12px;">Faculty</h2>
+      <p style="color:#ccc;line-height:1.6">
+        Our experienced and dedicated faculty members ensure personalized attention and quality education for all students.
+      </p>
+    </section>
   </section>
 
   <!-- Homework -->
@@ -258,13 +290,22 @@ function startSlideTimer(){clearInterval(slideTimer);slideTimer=setInterval(()=>
 function renderHomework(){const data=JSON.parse(localStorage.getItem(LS.homework)||'[]');const tbody=document.querySelector('#hw-table tbody');const filter=document.getElementById('hw-filter').value;tbody.innerHTML='';data.filter(h=>filter==='All'?true:h.class===filter).forEach(h=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${h.date}</td><td>${h.class}</td><td>${h.task}</td>`;tbody.appendChild(tr);});}
 document.getElementById('hw-filter').addEventListener('change',renderHomework);
 function findResult(){const roll=document.getElementById('res-roll').value.trim();const cnic=document.getElementById('res-cnic').value.trim();const data=JSON.parse(localStorage.getItem(LS.results)||'[]');const found=data.find(r=>r.roll===roll&&r.cnic===cnic);const out=document.getElementById('result-output');if(found){out.innerHTML=`<div style="padding:12px;border-radius:8px;background:#111"><strong>Result:</strong> ${found.marks||'Marks not set'}<br><small class="muted">Class: ${found.class||'N/A'}</small></div>`;}else{out.innerHTML=`<div style="padding:10px;color:#ef4444">No result found for that Roll/CNIC.</div>`;}}
-function renderFaqs(){const list=document.getElementById('faq-list');const faqs=JSON.parse(localStorage.getItem(LS.faqs)||'[]');list.innerHTML='';faqs.forEach((f,idx)=>{const el=document.createElement('div');el.className='faq-item';el.innerHTML=`<div class="faq-q">${f.q}<span style="opacity:.7">${f.cat||'General'}</span></div><div class="faq-a">${f.a}</div>`;el.querySelector('.faq-q').addEventListener('click',()=>{const a=el.querySelector('.faq-a');a.style.display=a.style.display==='block'?'none':'block';});list.appendChild(el);});}
-function renderAttendance(){const cls=document.getElementById('att-class').value;const date=document.getElementById('att-date').value||new Date().toISOString().slice(0,10);const data=JSON.parse(localStorage.getItem(LS.attendance)||'[]');const tbody=document.querySelector('#att-table tbody');tbody.innerHTML='';data.filter(rec=>rec.class===cls&&rec.date===date).forEach(rec=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${rec.name}</td><td>${rec.date}</td><td><span class="status-dot ${rec.status==='Present'?'present':rec.status==='Absent'?'absent':'half'}"></span>${rec.status}</td>`;tbody.appendChild(tr);});}
-document.getElementById('att-class').addEventListener('change',renderAttendance);
-document.getElementById('att-date').addEventListener('change',renderAttendance);
-function renderEvents(){const list=document.getElementById('events-list');const events=JSON.parse(localStorage.getItem(LS.events)||'[]');list.innerHTML='';events.forEach((ev,idx)=>{const card=document.createElement('div');card.style.minWidth='220px';card.style.flex='0 0 auto';card.style.border='1px solid #333';card.style.padding='12px';card.style.borderRadius='10px';card.innerHTML=`<div style="font-weight:700;color:var(--white)">${ev.name}</div><div class="muted" style="margin-top:6px">${ev.desc}</div>`;card.title=ev.desc;list.appendChild(card);});}
-function renderUpdates(){const up=JSON.parse(localStorage.getItem(LS.updates)||'{}');document.getElementById('cie-updates').textContent=up.cie||'';document.getElementById('school-news').textContent=up.news||'';}
+function renderFaqs(){const list=document.getElementById('faq-list');const faqs=JSON.parse(localStorage.getItem(LS.faqs)||'[]');list.innerHTML='';faqs.forEach(f=>{const div=document.createElement('div');div.className='faq-item';div.innerHTML=`<div class="faq-q">${f.q}<span>+</span></div><div class="faq-a">${f.a}</div>`;div.querySelector('.faq-q').addEventListener('click',()=>{const a=div.querySelector('.faq-a');a.style.display=a.style.display==='block'?'none':'block';});list.appendChild(div);});}
+function renderAttendance(){const data=JSON.parse(localStorage.getItem(LS.attendance)||'[]');const tbody=document.querySelector('#att-table tbody');const cls=document.getElementById('att-class').value;const dt=document.getElementById('att-date').value;tbody.innerHTML='';data.filter(s=>s.class===cls&&(dt? s.date===dt:true)).forEach(s=>{const tr=document.createElement('tr');const statusClass=s.status==='Present'?'present':s.status==='Absent'?'absent':'half';tr.innerHTML=`<td>${s.name}</td><td>${s.date}</td><td><span class="status-dot ${statusClass}"></span>${s.status}</td>`;tbody.appendChild(tr);});}
+document.getElementById('att-class').addEventListener('change',renderAttendance);document.getElementById('att-date').addEventListener('change',renderAttendance);
+function renderEvents(){const data=JSON.parse(localStorage.getItem(LS.events)||'[]');const wrap=document.getElementById('events-list');wrap.innerHTML='';data.forEach(ev=>{const div=document.createElement('div');div.style.background='#222';div.style.padding='12px';div.style.borderRadius='10px';div.style.flex='1 1 200px';div.innerHTML=`<strong>${ev.name}</strong><p class="muted" style="margin-top:6px">${ev.desc}</p>`;wrap.appendChild(div);});}
+function renderUpdates(){const upd=JSON.parse(localStorage.getItem(LS.updates)||'{}');document.getElementById('cie-updates').textContent=upd.cie||'';document.getElementById('school-news').textContent=upd.news||'';}
 renderSlides();renderHomework();renderFaqs();renderAttendance();renderEvents();renderUpdates();
+
+/* Dark/light mode based on device theme */
+const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+if(prefersDark){
+  document.body.style.background = '#000';
+  document.body.style.color = '#ccc';
+} else {
+  document.body.style.background = '#fff';
+  document.body.style.color = '#111';
+}
 </script>
 
 </body>
