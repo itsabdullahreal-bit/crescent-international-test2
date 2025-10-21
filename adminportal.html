@@ -6,85 +6,226 @@
 <title>Crescent International</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0b2b5a;--white:#fff;--muted:#ccc;--accent:#111;}
+:root{--navy:#0b2b5a;--white:#ffffff;--muted:#ccc;--accent:#111;}
 *{box-sizing:border-box}
-body{font-family:'Poppins',sans-serif;margin:0;background:#000;color:var(--muted);}
+body{font-family:'Poppins',sans-serif;margin:0;background:#000;color:var(--muted);-webkit-font-smoothing:antialiased;}
 header{background:var(--navy);color:var(--white);padding:28px 16px;text-align:center}
-header h1{margin:0;font-size:28px;font-weight:700;}
+header h1{margin:0;font-size:28px;font-weight:700;text-align:center}
 header p{margin:6px 0 0;font-weight:500;opacity:.95}
 nav{display:flex;justify-content:center;gap:14px;padding:12px 8px;background:var(--navy);position:sticky;top:0;z-index:50;border-bottom:1px solid #333;flex-wrap:wrap}
 nav a{padding:8px 12px;border-radius:6px;color:#fff;text-decoration:none;font-weight:600}
 nav a.active{background:#444;color:#fff}
+nav a:hover{opacity:.9}
 .nav-toggle{display:none;cursor:pointer;font-size:22px;padding:8px;background:#222;border-radius:6px;margin-left:auto;margin-right:16px;color:#fff}
 main{max-width:1100px;margin:22px auto;padding:0 16px}
+.slideshow{position:relative;height:320px;border-radius:10px;overflow:hidden;background:var(--accent);display:flex;align-items:center;justify-content:center}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+.slide.show{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.slide .caption{position:absolute;left:18px;bottom:18px;background:rgba(11,43,90,.75);color:#fff;padding:8px 12px;border-radius:6px;font-weight:600}
 section{margin:20px 0;padding:18px;background:#111;border-radius:10px;box-shadow:0 6px 18px rgba(12,30,60,0.1)}
-.page{display:none}
-footer{max-width:1100px;margin:26px auto 60px;padding:8px 16px;color:#666;font-size:14px}
-button{padding:6px 12px;border:none;border-radius:6px;background:#0b2b5a;color:#fff;cursor:pointer}
-input,select,textarea{padding:6px;border-radius:6px;border:1px solid #333;background:#111;color:#ccc;margin-right:6px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.section-head h2{margin:0;color:var(--white)}
+.muted{color:#aaa;font-size:14px}
 table{width:100%;border-collapse:collapse;margin-top:12px;color:#ccc}
 th,td{padding:10px;border-bottom:1px solid #333;text-align:left}
 th{background:#222;color:#fff;font-weight:600}
-.flowchart{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
-.flowchart div{padding:8px 12px;background:#222;border-radius:8px;color:#ccc;flex:1 1 150px;text-align:center}
-ul{padding-left:20px}
+.faq-item{border-radius:8px;padding:10px;margin-top:8px;border:1px solid #333}
+.faq-q{display:flex;justify-content:space-between;cursor:pointer;font-weight:600}
+.faq-a{margin-top:8px;color:#ccc;display:none}
+.status-dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:middle}
+.present{background:#16a34a}
+.absent{background:#ef4444}
+.half{background:#9ca3af}
+@media(max-width:900px){
+.slideshow{height:220px}
+nav a{display:none;width:100%;padding:12px 0;text-align:center}
+nav a.mobile-show{display:block}
+.nav-toggle{display:block}
+}
+footer{max-width:1100px;margin:26px auto 60px;padding:8px 16px;color:#666;font-size:14px}
+.contact{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+input, select, button, textarea{background:#111;color:#ccc;border:1px solid #333;border-radius:6px;padding:6px;font-family:'Poppins',sans-serif}
+button{cursor:pointer}
 </style>
 </head>
 <body>
+
 <header>
   <h1>Crescent International</h1>
   <p>Excellence • Respect • Growth</p>
 </header>
+
 <nav id="mainNav">
   <span class="nav-toggle" onclick="toggleNav()">☰ Menu</span>
   <a href="#home" data-page="home" class="active mobile-show">Home</a>
-  <a href="#admin" data-page="admin" class="mobile-show">Admin Dashboard</a>
+  <a href="#homework" data-page="homework" class="mobile-show">Homework</a>
+  <a href="#results" data-page="results" class="mobile-show">Results</a>
+  <a href="#faqs" data-page="faqs" class="mobile-show">FAQ’s</a>
+  <a href="#attendance" data-page="attendance" class="mobile-show">Student Attendance</a>
+  <a href="#events" data-page="events" class="mobile-show">Events</a>
+  <a href="#updates" data-page="updates" class="mobile-show">Updates</a>
+  <a href="#admin" data-page="admin" class="mobile-show">Admin Login</a>
 </nav>
+
 <main>
-  <!-- Home Page -->
+  <!-- Home -->
   <section id="home" class="page">
-    <h2 style="color:#fff">Facilities</h2>
-    <ul id="facilities-list" style="color:#ccc"></ul>
-    <h2 style="color:#fff;margin-top:20px">Labs</h2>
-    <ul id="labs-list" style="color:#ccc"></ul>
+    <div class="slideshow" id="slideshow"></div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;align-items:center;justify-content:space-between">
+      <div>
+        <h2 style="margin:0;color:var(--white)">Welcome to Crescent International</h2>
+        <p class="muted" style="margin-top:6px">A modern school for modern learners.</p>
+      </div>
+    </div>
+
+    <!-- Facilities -->
+    <section style="margin-top:20px;">
+      <h2 style="color:var(--white)">Facilities</h2>
+      <section id="facilities-list" style="background:#222;padding:16px;border-radius:10px;margin-bottom:16px;">
+        <!-- JS will populate facilities here -->
+      </section>
+
+      <!-- Labs -->
+      <section id="labs-list" style="background:#222;padding:16px;border-radius:10px;margin-bottom:16px;">
+        <h3 style="color:#fff;margin-bottom:12px;">Labs</h3>
+        <ul id="labs-ul" style="color:#ccc;line-height:1.6"></ul>
+      </section>
+    </section>
+
+    <!-- Faculty -->
+    <section id="faculty-list" style="background:#222;padding:16px;border-radius:10px;margin-top:16px;">
+      <h2 style="color:#fff;margin-bottom:12px;">Faculty</h2>
+      <ul id="faculty-ul" style="color:#ccc;line-height:1.6"></ul>
+    </section>
+
+    <!-- Contact info at end -->
+    <section style="margin-top:20px;">
+      <h2 style="color:var(--white)">Contact Information</h2>
+      <div class="contact">
+        <div style="font-weight:600">Contact:</div>
+        <div class="muted">Email: admissions@crescentinternational.edu</div>
+        <div class="muted">Phone: +92 321 1234567</div>
+        <div class="muted">Address: 45 Crescent Boulevard, Islamabad, Pakistan</div>
+      </div>
+    </section>
   </section>
 
-  <!-- Admin Dashboard -->
-  <section id="admin" class="page">
-    <h2 style="color:#fff">Admin Dashboard</h2>
-
-    <!-- Add Student -->
-    <h3 style="color:#fff">Add Student</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
-      <input placeholder="Name" id="st-name">
-      <input placeholder="Roll No" id="st-roll">
-      <input placeholder="Class" id="st-class">
-      <input placeholder="Parent CNIC" id="st-cnic">
-      <input placeholder="B-Form / Smart Card" id="st-bform">
-      <input type="date" placeholder="DOB" id="st-dob">
-      <input type="date" placeholder="Date of Joining" id="st-join">
-      <button onclick="addStudent()">Add</button>
+  <!-- Homework -->
+  <section id="homework" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Homework</h2>
+      <div>
+        <select id="hw-filter">
+          <option value="All">All Classes</option>
+          <option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option>
+        </select>
+      </div>
     </div>
+    <table id="hw-table" aria-live="polite">
+      <thead><tr><th>Date</th><th>Class</th><th>Task</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
 
-    <h3 style="color:#fff">Student List</h3>
-    <button onclick="exportCSV()">Export CSV</button>
-    <div class="flowchart" id="flowchart"></div>
-
-    <!-- Add Facilities -->
-    <h3 style="color:#fff;margin-top:20px">Add Facility</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
-      <input placeholder="Facility Name" id="facility-input">
-      <button onclick="addFacility()">Add</button>
+  <!-- Results -->
+  <section id="results" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Results</h2>
+      <div class="muted">Enter Roll No and Parent CNIC</div>
     </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <input id="res-roll" placeholder="Roll Number" />
+      <input id="res-cnic" placeholder="Parent CNIC" />
+      <button onclick="findResult()">Show Result</button>
+    </div>
+    <div id="result-output" style="margin-top:12px"></div>
+  </section>
 
-    <!-- Add Labs -->
-    <h3 style="color:#fff;margin-top:20px">Add Lab</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
-      <input placeholder="Lab Name" id="lab-input">
-      <button onclick="addLab()">Add</button>
+  <!-- FAQs -->
+  <section id="faqs" class="page" style="display:none">
+    <div class="section-head">
+      <h2>FAQ’s</h2>
+      <div class="muted">Categories: Admissions, Exams, Uniforms, Fees, General</div>
+    </div>
+    <div id="faq-list" style="margin-top:12px"></div>
+  </section>
+
+  <!-- Attendance -->
+  <section id="attendance" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Student Attendance</h2>
+      <div>
+        <select id="att-class">
+          <option>Grade 6</option><option>Grade 7</option><option>IGCSE 1</option><option>IGCSE 2</option><option>IGCSE 3</option>
+        </select>
+        <input type="date" id="att-date" />
+      </div>
+    </div>
+    <table id="att-table">
+      <thead><tr><th>Student</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- Events -->
+  <section id="events" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Events</h2>
+      <div class="muted">Hover over event names to see details</div>
+    </div>
+    <div id="events-list" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:12px"></div>
+  </section>
+
+  <!-- Updates -->
+  <section id="updates" class="page" style="display:none">
+    <div class="section-head">
+      <h2>Updates</h2>
+      <div class="muted">CIE Updates & School News</div>
+    </div>
+    <div style="margin-top:12px">
+      <h4>CIE Updates</h4>
+      <p id="cie-updates" class="muted"></p>
+      <h4 style="margin-top:12px">School News</h4>
+      <p id="school-news" class="muted"></p>
+    </div>
+  </section>
+
+  <!-- Admin Portal -->
+  <section id="admin" class="page" style="display:none">
+    <div style="max-width:500px;margin:0 auto;">
+      <h2 style="color:#fff">Admin Login</h2>
+      <input id="admin-email" placeholder="Email" />
+      <input id="admin-pass" placeholder="Password" type="password" />
+      <button onclick="loginAdmin()">Login</button>
+      <div id="admin-msg" style="margin-top:8px;color:#ef4444"></div>
+
+      <div id="admin-panel" style="display:none;margin-top:16px">
+        <h3 style="color:#fff">Admin Panel</h3>
+        <button onclick="logoutAdmin()">Logout</button>
+        <div style="margin-top:12px">
+          <h4>Add Facility</h4>
+          <input id="fac-name" placeholder="Facility Name" />
+          <button onclick="addFacility()">Add</button>
+          <ul id="facilities-admin" style="color:#ccc;margin-top:8px"></ul>
+        </div>
+        <div style="margin-top:12px">
+          <h4>Add Lab</h4>
+          <input id="lab-name" placeholder="Lab Name/Details" />
+          <button onclick="addLab()">Add</button>
+          <ul id="labs-admin" style="color:#ccc;margin-top:8px"></ul>
+        </div>
+        <div style="margin-top:12px">
+          <h4>Add Faculty</h4>
+          <input id="faculty-name" placeholder="Faculty Name/Details" />
+          <button onclick="addFaculty()">Add</button>
+          <ul id="faculty-admin" style="color:#ccc;margin-top:8px"></ul>
+        </div>
+      </div>
     </div>
   </section>
 </main>
+
 <footer>
   <div style="max-width:1100px;margin:0 auto;padding:10px 16px;color:#666;display:flex;flex-direction:column;gap:6px">
     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
@@ -95,107 +236,97 @@ ul{padding-left:20px}
 </footer>
 
 <script>
-const pages=document.querySelectorAll('.page');
-const navLinks=document.querySelectorAll('nav a[data-page]');
+const pages = document.querySelectorAll('.page');
+const navLinks = document.querySelectorAll('nav a[data-page]');
 function showPage(name){
   pages.forEach(p=>p.style.display='none');
   document.getElementById(name).style.display='block';
   navLinks.forEach(a=>a.classList.remove('active'));
-  const activeLink=document.querySelector('nav a[data-page="'+name+'"]');
+  const activeLink = document.querySelector('nav a[data-page="'+name+'"]');
   if(activeLink) activeLink.classList.add('active');
   window.scrollTo(0,0);
 }
-window.addEventListener('hashchange',()=>showPage(location.hash.replace('#','')));
-if(!location.hash) location.hash='#home'; else showPage(location.hash.replace('#',''));
+window.addEventListener('hashchange',()=>{showPage(location.hash.replace('#','')||'home');});
+if(!location.hash) location.hash='#home';
+else showPage(location.hash.replace('#',''));
 function toggleNav(){document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('mobile-show'));}
 
-/* ---------- Local Storage ---------- */
-const LS={
-  students:'cres_students_v1',
-  facilities:'cres_facilities_v1',
-  labs:'cres_labs_v1'
+// ---------- localStorage ----------
+const LS = {
+  slides:'cres_slides_v2',
+  homework:'cres_homework_v2',
+  results:'cres_results_v2',
+  faqs:'cres_faqs_v2',
+  attendance:'cres_att_v2',
+  events:'cres_events_v2',
+  updates:'cres_updates_v2',
+  students:'cres_students_v2',
+  facilities:'cres_facilities_v2',
+  labs:'cres_labs_v2',
+  faculty:'cres_faculty_v2',
+  admin:'cres_admin_v2'
 };
-if(!localStorage.getItem(LS.students)) localStorage.setItem(LS.students,JSON.stringify([]));
-if(!localStorage.getItem(LS.facilities)) localStorage.setItem(LS.facilities,JSON.stringify([]));
-if(!localStorage.getItem(LS.labs)) localStorage.setItem(LS.labs,JSON.stringify([]));
 
-/* ---------- Students ---------- */
-function addStudent(){
-  const s={
-    name:document.getElementById('st-name').value.trim(),
-    roll:document.getElementById('st-roll').value.trim(),
-    class:document.getElementById('st-class').value.trim(),
-    cnic:document.getElementById('st-cnic').value.trim(),
-    bform:document.getElementById('st-bform').value.trim(),
-    dob:document.getElementById('st-dob').value,
-    join:document.getElementById('st-join').value
-  };
-  if(!s.name||!s.roll){alert('Name and Roll are required');return;}
-  const data=JSON.parse(localStorage.getItem(LS.students)||'[]');
-  data.push(s);
-  localStorage.setItem(LS.students,JSON.stringify(data));
-  renderFlowchart();
-  alert('Student added!');
-}
-function renderFlowchart(){
-  const data=JSON.parse(localStorage.getItem(LS.students)||'[]');
-  const wrap=document.getElementById('flowchart');
-  wrap.innerHTML='';
-  data.forEach(s=>{
-    const div=document.createElement('div');
-    div.textContent=`${s.name} (${s.class})`;
-    wrap.appendChild(div);
-  });
-}
-function exportCSV(){
-  const data=JSON.parse(localStorage.getItem(LS.students)||'[]');
-  if(!data.length){alert('No students to export');return;}
-  const header=['Name','Roll','Class','Parent CNIC','B-Form/Smart Card','DOB','Date of Joining'];
-  const rows=data.map(s=>[s.name,s.roll,s.class,s.cnic,s.bform,s.dob,s.join].join(','));
-  const csv=[header.join(','),...rows].join('\n');
-  const blob=new Blob([csv],{type:'text/csv'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='students.csv';a.click();URL.revokeObjectURL(url);
-}
+// Default data init
+if(!localStorage.getItem(LS.slides)) localStorage.setItem(LS.slides, JSON.stringify([]));
+if(!localStorage.getItem(LS.facilities)) localStorage.setItem(LS.facilities, JSON.stringify([]));
+if(!localStorage.getItem(LS.labs)) localStorage.setItem(LS.labs, JSON.stringify([]));
+if(!localStorage.getItem(LS.faculty)) localStorage.setItem(LS.faculty, JSON.stringify([]));
+if(!localStorage.getItem(LS.updates)) localStorage.setItem(LS.updates, JSON.stringify({cie:'No session',news:'No news'}));
+if(!localStorage.getItem(LS.admin)) localStorage.setItem(LS.admin, JSON.stringify({email:'ayubandabdullah835@gmail.com',pass:'admin@123'}));
 
-/* ---------- Facilities & Labs ---------- */
-function addFacility(){
-  const f=document.getElementById('facility-input').value.trim();
-  if(!f)return;
-  const data=JSON.parse(localStorage.getItem(LS.facilities)||'[]');
-  data.push(f);
-  localStorage.setItem(LS.facilities,JSON.stringify(data));
-  renderFacilities();
+// ---------- Slides ----------
+function renderSlides(){
+  const slides=JSON.parse(localStorage.getItem(LS.slides)||'[]');
+  const wrap=document.getElementById('slideshow'); wrap.innerHTML='';
+  slides.forEach((s,i)=>{const div=document.createElement('div');div.className='slide'+(i===0?' show':''); const img=document.createElement('img'); img.src=s.url; img.alt=s.caption||'slide'; div.appendChild(img); if(s.caption){const c=document.createElement('div');c.className='caption';c.textContent=s.caption; div.appendChild(c);} wrap.appendChild(div);});
+  if(slides.length>1) startSlideTimer();
 }
-function addLab(){
-  const l=document.getElementById('lab-input').value.trim();
-  if(!l)return;
-  const data=JSON.parse(localStorage.getItem(LS.labs)||'[]');
-  data.push(l);
-  localStorage.setItem(LS.labs,JSON.stringify(data));
-  renderLabs();
-}
+let slideTimer=null;
+function startSlideTimer(){clearInterval(slideTimer);slideTimer=setInterval(()=>{const slides=document.querySelectorAll('.slide');if(!slides.length)return;let idx=-1;slides.forEach((s,i)=>{if(s.classList.contains('show')) idx=i;s.classList.remove('show');});idx=(idx+1)%slides.length;slides[idx].classList.add('show');},4000);}
+renderSlides();
+
+// ---------- Facilities ----------
 function renderFacilities(){
-  const data=JSON.parse(localStorage.getItem(LS.facilities)||'[]');
-  const ul=document.getElementById('facilities-list');
-  ul.innerHTML='';
-  data.forEach(f=>{
-    const li=document.createElement('li'); li.textContent=f; ul.appendChild(li);
-  });
+  const facs=JSON.parse(localStorage.getItem(LS.facilities)||'[]');
+  const ul=document.getElementById('facilities-list'); ul.innerHTML='';
+  facs.forEach(f=>{const div=document.createElement('div');div.textContent=f;ul.appendChild(div);});
 }
 function renderLabs(){
-  const data=JSON.parse(localStorage.getItem(LS.labs)||'[]');
-  const ul=document.getElementById('labs-list');
-  ul.innerHTML='';
-  data.forEach(l=>{
-    const li=document.createElement('li'); li.textContent=l; ul.appendChild(li);
-  });
+  const labs=JSON.parse(localStorage.getItem(LS.labs)||'[]');
+  const ul=document.getElementById('labs-ul'); ul.innerHTML='';
+  labs.forEach(l=>{const li=document.createElement('li'); li.textContent=l; ul.appendChild(li);});
+}
+function renderFaculty(){
+  const facs=JSON.parse(localStorage.getItem(LS.faculty)||'[]');
+  const ul=document.getElementById('faculty-ul'); ul.innerHTML='';
+  facs.forEach(f=>{const li=document.createElement('li'); li.textContent=f; ul.appendChild(li);});
+}
+renderFacilities(); renderLabs(); renderFaculty();
+
+// ---------- Admin ----------
+function loginAdmin(){
+  const email=document.getElementById('admin-email').value.trim();
+  const pass=document.getElementById('admin-pass').value.trim();
+  const admin=JSON.parse(localStorage.getItem(LS.admin)||'{}');
+  if(email===admin.email && pass===admin.pass){document.getElementById('admin-msg').textContent=''; document.getElementById('admin-panel').style.display='block'; renderAdminLists();} 
+  else document.getElementById('admin-msg').textContent='Incorrect email or password';
+}
+function logoutAdmin(){document.getElementById('admin-panel').style.display='none';document.getElementById('admin-msg').textContent='Logged out';}
+function renderAdminLists(){
+  const facs=JSON.parse(localStorage.getItem(LS.facilities)||'[]');
+  const facUl=document.getElementById('facilities-admin'); facUl.innerHTML=''; facs.forEach((f,i)=>{const li=document.createElement('li');li.textContent=f+' ';const btn=document.createElement('button');btn.textContent='Delete';btn.onclick=()=>{facs.splice(i,1);localStorage.setItem(LS.facilities,JSON.stringify(facs));renderFacilities();renderAdminLists();};li.appendChild(btn);facUl.appendChild(li);});
+
+  const labs=JSON.parse(localStorage.getItem(LS.labs)||'[]');
+  const labUl=document.getElementById('labs-admin'); labUl.innerHTML=''; labs.forEach((l,i)=>{const li=document.createElement('li');li.textContent=l+' ';const btn=document.createElement('button');btn.textContent='Delete';btn.onclick=()=>{labs.splice(i,1);localStorage.setItem(LS.labs,JSON.stringify(labs));renderLabs();renderAdminLists();};li.appendChild(btn);labUl.appendChild(li);});
+
+  const facs2=JSON.parse(localStorage.getItem(LS.faculty)||'[]');
+  const fac2Ul=document.getElementById('faculty-admin'); fac2Ul.innerHTML=''; facs2.forEach((f,i)=>{const li=document.createElement('li');li.textContent=f+' ';const btn=document.createElement('button');btn.textContent='Delete';btn.onclick=()=>{facs2.splice(i,1);localStorage.setItem(LS.faculty,JSON.stringify(facs2));renderFaculty();renderAdminLists();};li.appendChild(btn);fac2Ul.appendChild(li);});
 }
 
-/* ---------- Init ---------- */
-renderFlowchart();
-renderFacilities();
-renderLabs();
+function addFacility(){const name=document.getElementById('fac-name').value.trim();if(!name)return;const facs=JSON.parse(localStorage.getItem(LS.facilities)||'[]');facs.push(name);localStorage.setItem(LS.facilities,JSON.stringify(facs));renderFacilities();renderAdminLists();document.getElementById('fac-name').value='';}
+function addLab(){const name=document.getElementById('lab-name').value.trim();if(!name)return;const labs=JSON.parse(localStorage.getItem(LS.labs)||'[]');labs.push(name);localStorage.setItem(LS.labs,JSON.stringify(labs));renderLabs();renderAdminLists();document.getElementById('lab-name').value='';}
+function addFaculty(){const name=document.getElementById('faculty-name').value.trim();if(!name)return;const facs=JSON.parse(localStorage.getItem(LS.faculty)||'[]');facs.push(name);localStorage.setItem(LS.faculty,JSON.stringify(facs));renderFaculty();renderAdminLists();document.getElementById('faculty-name').value='';}
 </script>
 </body>
 </html>
